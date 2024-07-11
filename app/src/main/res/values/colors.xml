@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Theme 1 colors. -->
+    <color name="colorPrimary">#3664EC</color>
+    <color name="colorPrimaryDark">#3664EC</color>
+    <color name="colorAccent">#3664EC</color>
+
+    <!-- Theme 1 colors. -->
+    <color name="colorPrimary_Night">#06D001</color>
+    <color name="colorPrimaryDark_Night">#059212</color>
+    <color name="colorAccent_Night">#F3FF90</color>
+
+    <!-- Page Background-->
+    <color name="page_background">#F4F4F4</color>
+    <color name="page_background_2">#F5F6F8</color>
+    <color name="page_background_white">#FFFFFF</color>
+
+    <!-- Toolbar-->
+    <color name="toolbar_background">#F4F4F4</color>
+    <color name="toolbar_background_white">#FFFFFF</color>
+    <color name="toolbar_text_color">#000000</color>
+    <color name="toolbar_back_arrow_color">#000000</color>
+
+    <!-- TextView-->
+    <color name="tv_text_color">#000000</color>
+    <color name="tv_text_color_grey">#6a6b6c</color>
+    <color name="tv_background_color_green">#D4EBD2</color>
+    <color name="tv_text_color_for_background_color_green">#000000</color>
+    <color name="tv_background_color_gray">#F5F6F8</color>
+    <color name="tv_text_color_for_background_color_gray">#000000</color>
+    <color name="tv_text_color_active">#34C759</color>
+    <color name="tv_text_color_primary">@color/colorPrimary</color>
+
+    <!-- EditText-->
+    <color name="et_text_color">#000000</color>
+    <color name="et_hint_text_color">#6a6b6c</color>
+    <color name="et_background_color">#FFFFFF</color>
+
+    <!-- Button-->
+    <color name="btn_background">@color/colorPrimary</color>
+    <color name="btn_background_text_color">#FFFFFF</color>
+    <color name="btn_background_black">#000000</color>
+    <color name="btn_background_black_text_color">#FFFFFF</color>
+    <color name="btn_background_white">#FFFFFF</color>
+    <color name="btn_background_white_text_color">#000000</color>
+
+<!--    BottomNavigationView-->
+    <color name="bnv_background">#FFFFFF</color>
+    <color name="bnv_selected">@color/colorPrimary</color>
+    <color name="bnv_others">@color/black</color>
+
+<!--    FloatingActionButton-->
+    <color name="fab_icon_color">#FFFFFF</color>
+
+<!--    SearchView-->
+    <color name="searchview_background_color">#F5F6F8</color>
+
+<!--    CardView-->
+    <color name="cardview_background_color_light_blue">#E5F4FF</color>
+
+<!--    Scanning-->
+    <color name="scanner_line">#00ceff</color>
+
 </resources>

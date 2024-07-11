@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".utility.camera.CameraXScanner">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.camera.view.PreviewView>
+
+    <com.leegosolutions.vms_host_app.utility.camera.CS_ScanningOverlayView
+        android:id="@+id/scan_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:line_color="@color/colorPrimaryDark"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        app:line_speed="6"
+        app:line_width="5"
+        app:square_height="250"
+        app:square_width="250"
+        android:alpha="0.9"/>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center|bottom"-->
+<!--        android:layout_marginBottom="20dp">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_Scan_Bottom_Title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Move closer"-->
+<!--            android:textColor="#f4f4f4"-->
+<!--            android:padding="10dp"-->
+<!--            android:background="@color/black"-->
+<!--            android:gravity="center"-->
+<!--            android:textSize="22sp"/>-->
+
+<!--    </RelativeLayout>-->
+
+</FrameLayout>

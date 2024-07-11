@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background_2"
+    tools:context=".activity.login.fragment.L_MobileNoFragment">
+
+    <RelativeLayout
+        android:gravity="center|top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:windowSoftInputMode="adjustPan"
+        android:layout_below="@+id/appBar">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_above="@+id/tr_SaveDelete"
+            android:layout_marginBottom="50dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_mobile_no"
+                        android:textSize="@dimen/text_medium"
+                        android:textColor="@color/tv_text_color_grey"
+                        android:padding="10dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/countryCodePicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="@dimen/text_medium"
+                            app:ccp_showFlag="true"
+                            app:ccp_showNameCode="false"
+                            app:ccp_countryPreference="SG,MY,CN"
+                            app:ccp_defaultNameCode="SG"
+                            android:layout_marginRight="5dp"
+                            app:ccpDialog_showCloseIcon="true"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"/>
+
+                        <EditText
+                            android:id="@+id/et_MobileNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_medium"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"
+                            android:padding="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:hint="@string/login_mobile_no_text_hint"
+                            android:textColorHint="@color/et_hint_text_color"
+                            android:fontFamily="@font/inter_regular"/>
+
+                    </TableRow>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_mobile_no_otp"
+                        android:textSize="@dimen/text_medium"
+                        android:textColor="@color/tv_text_color_grey"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <EditText
+                        android:id="@+id/et_Password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_medium"
+                        android:background="@drawable/rectangle_shape"
+                        android:backgroundTint="@color/et_background_color"
+                        android:padding="10dp"
+                        android:textColorHint="@color/et_hint_text_color"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_mobile_no_otp_expired"
+                            android:textSize="@dimen/text_small"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_mobile_no_otp_resend"
+                            android:textSize="@dimen/text_small"
+                            android:padding="10dp"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/inter_regular"/>
+
+                    </TableRow>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <TableRow
+            android:id="@+id/tr_SaveDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btn_Next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_mobile_next"
+                android:textColor="@color/btn_background_text_color"
+                android:background="@drawable/rectangle_shape"
+                android:backgroundTint="@color/btn_background"
+                android:fontFamily="@font/inter_regular"/>
+
+        </TableRow>
+
+    </RelativeLayout>
+
+</FrameLayout>

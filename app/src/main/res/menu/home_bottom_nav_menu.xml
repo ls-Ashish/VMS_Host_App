@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:visible="false"
+        android:id="@+id/nav_home"
+        android:title="@string/home_bottom_tab_1"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:visible="false"
+        android:id="@+id/nav_visitors"
+        android:title="@string/home_bottom_tab_2"
+        android:icon="@drawable/ic_visitor"/>
+    <item
+        android:id="@+id/nav_access"
+        android:title="@string/home_bottom_tab_3"
+        android:icon="@drawable/ic_access"/>
+    <item
+        android:visible="false"
+        android:id="@+id/nav_nortifications"
+        android:title="@string/home_bottom_tab_4"
+        android:icon="@drawable/ic_nortification"/>
+    <item
+        android:id="@+id/nav_settings"
+        android:title="@string/home_bottom_tab_5"
+        android:icon="@drawable/ic_settings"/>
+
+</menu>

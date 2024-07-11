@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/page_background_white"
+    android:windowSoftInputMode="adjustPan"
+    tools:context=".activity.visitors.V_VisitorsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="16dp"
+                app:contentInsetEnd="16dp"
+                style="@style/Theme.MyCustomToolbar_White">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp">
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <TextView
+                        android:layout_weight="8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/visitor_page_caption"
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:gravity="center|left"/>
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:id="@+id/iv_ScanServerDetails"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_add_black"/>
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/parent_page_margin"
+            android:layout_marginRight="@dimen/parent_page_margin"
+            android:layout_marginBottom="@dimen/parent_page_margin"
+            android:layout_below="@+id/appBar">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <android.widget.SearchView
+                            android:id="@+id/searchView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:iconifiedByDefault="false"
+                            android:queryHint="@string/visitor_search_hint"
+                            android:queryBackground="@null"
+                            style="@style/MySearchViewStyle"/>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                            <Button
+                                android:id="@+id/btn_Todays"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_tab_todays"
+                                android:textColor="@color/btn_background_white_text_color"
+                                android:background="@drawable/round_shape"
+                                app:backgroundTint="@color/btn_background_white"
+                                android:fontFamily="@font/inter_regular"/>
+
+                            <Button
+                                android:id="@+id/btn_AllVisitors"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_tab_all_visitors"
+                                android:textColor="@color/btn_background_white_text_color"
+                                android:background="@drawable/round_shape"
+                                app:backgroundTint="@color/btn_background_white"
+                                android:fontFamily="@font/inter_regular"/>
+
+                            <Button
+                                android:id="@+id/btn_History"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_tab_history"
+                                android:textColor="@color/btn_background_white_text_color"
+                                android:background="@drawable/round_shape"
+                                app:backgroundTint="@color/btn_background_white"
+                                android:fontFamily="@font/inter_regular"/>
+
+                        </TableRow>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:backgroundTint="@color/tv_background_color_gray"
+                        android:layout_marginTop="20dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

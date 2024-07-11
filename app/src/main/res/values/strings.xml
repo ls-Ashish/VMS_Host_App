@@ -1,3 +1,154 @@
 <resources>
     <string name="app_name">VMS_Host_App</string>
+
+    <!--    Global-->
+    <string name="no_connection">No Internet Connection</string>
+
+    <!--    Splash Page-->
+    <string name="splash_powered_by">Powered by</string>
+    <string name="splash_powered_by_text">Leego Visitor Management</string>
+
+    <!--    Scan Server Details-->
+    <string name="scan_server_details_page_caption">Scan Server Details</string>
+    <string name="scan_server_details_page_instruction">Please scan the server’s QR code</string>
+    <string name="scan_server_details_scan">Scan</string>
+    <string name="scan_server_details_scan_error_null">Error - null</string>
+    <string name="scan_server_details_scan_error_empty">Error - empty</string>
+    <string name="scan_server_details_scan_canceled">Canceled</string>
+    <string name="scan_server_details_connect_success">Connected to server successfully</string>
+    <string name="scan_server_details_data_save_error">Unable to save server details</string>
+    <string name="scan_server_details_invalid_server_details">Invalid Server details</string>
+
+c    <!--    LoginOrRegistration Page-->
+    <string name="lor_vms">VMS</string>
+    <string name="lor_button_new_registration">New Registration</string>
+    <string name="lor_button_login">Login</string>
+
+    <!--    Registration Page-->
+    <string name="registration_page_caption">New Registration</string>
+    <string name="registration_name">Name</string>
+    <string name="registration_name_hint">John Smith</string>
+    <string name="registration_mobile_no">Mobile No.</string>
+    <string name="registration_mobile_no_hint">98927673</string>
+    <string name="registration_email">Email</string>
+    <string name="registration_email_hint">E.g. johnsmith@gmail.com</string>
+    <string name="registration_verification_text">To proceed, we’ll send a verification code to these mobile no. and email.</string>
+    <string name="registration_company_name">REGISTERED COMPANY NAME</string>
+    <string name="registration_company_name_hint">Company Pte. Ltd.</string>
+    <string name="registration_button_next">Next</string>
+
+    <!--    Registration Verify Mobile No Page-->
+    <string name="registration_verify_mobile_no_page_caption">Verify Your Mobile No.</string>
+    <string name="registration_verify_mobile_no_page_instruction">OTP/ VERIFICATION CODE</string>
+    <string name="registration_verify_mobile_no_page_expired_text">Expired in 30 secs</string>
+    <string name="registration_verify_mobile_no_page_resend_text">Resend New OTP</string>
+    <string name="registration_verify_mobile_no_page_next">Next</string>
+
+    <!--    Registration Verify Email Page-->
+    <string name="registration_verify_email_page_caption">Verify Your Email Address</string>
+    <string name="registration_verify_email_page_instruction">OTP/ VERIFICATION CODE</string>
+    <string name="registration_verify_email_page_expired_text">Expired in 30 secs</string>
+    <string name="registration_verify_email_page_resend_text">Resend New OTP</string>
+    <string name="registration_verify_email_page_submit">Submit</string>
+
+    <!--    Registration Acknowledgement Page-->
+    <string name="registration_acknowledgement_page_caption">Acknowledgement</string>
+    <string name="registration_acknowledgement_page_instruction">You have successfully submitted a new account registration!</string>
+    <string name="registration_acknowledgement_page_note">Note</string>
+    <string name="registration_acknowledgement_page_note_instruction">Please be informed that you will be notified by email/SMS after the Account Registration is approved in 3&#8211;5 working days.</string>
+    <string name="registration_acknowledgement_page_done">Done</string>
+
+    <!--    Login Page-->
+    <string name="login_page_caption">Login</string>
+    <string name="login_success">Login success</string>
+    <string name="login_data_save_error">Unable to save login details</string>
+
+    <string name="login_email">Email</string>
+    <string name="login_email_text">Email</string>
+    <string name="login_email_text_hint">E.g. johnsmith@gmail.com</string>
+    <string name="login_email_password">PASSWORD</string>
+    <string name="login_email_password_forgot">Forgot your password?</string>
+    <string name="login_email_password_mobile_no">Login with mobile no.</string>
+    <string name="login_email_next">Next</string>
+    <string name="login_email_empty_email">Enter email</string>
+    <string name="login_email_empty_password">Enter password</string>
+
+    <string name="login_mobile_no">Mobile No.</string>
+    <string name="login_mobile_no_text">MOBILE NO.</string>
+    <string name="login_mobile_no_text_hint">98927673</string>
+    <string name="login_mobile_no_otp">OTP/ VERIFICATION CODE</string>
+    <string name="login_mobile_no_otp_expired">Expired in 30 secs</string>
+    <string name="login_mobile_no_otp_resend">Resend New OTP</string>
+    <string name="login_mobile_next">Next</string>
+
+    <!--    Home-->
+    <string name="home_bottom_tab_1">Home</string>
+    <string name="home_bottom_tab_2">Visitors</string>
+    <string name="home_bottom_tab_3">Access</string>
+    <string name="home_bottom_tab_4">Notifications</string>
+    <string name="home_bottom_tab_5">Settings</string>
+
+    <string name="home_welcome_text">Good Morning,</string>
+    <string name="home_username">John</string>
+    <string name="home_quick_access">Quick Access</string>
+    <string name="home_my_access">My Access</string>
+    <string name="home_todays_visitors">Today’s Visitors</string>
+    <string name="home_all_visitors">All Visitors</string>
+    <string name="home_past_visitors">Past Visitors</string>
+    <string name="home_upcoming_visitors">Upcoming Visitors</string>
+
+    <string name="home_visitor_appointment_no">XXXX</string>
+    <string name="home_visitor_name">Visitor Name:</string>
+    <string name="home_visitor_type">Visitor Type:</string>
+    <string name="home_visitor_mobile_no">Mobile No.</string>
+    <string name="home_visitor_start_date">Visit Dates:</string>
+    <string name="home_visitor_end_date">Expired on:</string>
+    <string name="home_visitor_overnights">Overnight(s):</string>
+    <string name="home_visitor_status">Status:</string>
+
+    <!--    Visitors-->
+    <string name="visitor_page_caption">Visitors</string>
+    <string name="visitor_search_hint">Search Visitors</string>
+    <string name="visitor_tab_todays">Today’s</string>
+    <string name="visitor_tab_all_visitors">All Visitors</string>
+    <string name="visitor_tab_history">History</string>
+
+    <string name="visitor_appointment_no">87468</string>
+    <string name="visitor_name">Visitor Name:</string>
+    <string name="visitor_type">Visitor Type:</string>
+    <string name="visitor_mobile_no">Mobile No.</string>
+    <string name="visitor_start_date">Visit Dates:</string>
+    <string name="visitor_end_date">Expired on:</string>
+    <string name="visitor_overnights">Overnight(s):</string>
+    <string name="visitor_status">Status:</string>
+
+    <!--    Visitors Details-->
+    <string name="visitor_details_page_caption">A15-403</string>
+    <string name="visitor_details_unit_name">Unit Name:</string>
+    <string name="visitor_details_user_name">User Name:</string>
+    <string name="visitor_details_invitation_title">Invitation Title:</string>
+    <string name="visitor_details_visitor_name">Visitor Name:</string>
+    <string name="visitor_details_company_name">Company Name:</string>
+    <string name="visitor_details_visit_dates">Visit Dates:</string>
+    <string name="visitor_details_valid_until">Valid Until:</string>
+    <string name="visitor_details_overnight">Overnight:</string>
+    <string name="visitor_details_entry_type">Entry Type:</string>
+    <string name="visitor_details_vehicle_no">Vehicle Number:</string>
+    <string name="visitor_details_remarks">Remarks:</string>
+
+    <string name="visitor_details_created_by">Created by:</string>
+    <string name="visitor_details_created_at">Created at:</string>
+    <string name="visitor_details_last_updated_by">Last Updated by:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--    Access-->
+    <string name="access_page_caption">Access</string>
+    <string name="access_employee_accss">Employee Access</string>
+    <string name="access_page_instruction">Scan/Present this QR code at the Gate.</string>
+    <string name="access_host_employee_no">Employee No. :</string>
+    <string name="access_host_visitor_name">Visitor Name:</string>
+    <string name="access_host_vehicle_no">Vehicle Number:</string>
+    <string name="access_data_save_error">Unable to save access details</string>
+
 </resources>

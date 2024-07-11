@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background_2"
+    tools:context=".activity.registration.R_Verify_Email">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="16dp"
+                app:contentInsetEnd="16dp"
+                style="@style/Theme.MyCustomToolbar">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp">
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <TextView
+                        android:layout_weight="8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/registration_verify_email_page_caption"
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:layout_weight="1"
+                        android:id="@+id/iv_ScanServerDetails"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/parent_page_margin"
+            android:layout_below="@+id/appBar">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:layout_above="@+id/tr_SaveDelete"
+                android:layout_marginBottom="50dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_verify_email_page_instruction"
+                            android:textSize="@dimen/text_medium"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <EditText
+                            android:id="@+id/et_Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_medium"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"
+                            android:textColorHint="@color/et_hint_text_color"
+                            android:padding="10dp"/>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/registration_verify_email_page_expired_text"
+                                android:textSize="@dimen/text_small"
+                                android:textColor="@color/tv_text_color_grey"
+                                android:padding="10dp"
+                                android:fontFamily="@font/inter_regular"/>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/registration_verify_email_page_resend_text"
+                                android:textSize="@dimen/text_small"
+                                android:padding="10dp"
+                                android:textColor="@color/colorPrimary"
+                                android:fontFamily="@font/inter_regular"/>
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </ScrollView>
+
+            <TableRow
+                android:id="@+id/tr_SaveDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/btn_Submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registration_verify_email_page_submit"
+                    android:textColor="@color/btn_background_text_color"
+                    android:background="@drawable/rectangle_shape"
+                    android:backgroundTint="@color/btn_background"
+                    android:fontFamily="@font/inter_regular"/>
+
+            </TableRow>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

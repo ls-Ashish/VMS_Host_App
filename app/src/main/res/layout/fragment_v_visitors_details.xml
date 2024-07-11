@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background_white"
+    android:windowSoftInputMode="adjustPan"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.visitors.V_VisitorsDetails">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="16dp"
+                app:contentInsetEnd="16dp"
+                style="@style/Theme.MyCustomToolbar_White">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp">
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <TextView
+                        android:id="@+id/tv_PageCaption"
+                        android:layout_weight="8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/visitor_details_page_caption"
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_edit"/>
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_scan"/>
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/parent_page_margin"
+            android:layout_marginRight="@dimen/parent_page_margin"
+            android:layout_marginBottom="@dimen/parent_page_margin"
+            android:layout_below="@+id/appBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardBackgroundColor="@color/cardview_background_color_light_blue"
+                    app:cardMaxElevation="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_Content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:padding="5dp">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_unit_name"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_UnitName"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_user_name"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_UserName"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardBackgroundColor="@color/cardview_background_color_light_blue"
+                    app:cardMaxElevation="5dp"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:padding="5dp">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_AppointmentNo"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="XXXX"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_invitation_title"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_InvitationTitle"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_visitor_name"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_VisitorName"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_company_name"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_CompanyName"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_visit_dates"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_VisitDates"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_valid_until"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_ValidUntil"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_overnight"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_Overnight"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_entry_type"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_EntryType"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_vehicle_no"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_VehicleNo"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_remarks"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_Remarks"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardBackgroundColor="@color/cardview_background_color_light_blue"
+                    app:cardMaxElevation="5dp"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:padding="5dp">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_created_by"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_CreatedBy"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_created_at"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_CreatedAt"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/visitor_details_last_updated_by"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_LastUpdationBy"
+                                android:layout_weight="2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:textColor="@color/tv_text_color"
+                                android:layout_marginTop="5dp"/>
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

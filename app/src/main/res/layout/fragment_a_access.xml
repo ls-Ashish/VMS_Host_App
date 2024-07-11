@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/page_background"
+    tools:context=".activity.access.A_AccessFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="16dp"
+                app:contentInsetEnd="16dp"
+                style="@style/Theme.MyCustomToolbar">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp">
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <TextView
+                        android:id="@+id/tv_PageCaption"
+                        android:layout_weight="8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/access_page_caption"
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:gravity="center|left"/>
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:layout_weight="1"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_scan"/>
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/parent_page_margin"
+            android:layout_marginRight="@dimen/parent_page_margin"
+            android:layout_marginBottom="@dimen/parent_page_margin"
+            android:layout_below="@+id/appBar">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="5dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardMaxElevation="5dp"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_Content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp"
+                            android:background="#FFFFFF"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/access_employee_accss"
+                                android:textSize="@dimen/text_large"
+                                android:textColor="@color/tv_text_color_primary"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/access_page_instruction"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center"
+                                android:layout_marginTop="10dp"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="20dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cardCornerRadius="5dp"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardMaxElevation="5dp"
+                                    android:layout_margin="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/iv_AccessQRCode"
+                                        android:layout_width="250dp"
+                                        android:layout_height="250dp"
+                                        android:src="@drawable/ic_scan"/>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tv_HostCompanyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="HiCOMM PTE LTD"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center"
+                                android:layout_marginTop="20dp"/>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tv_HostUnitName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="A15-403"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center"
+                                android:layout_marginTop="10dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_HostEmployeeNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/access_host_employee_no"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center"
+                                android:layout_marginTop="10dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_QRCodeValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_extra_small"
+                                android:layout_marginTop="10dp"/>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <EditText
+                                    android:id="@+id/et_EnterEmployeeId"
+                                    android:layout_weight="1.5"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="34387"
+                                    android:hint="Employee No."
+                                    android:layout_marginRight="10dp"/>
+
+                                <Button
+                                    android:id="@+id/btn_UpdateEmployeeId"
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Update"
+                                    android:layout_marginLeft="10dp"/>
+
+                            </TableRow>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#EFEFEF"
+                                android:layout_marginTop="20dp"/>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/access_host_visitor_name"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center|left"
+                                android:layout_marginTop="20dp"/>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tv_HostName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Steven  Lee"
+                                android:textSize="@dimen/text_small"
+                                android:textColor="@color/tv_text_color"
+                                android:gravity="center|left"
+                                android:layout_marginTop="10dp"/>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/access_host_vehicle_no"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center|left"
+                                android:layout_marginTop="20dp"/>
+
+                            <TextView
+                                android:visibility="gone"
+                                android:id="@+id/tv_HostVehicleNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="SJH6723"
+                                android:textColor="@color/tv_text_color"
+                                android:textSize="@dimen/text_small"
+                                android:gravity="center|left"
+                                android:layout_marginTop="10dp"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>
