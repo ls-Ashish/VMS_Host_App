@@ -24,8 +24,9 @@ public class CS_Entity_AccessDetails {
     private String AD_E_CreationDate;
 
     private String AD_E_UpdationDate;
+    private String AD_E_No_Encrypted;
 
-    public CS_Entity_AccessDetails(String AD_SourceId, String AD_E_No, String AD_E_Name, String AD_E_Unit, String AD_E_VehicleNo, String AD_E_CreationDate, String AD_E_UpdationDate) {
+    public CS_Entity_AccessDetails(String AD_SourceId, String AD_E_No, String AD_E_Name, String AD_E_Unit, String AD_E_VehicleNo, String AD_E_CreationDate, String AD_E_UpdationDate, String AD_E_No_Encrypted) {
         this.AD_SourceId = AD_SourceId;
         this.AD_E_No = AD_E_No;
         this.AD_E_Name = AD_E_Name;
@@ -33,6 +34,7 @@ public class CS_Entity_AccessDetails {
         this.AD_E_VehicleNo = AD_E_VehicleNo;
         this.AD_E_CreationDate = AD_E_CreationDate;
         this.AD_E_UpdationDate = AD_E_UpdationDate;
+        this.AD_E_No_Encrypted = AD_E_No_Encrypted;
     }
 
     public int getAD_Auto_Id() {
@@ -97,5 +99,13 @@ public class CS_Entity_AccessDetails {
 
     public void setAD_E_UpdationDate(String AD_E_UpdationDate) {
         this.AD_E_UpdationDate = AD_E_UpdationDate;
+    }
+
+    public String getAD_E_No_Encrypted() {
+        return AD_E_No_Encrypted;
+    }
+
+    public void setAD_E_No_Encrypted(String AD_E_No_Encrypted) {
+        this.AD_E_No_Encrypted = AD_E_No_Encrypted;
     }
 }

@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -186,7 +187,7 @@ public class L_EmailFragment extends Fragment {
 
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
-        private String bCode="", tCode="", clientSecret="", baseURL="", userType="", userName="", buildingId="", tenantId="", sourceId="";
+        private String bCode="", tCode="", clientSecret="", appToken="", baseURL="", userType="", userName="", buildingId="", tenantId="", sourceId="";
         private byte[] userPhoto=null;
         private boolean dataInserted = false;
 
@@ -209,7 +210,6 @@ public class L_EmailFragment extends Fragment {
         protected Void doInBackground(Void ... voids) {
             try {
                 OkHttpClient client = new CS_Utility(context).getOkHttpClient();
-                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
                 CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
 
@@ -217,7 +217,8 @@ public class L_EmailFragment extends Fragment {
                     bCode = model.getSD_BCode();
                     tCode = model.getSD_TCode();
                     clientSecret = model.getSD_ClientSecret();
-                    baseURL = model.getSD_BaseURL();
+                    appToken = model.getSD_AppToken();
+                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
                     buildingId = model.getSD_BU_ID();
                     tenantId = model.getSD_TE_ID();
 
@@ -225,29 +226,30 @@ public class L_EmailFragment extends Fragment {
                 if (!bCode.equals("") && !tCode.equals("") && !clientSecret.equals("") && !baseURL.equals("")) {
 
                     JSONObject jObject = new JSONObject();
-                    jObject.put("Id", "0");
                     jObject.put("UserName", email);
                     jObject.put("Password", password);
                     jObject.put("Logged_BU_Id", buildingId);
                     jObject.put("Logged_TE_Id", tenantId);
                     jObject.put("Flag", "Validate_User");
 
-                    RequestBody body = RequestBody.create(mediaType, String.valueOf(jObject));
+                    RequestBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("Id","0")
+                            .addFormDataPart("Json_Data",String.valueOf(jObject))
+                            .addFormDataPart("App_Token",appToken)
+                            .build();
 
                     Request request = new Request.Builder()
-                            .url(CS_ED.Decrypt(baseURL) + CS_API_URL.validateBuilding)
+                            .url(baseURL + CS_API_URL.Login)
                             .method("POST", body)
                             .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                            .addHeader("Authorization", "Bearer " + "")
+                            .addHeader("Authorization", "Bearer " + appToken)
                             .build();
+
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
                         if (response != null) {
                             String responseBody = response.body().string();
-
-                            // fixme - till api is not ready
-                            responseBody = "[{\"Result\":1,\"Msg\":\"Login Successfully\",\"Source_Id\":63,\"UserType\":\"Host\",\"UserName\":\"Unir A host\",\"ProfilePhoto\":\"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\"}]";
-
                             if (!responseBody.equals("")) {
 
                                 String jsonData = responseBody;
@@ -318,7 +320,7 @@ public class L_EmailFragment extends Fragment {
                     showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
 
                 } else {
-                    showAlertDialog(msg.equals("") ? "Error" : CS_Constant.serverConnectionErrorMessage);
+                    showAlertDialog(!msg.equals("") ? msg : CS_Constant.serverConnectionErrorMessage);
                 }
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
@@ -330,7 +332,7 @@ public class L_EmailFragment extends Fragment {
     public void showAlertDialog(String message) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Invalid");
+            builder.setTitle("Error");
             builder.setIcon(R.drawable.ic_error);
             builder.setMessage(message);
             builder.setCancelable(false);

@@ -52,7 +52,9 @@ public class CS_Utility {
 
     public void saveError(Exception e, String sourceClassName, String sourceMethodName, String sourceLineNo) {
         try {
-            showToast(e.toString(), 0);
+            if (BuildConfig.DEBUG) {
+                showToast(e.toString(), 0);
+            }
         } catch (Exception ignored) {
         }
     }

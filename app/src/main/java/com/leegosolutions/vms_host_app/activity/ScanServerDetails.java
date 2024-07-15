@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -141,6 +142,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
             if (!String.valueOf(startBu).equals("-1") && !String.valueOf(endBu).equals("-1") && startBu <= endBu) {
                 baseURL = result.substring(startBu + 5, endBu).trim();
+                baseURL = CS_ED.Decrypt(baseURL);
             }
 
             // API - BCode
@@ -186,7 +188,7 @@ public class ScanServerDetails extends AppCompatActivity {
     public void showAlertDialog(String message) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Invalid");
+            builder.setTitle("Error");
             builder.setIcon(R.drawable.ic_error);
             builder.setMessage(message);
             builder.setCancelable(false);
@@ -273,31 +275,31 @@ public class ScanServerDetails extends AppCompatActivity {
                 if (!bCode.equals("") && !tCode.equals("") && !clientSecret.equals("") && !baseURL.equals("")) {
 
                     OkHttpClient client = new CS_Utility(context).getOkHttpClient();
-                    MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
                     JSONObject jObject = new JSONObject();
-                    jObject.put("Id", "0");
                     jObject.put("bcode", bCode);
                     jObject.put("tcode", tCode);
                     jObject.put("client_secret", clientSecret);
                     jObject.put("Flag", "Validate_Building");
 
-                    RequestBody body = RequestBody.create(mediaType, String.valueOf(jObject));
+                    RequestBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("Id","0")
+                            .addFormDataPart("Json_Data",String.valueOf(jObject))
+                            .addFormDataPart("App_Token",appToken)
+                            .build();
 
                     Request request = new Request.Builder()
-                            .url(CS_ED.Decrypt(baseURL) + CS_API_URL.validateBuilding)
+                            .url(baseURL + CS_API_URL.Connection)
                             .method("POST", body)
                             .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                            .addHeader("Authorization", "Bearer " + "")
+                            .addHeader("Authorization", "Bearer " + appToken)
                             .build();
+
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
                         if (response != null) {
                             String responseBody = response.body().string();
-
-                            // fixme - till api is not ready
-                            responseBody = "[{\"Result\":1,\"Msg\":\"Valid\",\"BU_Id\":1,\"TE_Id\":\"0\",\"BU_BuildingName\":\"DLF Cyber City\",\"TenantName\":\"\",\"ErrorPostingURL\":\"http:\\/\\/192.168.1.121\\/Portal\\/\",\"AttachedPhoto\":\"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\"}]";
-
                             if (!responseBody.equals("")) {
 
                                 String jsonData = responseBody;
@@ -320,45 +322,45 @@ public class ScanServerDetails extends AppCompatActivity {
                                     }
 
                                     // Generate New App Token
-                                    try {
-                                        client = new CS_Utility(context).getOkHttpClient();
-                                        mediaType = MediaType.parse("application/x-www-form-urlencoded");
-
-                                        body = RequestBody.create(mediaType, "bcode=" + CS_ED.Decrypt(bCode)
-                                                        + "&tcode=" + CS_ED.Decrypt(tCode)
-                                                        + "&client_secret=" + CS_ED.Decrypt(clientSecret)
-//                                            + "&redirect_uri=" + CS_ED.Decrypt(redirectURL)
-//                                            + "&deviceId=" + deviceId)
-                                        );
-
-                                        request = new Request.Builder()
-                                                .url(CS_ED.Decrypt(baseURL) + CS_API_URL.token)
-                                                .method("POST", body)
-                                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                                                .build();
-
-                                        response = client.newCall(request).execute();
-                                        if (response.isSuccessful()) {
-                                            if (response != null) {
-                                                responseBody = response.body().string();
-                                                if (!responseBody.equals("")) {
-
-                                                    jsonData = responseBody;
-                                                    jsonObject = new JSONObject(jsonData);
-
-                                                    String tokenCode = jsonObject.getString("code");
-                                                    String tokenMsg = jsonObject.getString("msg");
-
-                                                    if (tokenCode.equals("200") && tokenMsg.equals("Success")) {
-                                                        appToken = jsonObject.getString("appToken");
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } catch (Exception e) {
-                                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-                                    }
+//                                    try {
+//                                        client = new CS_Utility(context).getOkHttpClient();
+//                                        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+//
+//                                        body = RequestBody.create(mediaType, "bcode=" + CS_ED.Decrypt(bCode)
+//                                                        + "&tcode=" + CS_ED.Decrypt(tCode)
+//                                                        + "&client_secret=" + CS_ED.Decrypt(clientSecret)
+////                                            + "&redirect_uri=" + CS_ED.Decrypt(redirectURL)
+////                                            + "&deviceId=" + deviceId)
+//                                        );
+//
+//                                        request = new Request.Builder()
+//                                                .url(baseURL + CS_API_URL.token)
+//                                                .method("POST", body)
+//                                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+//                                                .build();
+//
+//                                        response = client.newCall(request).execute();
+//                                        if (response.isSuccessful()) {
+//                                            if (response != null) {
+//                                                responseBody = response.body().string();
+//                                                if (!responseBody.equals("")) {
+//
+//                                                    jsonData = responseBody;
+//                                                    jsonObject = new JSONObject(jsonData);
+//
+//                                                    String tokenCode = jsonObject.getString("code");
+//                                                    String tokenMsg = jsonObject.getString("msg");
+//
+//                                                    if (tokenCode.equals("200") && tokenMsg.equals("Success")) {
+//                                                        appToken = jsonObject.getString("appToken");
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                    } catch (Exception e) {
+//                                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+//                                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+//                                    }
                                 }
                             }
                         }
@@ -370,7 +372,8 @@ public class ScanServerDetails extends AppCompatActivity {
                 }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
             }
             try {
-                if (result.equals("1") && !appToken.equals("")) {
+                if (result.equals("1")) {
+//                if (result.equals("1") && !appToken.equals("")) {
                     // Save Server Details
 
                     // Clean
@@ -379,7 +382,7 @@ public class ScanServerDetails extends AppCompatActivity {
                     new CS_Action_AccessDetails(context).deleteAccessDetails();
 
                     // Model
-                    CS_Entity_ServerDetails model = new CS_Entity_ServerDetails(baseURL, bu_Id, te_Id, bCode, tCode, clientSecret, buildingName, tenantName, attachedPhoto, appToken, errorPostingURL, new CS_Utility(context).getDateTime(), "", "Active");
+                    CS_Entity_ServerDetails model = new CS_Entity_ServerDetails(CS_ED.Encrypt(baseURL), bu_Id, te_Id, bCode, tCode, clientSecret, buildingName, tenantName, attachedPhoto, appToken, errorPostingURL, new CS_Utility(context).getDateTime(), "", "Active");
 
                     // Insert
                     dataInserted = new CS_Action_ServerDetails(context).insertServerDetails(model);
@@ -398,7 +401,8 @@ public class ScanServerDetails extends AppCompatActivity {
             try {
                 progressdialog.dismiss();
 
-                if (result.equals("1") && !appToken.equals("")) {
+                if (result.equals("1")) {
+//                if (result.equals("1") && !appToken.equals("")) {
 
                     if (dataInserted) {
                         nextPage(Login.class);
@@ -411,7 +415,12 @@ public class ScanServerDetails extends AppCompatActivity {
                 } else if (bCode.equals("") || tCode.equals("") || clientSecret.equals("") || baseURL.equals("")) {
                     showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
 
-                } else {
+                }
+//                else if (appToken.equals("")) {
+//                    showAlertDialog(getResources().getString(R.string.scan_server_details_app_token_not_found));
+//
+//                }
+                else {
                     showAlertDialog(msg.equals("") ? CS_Constant.serverConnectionErrorMessage : msg);
                 }
             } catch (Exception e) {

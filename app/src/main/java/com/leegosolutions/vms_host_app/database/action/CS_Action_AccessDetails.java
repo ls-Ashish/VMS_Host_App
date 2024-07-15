@@ -6,6 +6,7 @@ import com.leegosolutions.vms_host_app.database.CS_HostDatabase;
 import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_AccessDetails;
 import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
 
@@ -17,7 +18,7 @@ public class CS_Action_AccessDetails {
 
     public CS_Action_AccessDetails(Context context) {
         try {
-            this.context=context;
+            this.context = context;
             database = CS_HostDatabase.getInstance(context);
             dao = database.accessDetails_Dao();
 
@@ -45,4 +46,18 @@ public class CS_Action_AccessDetails {
     public void deleteAccessDetails() {
         dao.deleteAllAccessDetails();
     }
+
+    // Fetch
+    public CS_Entity_AccessDetails getAccessDetails() {
+        CS_Entity_AccessDetails model = null;
+        try {
+            model = dao.getAccessDetails();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+        }
+        return model;
+    }
+
 }

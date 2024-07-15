@@ -12,8 +12,9 @@ import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
+import com.leegosolutions.vms_host_app.database.migrations.CS_Migrations;
 
-@Database(entities = {CS_Entity_ServerDetails.class, CS_Entity_LoginDetails.class, CS_Entity_AccessDetails.class}, version = 1)
+@Database(entities = {CS_Entity_ServerDetails.class, CS_Entity_LoginDetails.class, CS_Entity_AccessDetails.class}, version = 2)
 public abstract class CS_HostDatabase extends RoomDatabase {
 
     private static String DATABSE_NAME = "vmshost_db";
@@ -26,6 +27,7 @@ public abstract class CS_HostDatabase extends RoomDatabase {
     public static synchronized CS_HostDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), CS_HostDatabase.class, DATABSE_NAME)
+                            .addMigrations(CS_Migrations.VERSION_2)
 //                            .addMigrations(CS_Migrations.VERSION_2, CS_Migrations.VERSION_3, CS_Migrations.VERSION_4)
 //                            .addCallback(roomCallback)
                             .build();

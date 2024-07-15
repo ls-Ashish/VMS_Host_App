@@ -105,21 +105,21 @@
                                 android:gravity="center"
                                 android:layout_marginTop="5dp"/>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/access_page_instruction"
-                                android:textSize="@dimen/text_small"
-                                android:gravity="center"
-                                android:layout_marginTop="10dp"/>
-
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/access_page_instruction"
+                                    android:textSize="@dimen/text_small"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="10dp"/>
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -130,10 +130,10 @@
                                     android:layout_margin="5dp">
 
                                     <ImageView
+                                        android:layout_gravity="center"
                                         android:id="@+id/iv_AccessQRCode"
                                         android:layout_width="250dp"
-                                        android:layout_height="250dp"
-                                        android:src="@drawable/ic_scan"/>
+                                        android:layout_height="250dp"/>
 
                                 </androidx.cardview.widget.CardView>
 
@@ -176,6 +176,7 @@
                                 android:layout_marginTop="10dp"/>
 
                             <TableRow
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp">

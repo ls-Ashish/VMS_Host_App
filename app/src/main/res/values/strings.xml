@@ -18,6 +18,7 @@
     <string name="scan_server_details_connect_success">Connected to server successfully</string>
     <string name="scan_server_details_data_save_error">Unable to save server details</string>
     <string name="scan_server_details_invalid_server_details">Invalid Server details</string>
+    <string name="scan_server_details_app_token_not_found">App token not found</string>
 
 c    <!--    LoginOrRegistration Page-->
     <string name="lor_vms">VMS</string>

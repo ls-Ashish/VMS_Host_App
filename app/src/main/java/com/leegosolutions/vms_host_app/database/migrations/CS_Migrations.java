@@ -8,12 +8,12 @@ import com.leegosolutions.vms_host_app.database.CS_SQLiteTable;
 
 public class CS_Migrations {
 
-//    public static final Migration VERSION_2 = new Migration(1, 2) {
-//        @Override
-//        public void migrate(@NonNull SupportSQLiteDatabase database) {
-//            database.execSQL("ALTER TABLE "+ CS_SQLiteTable.VMS_Server_Details +" ADD COLUMN SD_Status_2 TEXT");
-//        }
-//    };
+    public static final Migration VERSION_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE "+ CS_SQLiteTable.VMS_Access_Details +" ADD COLUMN AD_E_No_Encrypted TEXT");
+        }
+    };
 //
 //    public static final Migration VERSION_3 = new Migration(2, 3) {
 //        @Override

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -23,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.ScanServerDetails;
 import com.leegosolutions.vms_host_app.activity.home.Home;
 import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailFragment;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
@@ -44,9 +47,15 @@ import com.leegosolutions.vms_host_app.utility.CS_Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -61,7 +70,7 @@ public class A_AccessFragment extends Fragment {
     private long refreshTime = 5000; // 5 x 1000 = 5 sec
     private Handler handler = new Handler();
     private Runnable runnable;
-    private String employeeId = "";
+    private String sourceId = "", employeeNo = "", employeeName = "", employeeUnit = "", employeeVehicleNo = "", employeeNo_Encrypted = "";
 
     public A_AccessFragment() {
         // default constructor required, if no default constructor than will crash at orientation change
@@ -137,9 +146,14 @@ public class A_AccessFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-//            fetchAccessData(); // fixme
-            getEmployeeId();
+            // todo ------------------ testing -----------------------------------------------------------------------------------------
+            employeeNo = "34387";
+            employeeNo_Encrypted = "yjepDd8wZZ/kstpGJmgycQ==";
             generateQRCode();
+            viewBinding.tvHostEmployeeNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeNo);
+            // todo ------------------ testing -----------------------------------------------------------------------------------------
+
+//            fetchAccessData(); // todo - comment for testing apk
             onClick_Button_Update();
 
         } catch (Exception e) {
@@ -179,7 +193,8 @@ public class A_AccessFragment extends Fragment {
                 new FetchAccessData().execute();
 
             } else {
-                showSnackbar();
+                new FetchAccessDetailsFromSQLite().execute();
+//                showSnackbar();
             }
 
         } catch (Exception e) {
@@ -212,34 +227,13 @@ public class A_AccessFragment extends Fragment {
         }
     }
 
-    private void fetchHostDetails() {
-        try {
-//            CS_E
-//            al_Visitors = new ArrayList<>();
-//
-//            // get testing data
-//            al_Visitors = new CS_Utility(context).getTestingVisitorsData();
-//
-//            if (al_Visitors.size() > 0) {
-//                setUpcomingVisitorAdapter(al_Visitors);
-//
-//            } else {
-//
-//            }
-
-        } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-        }
-    }
-
     private void onClick_Button_Update() {
         viewBinding.btnUpdateEmployeeId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    getEmployeeId();
-                    new CS_Utility(context).showToast("Updated", 0);
+//                    getEmployeeId();
+//                    new CS_Utility(context).showToast("Updated", 0);
 
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
@@ -249,42 +243,13 @@ public class A_AccessFragment extends Fragment {
         });
     }
 
-    private void getEmployeeId() {
-        try {
-            employeeId = viewBinding.etEnterEmployeeId.getText().toString().trim();
-            viewBinding.tvHostEmployeeNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeId);
-
-        } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-        }
-    }
-
-    private void generateQRCode() {
-        try {
-            String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
-
-            String qrcodeValue = "<body><men>"+CS_ED.Encrypt(employeeId)+"</men><mct>"+CS_ED.Encrypt(currentDateTime)+"</mct></body>";
-            String qrcodeValueDecrypt = "<body><men>"+employeeId+"</men><mct>"+currentDateTime+"</mct></body>";
-
-            barcodeEncoder = new BarcodeEncoder();
-            bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);
-            viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
-
-            viewBinding.tvQRCodeValue.setText(qrcodeValue +"\n\n" + qrcodeValueDecrypt);
-
-        } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-        }
-    }
-
     private void refreshQRCode() {
         try {
-            if (refreshTime > 0 ) {
+            if (refreshTime > 0) {
                 handler.postDelayed(runnable = new Runnable() {
                     public void run() {
                         handler.postDelayed(runnable, refreshTime);
+
                         generateQRCode();
                     }
                 }, refreshTime);
@@ -300,8 +265,7 @@ public class A_AccessFragment extends Fragment {
 
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
-        private String bCode="", tCode="", clientSecret="", baseURL="", buildingId="", tenantId="", sourceId="", loginId="", employeeName="", employeeNo="", tenantName="", vehicleNo="";
-        private boolean dataInserted = false;
+        private String bCode = "", tCode = "", clientSecret = "", appToken = "", baseURL = "", buildingId = "", tenantId = "", loginId = "";
 
         @Override
         protected void onPreExecute() {
@@ -319,10 +283,9 @@ public class A_AccessFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void ... voids) {
+        protected Void doInBackground(Void... voids) {
             try {
                 OkHttpClient client = new CS_Utility(context).getOkHttpClient();
-                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
                 CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
 
@@ -330,7 +293,8 @@ public class A_AccessFragment extends Fragment {
                     bCode = model.getSD_BCode();
                     tCode = model.getSD_TCode();
                     clientSecret = model.getSD_ClientSecret();
-                    baseURL = model.getSD_BaseURL();
+                    appToken = model.getSD_AppToken();
+                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
                     buildingId = model.getSD_BU_ID();
                     tenantId = model.getSD_TE_ID();
 
@@ -341,29 +305,47 @@ public class A_AccessFragment extends Fragment {
                     CS_Entity_LoginDetails loginModel = new CS_Action_LoginDetails(context).getLoginDetails();
                     loginId = loginModel.getLD_SourceId();
 
+                    // todo - test photo is there in assert, remove after testing
+
+                    InputStream ims = context.getAssets().open("test_image.jpg");
+                    Drawable d = Drawable.createFromStream(ims, null);
+
+                    Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//                    byte[] bitmapdata = stream.toByteArray();
+
+                    ims.close();
+
+                    File imageFile = bitmapToFile(bitmap, "image.jpg");
+
                     JSONObject jObject = new JSONObject();
-                    jObject.put("Id", "0");
                     jObject.put("HostId", loginId);
                     jObject.put("Logged_BU_Id", buildingId);
                     jObject.put("Logged_TE_Id", tenantId);
                     jObject.put("Flag", "Fetch_Access_Data");
 
-                    RequestBody body = RequestBody.create(mediaType, String.valueOf(jObject));
+                    RequestBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("Id", "70")
+                            .addFormDataPart("Json_Data", String.valueOf(jObject))
+                            .addFormDataPart("App_Token", appToken)
+//                            .addFormDataPart("App_Token","1161")
+//                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpeg"), imageFile))
+//                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpg"), imageFile))
+                            .build();
 
                     Request request = new Request.Builder()
-                            .url(CS_ED.Decrypt(baseURL) + CS_API_URL.validateBuilding)
+                            .url(baseURL + CS_API_URL.Access)
                             .method("POST", body)
                             .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                            .addHeader("Authorization", "Bearer " + "")
+                            .addHeader("Authorization", "Bearer " + appToken)
                             .build();
+
                     Response response = client.newCall(request).execute();
                     if (response.isSuccessful()) {
                         if (response != null) {
                             String responseBody = response.body().string();
-
-                            // fixme - till api is not ready
-                            responseBody = "[{\"Result\":1,\"Msg\":\"Found access data.\",\"Source_Id\":63,\"EmployeeName\":\"Unir A host\",\"EmployeeNo\":\"1616416161\",\"TenantName\":\"A Unit\",\"VehicleNo\":\"\"}]";
-
                             if (!responseBody.equals("")) {
 
                                 String jsonData = responseBody;
@@ -377,13 +359,13 @@ public class A_AccessFragment extends Fragment {
                                     sourceId = jsonObject.getString("Source_Id");
                                     employeeName = jsonObject.getString("EmployeeName");
                                     employeeNo = jsonObject.getString("EmployeeNo");
-                                    tenantName = jsonObject.getString("TenantName");
-                                    vehicleNo = jsonObject.getString("VehicleNo");
+                                    employeeUnit = jsonObject.getString("TenantName");
+                                    employeeVehicleNo = jsonObject.getString("VehicleNo");
+                                    employeeNo_Encrypted = jsonObject.getString("EmployeeNo_Encrypted");
                                 }
                             }
                         }
                     }
-
                 }
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
@@ -396,8 +378,8 @@ public class A_AccessFragment extends Fragment {
                     new CS_Action_AccessDetails(context).deleteAccessDetails();
 
                     // Insert access data
-                    CS_Entity_AccessDetails model = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(tenantName), CS_ED.Encrypt(vehicleNo), new CS_Utility(context).getDateTime(), "");
-                    dataInserted = new CS_Action_AccessDetails(context).insertAccessDetails(model);
+                    CS_Entity_AccessDetails model = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(employeeUnit), CS_ED.Encrypt(employeeVehicleNo), new CS_Utility(context).getDateTime(), "", employeeNo_Encrypted);
+                    new CS_Action_AccessDetails(context).insertAccessDetails(model);
 
                 }
             } catch (Exception e) {
@@ -414,14 +396,14 @@ public class A_AccessFragment extends Fragment {
                 progressdialog.dismiss();
 
                 if (result.equals("1")) {
+                    new FetchAccessDetailsFromSQLite().execute();
 
-                    if (dataInserted) {
-//                        nextPage(Home.class);
-//                        new CS_Utility(context).showToast(getResources().getString(R.string.login_success), 1);
 
-                    } else {
-                        showAlertDialog(getResources().getString(R.string.access_data_save_error));
-                    }
+//                    if (dataInserted) {
+//
+//                    } else {
+//                        showAlertDialog(getResources().getString(R.string.access_data_save_error));
+//                    }
 
                 } else if (loginId.equals("")) {
                     showAlertDialog("Login id is blank.");
@@ -430,7 +412,7 @@ public class A_AccessFragment extends Fragment {
                     showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
 
                 } else {
-                    showAlertDialog(msg.equals("") ? "Error" : CS_Constant.serverConnectionErrorMessage);
+                    showAlertDialog(!msg.equals("") ? msg : CS_Constant.serverConnectionErrorMessage);
                 }
 
             } catch (Exception e) {
@@ -440,10 +422,27 @@ public class A_AccessFragment extends Fragment {
         }
     }
 
+    // Example for Bitmap:
+    private File bitmapToFile(Bitmap bitmap, String fileName) throws IOException {
+        File file = new File(context.getCacheDir(), fileName);
+        file.createNewFile();
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos); // Adjust quality as needed
+        byte[] bitmapData = bos.toByteArray();
+
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(bitmapData);
+        fos.flush();
+        fos.close();
+
+        return file;
+    }
+
     public void showAlertDialog(String message) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Invalid");
+            builder.setTitle("Error");
             builder.setIcon(R.drawable.ic_error);
             builder.setMessage(message);
             builder.setCancelable(false);
@@ -456,6 +455,76 @@ public class A_AccessFragment extends Fragment {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+        }
+    }
+
+    public class FetchAccessDetailsFromSQLite extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_AccessDetails model = new CS_Action_AccessDetails(context).getAccessDetails();
+                if (model != null) {
+                    sourceId = model.getAD_SourceId();
+                    employeeNo = CS_ED.Decrypt(model.getAD_E_No());
+                    employeeName = CS_ED.Decrypt(model.getAD_E_Name());
+                    employeeUnit = CS_ED.Decrypt(model.getAD_E_Unit());
+                    employeeVehicleNo = CS_ED.Decrypt(model.getAD_E_VehicleNo());
+                    employeeNo_Encrypted = model.getAD_E_No_Encrypted();
+
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                generateQRCode();
+                setAccessDetails();
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            }
+        }
+    }
+
+    private void setAccessDetails() {
+        try {
+            viewBinding.tvHostEmployeeNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeNo);
+            viewBinding.tvHostName.setText(employeeName);
+            viewBinding.tvHostVehicleNo.setText(employeeVehicleNo);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
+            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+        }
+    }
+
+    private void generateQRCode() {
+        try {
+            if (!employeeNo_Encrypted.isEmpty()) {
+                String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
+
+                String qrcodeValue = "<body><en>" + employeeNo_Encrypted + "</en><mct>" + CS_ED.Encrypt(currentDateTime) + "</mct></body>";
+                String qrcodeValueDecrypt = "<body><en>" + employeeNo_Encrypted + "</en><mct>" + currentDateTime + "</mct></body>";
+
+                barcodeEncoder = new BarcodeEncoder();
+                bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);
+                viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
+
+                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
+            }
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
