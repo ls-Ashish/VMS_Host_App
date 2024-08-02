@@ -64,4 +64,7 @@
     <!--    Scanning-->
     <color name="scanner_line">#00ceff</color>
 
+    <!--    Success-->
+    <color name="success">#06D001</color>
+
 </resources>

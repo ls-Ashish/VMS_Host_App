@@ -38,8 +38,7 @@ public class Home extends AppCompatActivity {
             bottomNavigationViewOnNavigationItemSelectedListener();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -58,8 +57,7 @@ public class Home extends AppCompatActivity {
 //                getSupportFragmentManager().popBackStack();
             }
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -69,12 +67,11 @@ public class Home extends AppCompatActivity {
 //            viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_home);
 //            nextFragment("Home");
 
-            viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_access);
+            viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_access); // fixme - current flow
             nextFragment("Access");
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -109,8 +106,7 @@ public class Home extends AppCompatActivity {
                         return false;
                     }
                 } catch (Exception e) {
-                    new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                    }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                    new CS_Utility(context).saveError(e);
                 }
 
                 return false;
@@ -165,26 +161,25 @@ public class Home extends AppCompatActivity {
                 fragment.setArguments(args);
 
                 getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .commit();
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .commit();
             } else {
                 new CS_Utility(context).showToast("Fragment is null", 0);
 
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
     public void showAppExitDialog() {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Exit");
+            builder.setTitle(getResources().getString(R.string.app_exit_caption));
             builder.setIcon(R.drawable.ic_exit);
-            builder.setMessage("Are you sure want to exit ?");
+            builder.setMessage(getResources().getString(R.string.app_exit_message));
             builder.setCancelable(false);
             builder.setPositiveButton("Yes".toUpperCase(), new DialogInterface.OnClickListener() {
                 @Override
@@ -204,8 +199,7 @@ public class Home extends AppCompatActivity {
             alertDialog.show();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

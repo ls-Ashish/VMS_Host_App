@@ -27,13 +27,14 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp">
+                    android:layout_margin="5dp">
 
                     <ImageView
                         android:layout_weight="1"
                         android:id="@+id/iv_BackArrow"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:padding="5dp"/>
 
                     <TextView
                         android:layout_weight="8"
@@ -50,6 +51,7 @@
                         android:foregroundGravity="right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_back_arrow"/>
 
                 </TableRow>
@@ -100,7 +102,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="@string/lor_vms"
-                                        android:textSize="@dimen/text_large_36"
+                                        android:textSize="@dimen/text_size_large_36"
                                         android:textColor="@color/tv_text_color"
                                         android:gravity="center"
                                         android:textStyle="bold"

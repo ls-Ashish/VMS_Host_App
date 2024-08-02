@@ -4,34 +4,29 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.leegosolutions.vms_host_app.database.CS_SQLiteTable;
+import com.leegosolutions.vms_host_app.database.table.CS_SQLiteTable;
 
 @Entity(tableName = CS_SQLiteTable.VMS_LogIn_Details)
 public class CS_Entity_LoginDetails {
 
     @PrimaryKey(autoGenerate = true)
-    private int LD_Auto_Id;
-
-    private String LD_SourceId;
-
-    private String LD_Email;
-
-    private String LD_Password;
-
-    private String LD_UserType;
-
-    private String LD_UserName;
-
+    private int LD_Auto_Id = 0;
+    private String LD_SourceId = "";
+    private String LD_Email = "";
+    private String LD_Password = "";
+    private String LD_UserType = "";
+    private String LD_UserName = "";
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] LD_UserPhoto;
+    private byte[] LD_UserPhoto = null;
+    private int LD_IsLogin = 0;
+    private String LD_CreationDate = "";
+    private String LD_UpdationDate = "";
+    private String LD_CountryCode = "";
+    private String LD_MobileNo = "";
 
-    private int LD_IsLogin;
+    public CS_Entity_LoginDetails() {}
 
-    private String LD_CreationDate;
-
-    private String LD_UpdationDate;
-
-    public CS_Entity_LoginDetails(String LD_SourceId, String LD_Email, String LD_Password, String LD_UserType, String LD_UserName, byte[] LD_UserPhoto, int LD_IsLogin, String LD_CreationDate, String LD_UpdationDate) {
+    public CS_Entity_LoginDetails(String LD_SourceId, String LD_Email, String LD_Password, String LD_UserType, String LD_UserName, byte[] LD_UserPhoto, int LD_IsLogin, String LD_CreationDate, String LD_UpdationDate, String LD_CountryCode, String LD_MobileNo) {
         this.LD_SourceId = LD_SourceId;
         this.LD_Email = LD_Email;
         this.LD_Password = LD_Password;
@@ -41,6 +36,8 @@ public class CS_Entity_LoginDetails {
         this.LD_IsLogin = LD_IsLogin;
         this.LD_CreationDate = LD_CreationDate;
         this.LD_UpdationDate = LD_UpdationDate;
+        this.LD_CountryCode = LD_CountryCode;
+        this.LD_MobileNo = LD_MobileNo;
     }
 
     public int getLD_Auto_Id() {
@@ -121,5 +118,21 @@ public class CS_Entity_LoginDetails {
 
     public void setLD_UpdationDate(String LD_UpdationDate) {
         this.LD_UpdationDate = LD_UpdationDate;
+    }
+
+    public String getLD_CountryCode() {
+        return LD_CountryCode;
+    }
+
+    public void setLD_CountryCode(String LD_CountryCode) {
+        this.LD_CountryCode = LD_CountryCode;
+    }
+
+    public String getLD_MobileNo() {
+        return LD_MobileNo;
+    }
+
+    public void setLD_MobileNo(String LD_MobileNo) {
+        this.LD_MobileNo = LD_MobileNo;
     }
 }

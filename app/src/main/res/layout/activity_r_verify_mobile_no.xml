@@ -27,13 +27,14 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp">
+                    android:layout_margin="5dp">
 
                     <ImageView
                         android:layout_weight="1"
                         android:id="@+id/iv_BackArrow"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_back_arrow"/>
 
                     <TextView
@@ -51,6 +52,7 @@
                         android:foregroundGravity="right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_back_arrow"/>
 
                 </TableRow>
@@ -70,24 +72,24 @@
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:layout_above="@+id/tr_SaveDelete"
-                android:layout_marginBottom="50dp">
+                android:fillViewport="true">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <LinearLayout
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/registration_verify_mobile_no_page_instruction"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_text_color_grey"
                             android:padding="10dp"
                             android:fontFamily="@font/inter_regular"/>
@@ -96,7 +98,7 @@
                             android:id="@+id/et_Name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_size_normal"
                             android:background="@drawable/rectangle_shape"
                             android:backgroundTint="@color/et_background_color"
                             android:textColorHint="@color/et_hint_text_color"
@@ -105,13 +107,13 @@
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp">
+                            android:layout_marginTop="10dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/registration_verify_mobile_no_page_expired_text"
-                                android:textSize="@dimen/text_small"
+                                android:textSize="@dimen/text_size_normal"
                                 android:textColor="@color/tv_text_color_grey"
                                 android:padding="10dp"
                                 android:fontFamily="@font/inter_regular"/>
@@ -121,7 +123,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/registration_verify_mobile_no_page_resend_text"
-                                android:textSize="@dimen/text_small"
+                                android:textSize="@dimen/text_size_normal"
                                 android:padding="10dp"
                                 android:textColor="@color/colorPrimary"
                                 android:fontFamily="@font/inter_regular"/>
@@ -130,29 +132,27 @@
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="50dp">
+
+                        <Button
+                            android:id="@+id/btn_Next"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_verify_mobile_no_page_next"
+                            android:textColor="@color/btn_background_text_color"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/btn_background"
+                            android:fontFamily="@font/inter_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </ScrollView>
-
-            <TableRow
-                android:id="@+id/tr_SaveDelete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp">
-
-                <Button
-                    android:id="@+id/btn_Next"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/registration_verify_mobile_no_page_next"
-                    android:textColor="@color/btn_background_text_color"
-                    android:background="@drawable/rectangle_shape"
-                    android:backgroundTint="@color/btn_background"
-                    android:fontFamily="@font/inter_regular"/>
-
-            </TableRow>
 
         </RelativeLayout>
 

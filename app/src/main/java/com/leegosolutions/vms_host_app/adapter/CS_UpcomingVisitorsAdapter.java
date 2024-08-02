@@ -29,8 +29,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
             this.listener = listener;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -43,8 +42,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
             view = inflater.inflate(R.layout.single_row_home_upcoming_visitors, parent, false);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return new ViewHolder(view);
     }
@@ -66,8 +64,10 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
                 holder.tv_MobileNo.setText(model.getMobileNo());
                 holder.tv_StartDate.setText(model.getStartDate());
                 holder.tv_EndDate.setText(model.getEndDate());
-                holder.tv_Overnights.setText(model.getOvernights());
                 holder.tv_Status.setText(model.getStatus());
+
+                String overNight = model.getOvernights();
+                holder.tv_Overnights.setText(overNight.equals("0") ? "-" : overNight);
 
             } else {
                 holder.ll_Content.setVisibility(View.INVISIBLE);
@@ -79,18 +79,16 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
                 @Override
                 public void onClick(View v) {
                     try {
-                        listener.onItemClick(model);
+                        listener.onViewPager2TabItemClick(model);
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
                 }
             });
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -120,11 +118,11 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
 
             } catch (Exception ignored) {
                 // todo - check to save
-          }
+            }
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(CS_VisitorsModel model);
+        void onViewPager2TabItemClick(CS_VisitorsModel model);
     }
 }

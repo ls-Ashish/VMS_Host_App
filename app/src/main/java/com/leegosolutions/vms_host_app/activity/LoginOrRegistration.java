@@ -35,8 +35,7 @@ public class LoginOrRegistration extends AppCompatActivity {
 //            displayBiometricButton();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -46,8 +45,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                 nextPage(R_Registration.class);
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         });
     }
@@ -58,8 +56,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                 nextPage(Login.class);
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         });
     }
@@ -79,8 +76,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         });
     }
@@ -92,8 +88,7 @@ public class LoginOrRegistration extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -109,8 +104,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                         break;
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
                 case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
                     try {
@@ -119,8 +113,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                         break;
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
                 case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
                     try {
@@ -129,8 +122,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                         break;
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
                 case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
                     try {
@@ -139,14 +131,12 @@ public class LoginOrRegistration extends AppCompatActivity {
                         break;
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return result;
     }
@@ -162,8 +152,7 @@ public class LoginOrRegistration extends AppCompatActivity {
                     .build();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return promptInfo;
     }
@@ -195,8 +184,7 @@ public class LoginOrRegistration extends AppCompatActivity {
             );
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return biometricPrompt;
     }
@@ -206,8 +194,7 @@ public class LoginOrRegistration extends AppCompatActivity {
             new CS_Utility(context).showToast("Biometric Success", 0);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

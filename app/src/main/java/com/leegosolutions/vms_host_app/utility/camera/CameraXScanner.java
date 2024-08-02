@@ -78,8 +78,7 @@ public class CameraXScanner extends AppCompatActivity {
 //            viewBinding.animationView.playAnimation();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -90,22 +89,20 @@ public class CameraXScanner extends AppCompatActivity {
             startCamera();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
     public void startCamera() {
         try {
-            if(ContextCompat.checkSelfPermission(this, CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
                 setupCamera();
             } else {
                 getPermissions();
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -114,8 +111,7 @@ public class CameraXScanner extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{CAMERA_PERMISSION}, PERMISSION_CODE);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -136,8 +132,7 @@ public class CameraXScanner extends AppCompatActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -159,8 +154,7 @@ public class CameraXScanner extends AppCompatActivity {
             }, ContextCompat.getMainExecutor(this));
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -173,8 +167,7 @@ public class CameraXScanner extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -202,8 +195,7 @@ public class CameraXScanner extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -233,8 +225,7 @@ public class CameraXScanner extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -244,8 +235,7 @@ public class CameraXScanner extends AppCompatActivity {
             result = viewBinding.previewView.getDisplay().getRotation();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return result;
     }
@@ -268,8 +258,7 @@ public class CameraXScanner extends AppCompatActivity {
                     .addOnCompleteListener(task -> image.close());
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -282,8 +271,7 @@ public class CameraXScanner extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -295,8 +283,7 @@ public class CameraXScanner extends AppCompatActivity {
             finish();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 }

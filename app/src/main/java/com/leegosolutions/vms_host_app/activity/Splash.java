@@ -7,10 +7,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.home.Home;
@@ -21,6 +23,7 @@ import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
+import com.leegosolutions.vms_host_app.databinding.ActivityHomeBinding;
 import com.leegosolutions.vms_host_app.utility.CS_Connection;
 import com.leegosolutions.vms_host_app.utility.CS_Constant;
 import com.leegosolutions.vms_host_app.utility.CS_ED;
@@ -40,7 +43,9 @@ public class Splash extends AppCompatActivity {
 
     private Context context = Splash.this;
     private RelativeLayout rl_main;
-    private String bCode="", tCode="", clientSecret="", appToken="", baseURL="";
+    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "";
+    private ImageView iv_Logo;
+    private byte[] logo = null;
 
 
     @Override
@@ -49,6 +54,7 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.splash);
         try {
             rl_main = findViewById(R.id.rl_main);
+            iv_Logo = findViewById(R.id.iv_Logo);
 
             // Switch to night mode
 //            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -63,16 +69,10 @@ public class Splash extends AppCompatActivity {
 
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-//            fetchServerDetails(); // fixme
-            nextPageWithDelay(Home.class); // todo - testing employee access
-
-//            nextPage(LoginOrRegistration.class); //fixme
-//            nextPage(Home.class);
-//            nextPage(CameraXScanner.class);
+            fetchServerDetails();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -81,8 +81,7 @@ public class Splash extends AppCompatActivity {
             new FetchServerDetails().execute();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -96,16 +95,14 @@ public class Splash extends AppCompatActivity {
                                 checkServerConnection();
 
                             } catch (Exception e) {
-                                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                                new CS_Utility(context).saveError(e);
                             }
                         }
                     });
             snackbar.show();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -114,16 +111,20 @@ public class Splash extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(context, aClass);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    try {
+                        Intent intent = new Intent(context, aClass);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                    } catch (Exception e) {
+                        new CS_Utility(context).saveError(e);
+                    }
                 }
             }, CS_Constant.splashPageDelay);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -135,8 +136,7 @@ public class Splash extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -146,19 +146,17 @@ public class Splash extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
-
                 if (model != null) {
+                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
                     bCode = model.getSD_BCode();
                     tCode = model.getSD_TCode();
                     clientSecret = model.getSD_ClientSecret();
                     appToken = model.getSD_AppToken();
-                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
-
+                    logo = model.getSD_Logo();
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             return null;
         }
@@ -167,7 +165,10 @@ public class Splash extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
             try {
-                if (!bCode.equals("") && !tCode.equals("") && !tCode.equals("") && !baseURL.equals("")) {
+                // Logo
+                showPropertyUnitLogo();
+
+                if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
                     checkServerConnection();
 
                 } else {
@@ -175,8 +176,7 @@ public class Splash extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
     }
@@ -191,8 +191,7 @@ public class Splash extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -212,13 +211,12 @@ public class Splash extends AppCompatActivity {
                 progressdialog.show();
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
 
         @Override
-        protected Void doInBackground(Void ... voids) {
+        protected Void doInBackground(Void... voids) {
             try {
                 OkHttpClient client = new CS_Utility(context).getOkHttpClient();
 
@@ -230,9 +228,9 @@ public class Splash extends AppCompatActivity {
 
                 RequestBody body = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                        .addFormDataPart("Id","0")
-                        .addFormDataPart("Json_Data",String.valueOf(jObject))
-                        .addFormDataPart("App_Token",appToken)
+                        .addFormDataPart("Id", "0")
+                        .addFormDataPart("Json_Data", String.valueOf(jObject))
+                        .addFormDataPart("App_Token", appToken)
                         .build();
 
                 Request request = new Request.Builder()
@@ -259,8 +257,7 @@ public class Splash extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             try {
                 // If connected - Check login status
@@ -269,8 +266,7 @@ public class Splash extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             return null;
         }
@@ -294,19 +290,30 @@ public class Splash extends AppCompatActivity {
                     new CS_Utility(context).showToast(msg.equals("") ? "Error" : CS_Constant.serverConnectionErrorMessage, 0);
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
     }
 
-    private void checkIsLogin() {
+    private void showPropertyUnitLogo() {
         try {
-
+            if (logo != null) {
+                // Building / Tenant logo
+                Glide.with(context)
+                        .asBitmap()
+                        .load(logo)
+                        .into(iv_Logo);
+            } else {
+                // Default
+                Glide.with(context)
+                        .asBitmap()
+                        .load(R.drawable.ic_app_logo)
+                        .placeholder(R.drawable.ic_app_logo)
+                        .into(iv_Logo);
+            }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

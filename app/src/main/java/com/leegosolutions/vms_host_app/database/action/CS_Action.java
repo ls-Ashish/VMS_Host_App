@@ -1,10 +1,8 @@
 package com.leegosolutions.vms_host_app.database.action;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.leegosolutions.vms_host_app.database.CS_HostDatabase;
+import com.leegosolutions.vms_host_app.database.room.CS_HostDatabase;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
 
 public class CS_Action {
@@ -18,9 +16,7 @@ public class CS_Action {
             database = CS_HostDatabase.getInstance(context);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-        }
+            new CS_Utility(context).saveError(e);        }
     }
 
     public String getDatabaseVersion() {
@@ -29,9 +25,7 @@ public class CS_Action {
             version = String.valueOf(database.getOpenHelper().getReadableDatabase().getVersion());
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-        }
+            new CS_Utility(context).saveError(e);        }
         return version;
     }
 

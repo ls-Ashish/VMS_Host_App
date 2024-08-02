@@ -26,8 +26,7 @@ public class R_Registration extends AppCompatActivity {
             on_Click_Button_Next();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -37,8 +36,7 @@ public class R_Registration extends AppCompatActivity {
                 nextPage(R_Verify_MobileNo.class);
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         });
     }
@@ -50,8 +48,7 @@ public class R_Registration extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

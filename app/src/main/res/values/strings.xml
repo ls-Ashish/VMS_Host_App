@@ -1,8 +1,13 @@
 <resources>
-    <string name="app_name">VMS_Host_App</string>
+    <string name="app_name">VMS</string>
 
     <!--    Global-->
     <string name="no_connection">No Internet Connection</string>
+    <string name="email_settings_not_available">Email settings not available.</string>
+    <string name="sms_settings_not_available">SMS settings not available.</string>
+    <string name="camera_permission_denied">Permission denied, require camera permission to scan qr code.</string>
+    <string name="app_exit_caption">Exit</string>
+    <string name="app_exit_message">Are you sure want to exit ?</string>
 
     <!--    Splash Page-->
     <string name="splash_powered_by">Powered by</string>
@@ -17,10 +22,10 @@
     <string name="scan_server_details_scan_canceled">Canceled</string>
     <string name="scan_server_details_connect_success">Connected to server successfully</string>
     <string name="scan_server_details_data_save_error">Unable to save server details</string>
-    <string name="scan_server_details_invalid_server_details">Invalid Server details</string>
+    <string name="scan_server_details_invalid_server_details">Invalid server details</string>
     <string name="scan_server_details_app_token_not_found">App token not found</string>
 
-c    <!--    LoginOrRegistration Page-->
+    c    <!--    LoginOrRegistration Page-->
     <string name="lor_vms">VMS</string>
     <string name="lor_button_new_registration">New Registration</string>
     <string name="lor_button_login">Login</string>
@@ -64,7 +69,7 @@ c    <!--    LoginOrRegistration Page-->
     <string name="login_success">Login success</string>
     <string name="login_data_save_error">Unable to save login details</string>
 
-    <string name="login_email">Email</string>
+    <string name="login_email">EMAIL</string>
     <string name="login_email_text">Email</string>
     <string name="login_email_text_hint">E.g. johnsmith@gmail.com</string>
     <string name="login_email_password">PASSWORD</string>
@@ -74,13 +79,42 @@ c    <!--    LoginOrRegistration Page-->
     <string name="login_email_empty_email">Enter email</string>
     <string name="login_email_empty_password">Enter password</string>
 
-    <string name="login_mobile_no">Mobile No.</string>
+    <string name="login_mobile_no">MOBILE NO.</string>
     <string name="login_mobile_no_text">MOBILE NO.</string>
     <string name="login_mobile_no_text_hint">98927673</string>
-    <string name="login_mobile_no_otp">OTP/ VERIFICATION CODE</string>
+    <string name="login_mobile_no_password">PASSWORD</string>
     <string name="login_mobile_no_otp_expired">Expired in 30 secs</string>
     <string name="login_mobile_no_otp_resend">Resend New OTP</string>
-    <string name="login_mobile_next">Next</string>
+    <string name="login_mobile_no_next">Next</string>
+    <string name="login_mobile_no_country_code_empty">Select country code</string>
+    <string name="login_mobile_no_empty">Enter mobile no.</string>
+    <string name="login_mobile_no_password_empty">Enter password</string>
+
+    <!--    Login Email Verify-->
+    <string name="login_email_verify_caption">Verify Your Email Address</string>
+    <string name="login_email_verify_info">Verify Your Email Address</string>
+    <string name="login_email_verify_verification_code">VERIFICATION CODE</string>
+    <string name="login_email_verify_verification_code_expiry_default">Expired in 0 minutes</string>
+    <string name="login_email_verify_verification_code_expiry_text_1">Expired in</string>
+    <string name="login_email_verify_verification_code_expiry_text_2">minutes</string>
+    <string name="login_email_verify_verification_code_resend">Resend new verification code</string>
+    <string name="login_email_verify_button_submit">Submit</string>
+    <string name="login_email_verification_code_subject">Login Verification Code</string>
+    <string name="login_email_verification_code_send">Email sent</string>
+
+    <string name="login_verification_code_text_1">Your login verification code is</string>
+    <string name="login_verification_code_text_2">and will expire after</string>
+    <string name="login_verification_code_text_3">minutes.</string>
+    <string name="login_verification_code_invalid">Invalid verification code</string>
+    <string name="login_verification_code_enter">Enter verification code</string>
+    <string name="login_verification_code_expired">Verification code expired</string>
+
+    <string name="login_retry_text_1">Try again after</string>
+    <string name="login_retry_text_2">minutes.</string>
+
+    <!--    Login Mobile No Verify-->
+    <string name="login_mobile_no_verify_caption">Verify Your Mobile No.</string>
+    <string name="login_mobile_verification_code_send">SMS sent</string>
 
     <!--    Home-->
     <string name="home_bottom_tab_1">Home</string>
@@ -89,7 +123,9 @@ c    <!--    LoginOrRegistration Page-->
     <string name="home_bottom_tab_4">Notifications</string>
     <string name="home_bottom_tab_5">Settings</string>
 
-    <string name="home_welcome_text">Good Morning,</string>
+    <string name="home_welcome_text_gm">Good Morning,</string>
+    <string name="home_welcome_text_ga">Good Afternoon,</string>
+    <string name="home_welcome_text_ge">Good Evening,</string>
     <string name="home_username">John</string>
     <string name="home_quick_access">Quick Access</string>
     <string name="home_my_access">My Access</string>
@@ -106,6 +142,7 @@ c    <!--    LoginOrRegistration Page-->
     <string name="home_visitor_end_date">Expired on:</string>
     <string name="home_visitor_overnights">Overnight(s):</string>
     <string name="home_visitor_status">Status:</string>
+    <string name="home_visitor_login_id_blank">Employee id is empty</string>
 
     <!--    Visitors-->
     <string name="visitor_page_caption">Visitors</string>
@@ -125,31 +162,92 @@ c    <!--    LoginOrRegistration Page-->
 
     <!--    Visitors Details-->
     <string name="visitor_details_page_caption">A15-403</string>
-    <string name="visitor_details_unit_name">Unit Name:</string>
-    <string name="visitor_details_user_name">User Name:</string>
-    <string name="visitor_details_invitation_title">Invitation Title:</string>
-    <string name="visitor_details_visitor_name">Visitor Name:</string>
-    <string name="visitor_details_company_name">Company Name:</string>
-    <string name="visitor_details_visit_dates">Visit Dates:</string>
-    <string name="visitor_details_valid_until">Valid Until:</string>
-    <string name="visitor_details_overnight">Overnight:</string>
-    <string name="visitor_details_entry_type">Entry Type:</string>
-    <string name="visitor_details_vehicle_no">Vehicle Number:</string>
-    <string name="visitor_details_remarks">Remarks:</string>
+    <string name="visitor_details_unit_name">Unit Name</string>
+    <string name="visitor_details_user_name">User Name</string>
+    <string name="visitor_details_invitation_title">Invitation Title</string>
+    <string name="visitor_details_visitor_name">Visitor Name</string>
+    <string name="visitor_details_company_name">Company Name</string>
+    <string name="visitor_details_visit_dates">Visit Dates</string>
+    <string name="visitor_details_valid_until">Valid Until</string>
+    <string name="visitor_details_overnight">Overnight</string>
+    <string name="visitor_details_entry_type">Entry Type</string>
+    <string name="visitor_details_vehicle_no">Vehicle No.</string>
+    <string name="visitor_details_remarks">Remarks</string>
 
-    <string name="visitor_details_created_by">Created by:</string>
-    <string name="visitor_details_created_at">Created at:</string>
-    <string name="visitor_details_last_updated_by">Last Updated by:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="visitor_details_created_by">Created by</string>
+    <string name="visitor_details_created_at">Created at</string>
+    <string name="visitor_details_last_updated_by">Last Updated by</string>
 
-<!--    Access-->
+    <!--    Access-->
     <string name="access_page_caption">Access</string>
-    <string name="access_employee_accss">Employee Access</string>
-    <string name="access_page_instruction">Scan/Present this QR code at the Gate.</string>
+    <string name="access_employee_access">Employee Access</string>
+    <string name="access_page_instruction">Scan/Present this QR code at the gate.</string>
     <string name="access_host_employee_no">Employee No. :</string>
     <string name="access_host_visitor_name">Visitor Name:</string>
     <string name="access_host_vehicle_no">Vehicle Number:</string>
-    <string name="access_data_save_error">Unable to save access details</string>
+    <string name="access_data_save_error">Unable to save or update access details</string>
+    <string name="access_login_id_blank">Employee id is empty</string>
+
+
+    <!--    Settings-->
+    <string name="settings_page_caption">Settings</string>
+    <string name="settings_log_out">Log Out</string>
+    <string name="settings_app_version">App version </string>
+    <string name="settings_developed_by">Developed by Leego Solutions</string>
+    <string name="settings_logout_error">Unable to log out.</string>
+    <string name="settings_logout_success">Logout successfully</string>
+    <string name="settings_account_preference">ACCOUNT PREFERENCE</string>
+    <string name="settings_update_contact_details">Update Contact Details</string>
+    <string name="settings_update_contact_details_details">Update your details and contact</string>
+    <string name="settings_security">SECURITY</string>
+    <string name="settings_change_password">Change Password</string>
+    <string name="settings_change_password_details">Change your password regularly</string>
+    <string name="settings_server">SERVER</string>
+    <string name="settings_server_details">Server</string>
+    <string name="settings_server_details_info">Server Details</string>
+
+    <!--    Server Details-->
+    <string name="server_page_caption">Server Details</string>
+    <string name="server_name">Property Name</string>
+    <string name="server_id">Property ID</string>
+    <string name="server_unit_name">Unit Name</string>
+    <string name="server_unit_id">Unit ID</string>
+    <string name="server_country">Country</string>
+    <string name="server_address_line_1">Address Line 1</string>
+    <string name="server_address_line_2">Address Line 2</string>
+
+<!--    Update Mobile No-->
+    <string name="update_mobile_no_page_caption">Update Contact Details</string>
+    <string name="update_mobile_no_name">Name</string>
+    <string name="update_mobile_no_name_hint">John Smith</string>
+    <string name="update_mobile_no_mobile_no">MOBILE NO.</string>
+    <string name="update_mobile_no_mobile_no_hint">98927673</string>
+    <string name="update_mobile_no_email">EMAIL</string>
+    <string name="update_mobile_no_email_hint">E.g. johnsmith@gmail.com</string>
+    <string name="update_mobile_no_info">To proceed, we’ll send a verification code to these mobile no. and email.</string>
+    <string name="update_mobile_no_company">REGISTERED COMPANY NAME</string>
+    <string name="update_mobile_no_company_hint">HiCOMM Pte Ltd</string>
+    <string name="update_mobile_no_btn_update">Update</string>
+    <string name="update_mobile_no_error_country_code_blank_update">Select country code</string>
+    <string name="update_mobile_no_error_mobile_no_blank">Enter mobile no.</string>
+    <string name="update_mobile_no_change_success">Mobile no. changed successfully.</string>
+    <string name="update_mobile_save_error">Unable to save or update mobile no.</string>
+    <string name="update_mobile_id_empty">Employee id is empty</string>
+
+    <!--    Change Password-->
+    <string name="change_password_page_caption">Change Password</string>
+    <string name="change_password_enter_old_password">Enter old passwords</string>
+    <string name="change_password_old_password_did_not_match">Password not match</string>
+    <string name="change_password_enter_new_password">Enter new passwords</string>
+    <string name="change_password_invalid_new_password">Invalid new passwords</string>
+    <string name="change_password_new_old_password_same">New passwords same as old password</string>
+    <string name="change_password_info">At least 12 characters long but 14 or more is better. A combination of uppercase letters, lowercase letters, numbers, and special characters.\nSpecial characters are</string>
+    <string name="change_password_confirm_password">Confirm new passwords</string>
+    <string name="change_password_password_confirm">Enter confirm passwords</string>
+    <string name="change_password_password_not_match">Password not match</string>
+    <string name="change_password_update">Update</string>
+    <string name="change_password_save_error">Unable to save or update new password</string>
+    <string name="change_password_id_empty">Employee id is empty</string>
+    <string name="change_password_success">Password changed successfully.</string>
 
 </resources>

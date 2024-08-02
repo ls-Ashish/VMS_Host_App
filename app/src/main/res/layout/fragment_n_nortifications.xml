@@ -6,7 +6,6 @@
     android:background="@color/page_background_2"
     tools:context=".activity.notifications.N_NotificationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -30,8 +30,7 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
             this.listener = listener;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -46,8 +45,7 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
             notifyDataSetChanged();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -59,8 +57,7 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_visitors, parent, false);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return new ViewHolder(view);
     }
@@ -98,15 +95,13 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
                         listener.onItemClick(model);
 
                     } catch (Exception e) {
-                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                        new CS_Utility(context).saveError(e);
                     }
                 }
             });
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -136,7 +131,7 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
 
             } catch (Exception ignored) {
                 // todo - check to save
-          }
+            }
         }
     }
 

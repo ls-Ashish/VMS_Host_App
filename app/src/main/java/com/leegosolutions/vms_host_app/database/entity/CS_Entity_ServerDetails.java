@@ -4,44 +4,35 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.leegosolutions.vms_host_app.database.CS_SQLiteTable;
+import com.leegosolutions.vms_host_app.database.table.CS_SQLiteTable;
 
 @Entity(tableName = CS_SQLiteTable.VMS_Server_Details)
 public class CS_Entity_ServerDetails {
 
     @PrimaryKey(autoGenerate = true)
-    private int SD_Auto_Id;
-
-    private String SD_BaseURL;
-
-    private String SD_BU_ID;
-
-    private String SD_TE_ID;
-
-    private String SD_BCode;
-
-    private String SD_TCode;
-
-    private String SD_ClientSecret;
-
-    private String SD_BuildingName;
-
-    private String SD_TenantName;
-
+    private int SD_Auto_Id = 0;
+    private String SD_BaseURL = "";
+    private String SD_BU_ID = "";
+    private String SD_TE_ID = "";
+    private String SD_BCode = "";
+    private String SD_TCode = "";
+    private String SD_ClientSecret = "";
+    private String SD_BuildingName = "";
+    private String SD_TenantName = "";
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] SD_Logo;
+    private byte[] SD_Logo = null;
+    private String SD_AppToken = "";
+    private String SD_ErrorPostingURL = "";
+    private String SD_CreationDate = "";
+    private String SD_UpdationDate = "";
+    private String SD_Status = "";
+    private String SD_Country = "";
+    private String SD_Address_Line_1 = "";
+    private String SD_Address_Line_2 = "";
 
-    private String SD_AppToken;
+    public CS_Entity_ServerDetails() {}
 
-    private String SD_ErrorPostingURL;
-
-    private String SD_CreationDate;
-
-    private String SD_UpdationDate;
-
-    private String SD_Status;
-
-    public CS_Entity_ServerDetails(String SD_BaseURL, String SD_BU_ID, String SD_TE_ID, String SD_BCode, String SD_TCode, String SD_ClientSecret, String SD_BuildingName, String SD_TenantName, byte[] SD_Logo, String SD_AppToken, String SD_ErrorPostingURL, String SD_CreationDate, String SD_UpdationDate, String SD_Status) {
+    public CS_Entity_ServerDetails(String SD_BaseURL, String SD_BU_ID, String SD_TE_ID, String SD_BCode, String SD_TCode, String SD_ClientSecret, String SD_BuildingName, String SD_TenantName, byte[] SD_Logo, String SD_AppToken, String SD_ErrorPostingURL, String SD_CreationDate, String SD_UpdationDate, String SD_Status, String SD_Country, String SD_Address_Line_1, String SD_Address_Line_2) {
         this.SD_BaseURL = SD_BaseURL;
         this.SD_BU_ID = SD_BU_ID;
         this.SD_TE_ID = SD_TE_ID;
@@ -56,6 +47,9 @@ public class CS_Entity_ServerDetails {
         this.SD_CreationDate = SD_CreationDate;
         this.SD_UpdationDate = SD_UpdationDate;
         this.SD_Status = SD_Status;
+        this.SD_Country = SD_Country;
+        this.SD_Address_Line_1 = SD_Address_Line_1;
+        this.SD_Address_Line_2 = SD_Address_Line_2;
     }
 
     public int getSD_Auto_Id() {
@@ -176,5 +170,29 @@ public class CS_Entity_ServerDetails {
 
     public void setSD_Status(String SD_Status) {
         this.SD_Status = SD_Status;
+    }
+
+    public String getSD_Country() {
+        return SD_Country;
+    }
+
+    public void setSD_Country(String SD_Country) {
+        this.SD_Country = SD_Country;
+    }
+
+    public String getSD_Address_Line_1() {
+        return SD_Address_Line_1;
+    }
+
+    public void setSD_Address_Line_1(String SD_Address_Line_1) {
+        this.SD_Address_Line_1 = SD_Address_Line_1;
+    }
+
+    public String getSD_Address_Line_2() {
+        return SD_Address_Line_2;
+    }
+
+    public void setSD_Address_Line_2(String SD_Address_Line_2) {
+        this.SD_Address_Line_2 = SD_Address_Line_2;
     }
 }

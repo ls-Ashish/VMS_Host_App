@@ -2,12 +2,9 @@ package com.leegosolutions.vms_host_app.database.action;
 
 import android.content.Context;
 
-import com.leegosolutions.vms_host_app.database.CS_HostDatabase;
+import com.leegosolutions.vms_host_app.database.room.CS_HostDatabase;
 import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_AccessDetails;
-import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
-import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
-import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
 
 public class CS_Action_AccessDetails {
@@ -23,8 +20,7 @@ public class CS_Action_AccessDetails {
             dao = database.accessDetails_Dao();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -33,31 +29,50 @@ public class CS_Action_AccessDetails {
         boolean result = false;
         try {
             long rowId = dao.insertAccessDetails(model);
-            result = rowId != -1;
+            result = rowId > 0;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return result;
     }
 
     // Delete
     public void deleteAccessDetails() {
-        dao.deleteAllAccessDetails();
+        try {
+            dao.deleteAllAccessDetails();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
     }
 
     // Fetch
     public CS_Entity_AccessDetails getAccessDetails() {
-        CS_Entity_AccessDetails model = null;
+        CS_Entity_AccessDetails model = new CS_Entity_AccessDetails();
         try {
-            model = dao.getAccessDetails();
+            CS_Entity_AccessDetails fetchedModel = dao.getAccessDetails();
+            if (fetchedModel != null) {
+                model = fetchedModel;
+            }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return model;
+    }
+
+    // Update
+    public boolean updateAccessDetails(String whereColumnId, String AD_E_No, String AD_E_Name, String AD_E_Unit, String AD_E_VehicleNo, String AD_E_UpdationDate, String AD_E_No_Encrypted, String AD_E_FloorUnit) {
+        boolean result = false;
+        try {
+            long rowId = dao.updateAccessDetails(whereColumnId, AD_E_No, AD_E_Name, AD_E_Unit, AD_E_VehicleNo, AD_E_UpdationDate, AD_E_No_Encrypted, AD_E_FloorUnit);
+            result = rowId > 0;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
     }
 
 }

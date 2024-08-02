@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:background="@color/page_background"
+    tools:context=".activity.settings.update.S_UpdateMobileNoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="16dp"
+                app:contentInsetEnd="16dp"
+                style="@style/Theme.MyCustomToolbar">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp">
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                    <TextView
+                        android:layout_weight="8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/update_mobile_no_page_caption"
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:layout_weight="1"
+                        android:id="@+id/iv_ScanServerDetails"
+                        android:foregroundGravity="right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_back_arrow"/>
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:gravity="center|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/parent_page_margin"
+            android:layout_below="@+id/appBar">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textAllCaps="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_name"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <EditText
+                            android:enabled="false"
+                            android:id="@+id/et_Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_normal"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"
+                            android:padding="10dp"
+                            android:textColorHint="@color/et_hint_text_color"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:textAllCaps="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_mobile_no"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.hbb20.CountryCodePicker
+                                android:id="@+id/countryCodePicker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_normal"
+                                app:ccp_showFlag="true"
+                                app:ccp_showNameCode="false"
+                                app:ccp_countryPreference="SG,MY,CN"
+                                app:ccp_defaultNameCode="SG"
+                                android:layout_marginRight="5dp"
+                                app:ccpDialog_showCloseIcon="true"
+                                android:background="@drawable/rectangle_shape"
+                                android:backgroundTint="@color/et_background_color"/>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_MobileNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:hintEnabled="false"
+                                app:hintAnimationEnabled="false"
+                                app:errorEnabled="true">
+
+                                <EditText
+                                    android:id="@+id/et_MobileNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:background="@drawable/rectangle_shape"
+                                    android:backgroundTint="@color/et_background_color"
+                                    android:padding="10dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:hint="@string/login_mobile_no_text_hint"
+                                    android:inputType="number"
+                                    android:digits="0123456789"
+                                    android:maxLength="12"
+                                    android:textColorHint="@color/et_hint_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </TableRow>
+
+                        <TextView
+                            android:textAllCaps="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_email"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <EditText
+                            android:enabled="false"
+                            android:id="@+id/et_Email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_normal"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"
+                            android:padding="10dp"
+                            android:textColorHint="@color/et_hint_text_color"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_info"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:textAllCaps="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_company"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:padding="10dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <EditText
+                            android:enabled="false"
+                            android:id="@+id/et_Company"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_normal"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/et_background_color"
+                            android:padding="10dp"
+                            android:textColorHint="@color/et_hint_text_color"
+                            android:fontFamily="@font/inter_regular"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="50dp">
+
+                        <Button
+                            android:id="@+id/btn_Update"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_btn_update"
+                            android:textColor="@color/btn_background_text_color"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/btn_background"
+                            android:fontFamily="@font/inter_regular"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

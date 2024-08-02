@@ -3,30 +3,26 @@ package com.leegosolutions.vms_host_app.database.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.leegosolutions.vms_host_app.database.CS_SQLiteTable;
+import com.leegosolutions.vms_host_app.database.table.CS_SQLiteTable;
 
 @Entity(tableName = CS_SQLiteTable.VMS_Access_Details)
 public class CS_Entity_AccessDetails {
 
     @PrimaryKey(autoGenerate = true)
-    private int AD_Auto_Id;
+    private int AD_Auto_Id = 0;
+    private String AD_SourceId = "";
+    private String AD_E_No = "";
+    private String AD_E_Name = "";
+    private String AD_E_Unit = "";
+    private String AD_E_VehicleNo = "";
+    private String AD_E_CreationDate = "";
+    private String AD_E_UpdationDate = "";
+    private String AD_E_No_Encrypted = "";
+    private String AD_E_FloorUnit = "";
 
-    private String AD_SourceId;
+    public CS_Entity_AccessDetails() {}
 
-    private String AD_E_No;
-
-    private String AD_E_Name;
-
-    private String AD_E_Unit;
-
-    private String AD_E_VehicleNo;
-
-    private String AD_E_CreationDate;
-
-    private String AD_E_UpdationDate;
-    private String AD_E_No_Encrypted;
-
-    public CS_Entity_AccessDetails(String AD_SourceId, String AD_E_No, String AD_E_Name, String AD_E_Unit, String AD_E_VehicleNo, String AD_E_CreationDate, String AD_E_UpdationDate, String AD_E_No_Encrypted) {
+    public CS_Entity_AccessDetails(String AD_SourceId, String AD_E_No, String AD_E_Name, String AD_E_Unit, String AD_E_VehicleNo, String AD_E_CreationDate, String AD_E_UpdationDate, String AD_E_No_Encrypted, String AD_E_FloorUnit) {
         this.AD_SourceId = AD_SourceId;
         this.AD_E_No = AD_E_No;
         this.AD_E_Name = AD_E_Name;
@@ -35,6 +31,7 @@ public class CS_Entity_AccessDetails {
         this.AD_E_CreationDate = AD_E_CreationDate;
         this.AD_E_UpdationDate = AD_E_UpdationDate;
         this.AD_E_No_Encrypted = AD_E_No_Encrypted;
+        this.AD_E_FloorUnit = AD_E_FloorUnit;
     }
 
     public int getAD_Auto_Id() {
@@ -107,5 +104,13 @@ public class CS_Entity_AccessDetails {
 
     public void setAD_E_No_Encrypted(String AD_E_No_Encrypted) {
         this.AD_E_No_Encrypted = AD_E_No_Encrypted;
+    }
+
+    public String getAD_E_FloorUnit() {
+        return AD_E_FloorUnit;
+    }
+
+    public void setAD_E_FloorUnit(String AD_E_FloorUnit) {
+        this.AD_E_FloorUnit = AD_E_FloorUnit;
     }
 }

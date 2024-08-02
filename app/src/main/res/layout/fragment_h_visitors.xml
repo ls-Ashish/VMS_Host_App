@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rlMain"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/page_background_white"
     android:windowSoftInputMode="adjustPan"
@@ -27,7 +28,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp">
+                    android:layout_margin="5dp">
 
                     <ImageView
                         android:visibility="gone"
@@ -35,6 +36,7 @@
                         android:id="@+id/iv_BackArrow"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_back_arrow"/>
 
                     <TextView
@@ -51,7 +53,7 @@
                         android:foregroundGravity="right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:src="@drawable/ic_add_black"/>
 
                 </TableRow>
@@ -64,15 +66,13 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/parent_page_margin"
-            android:layout_marginRight="@dimen/parent_page_margin"
-            android:layout_marginBottom="@dimen/parent_page_margin"
+            android:layout_margin="@dimen/parent_page_margin"
             android:layout_below="@+id/appBar">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+<!--            <ScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:fillViewport="true">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,7 +151,7 @@
 
                 </LinearLayout>
 
-            </ScrollView>
+<!--            </ScrollView>-->
 
         </RelativeLayout>
 

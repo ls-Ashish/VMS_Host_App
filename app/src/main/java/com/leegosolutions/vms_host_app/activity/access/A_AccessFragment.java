@@ -70,7 +70,7 @@ public class A_AccessFragment extends Fragment {
     private long refreshTime = 5000; // 5 x 1000 = 5 sec
     private Handler handler = new Handler();
     private Runnable runnable;
-    private String sourceId = "", employeeNo = "", employeeName = "", employeeUnit = "", employeeVehicleNo = "", employeeNo_Encrypted = "";
+    private String sourceId = "", employeeNo = "", employeeName = "", employeeUnit = "", employeeVehicleNo = "", employeeNo_Encrypted = "", employeeLastUpdationDate = "", floorUnitNo = "";
 
     public A_AccessFragment() {
         // default constructor required, if no default constructor than will crash at orientation change
@@ -81,8 +81,7 @@ public class A_AccessFragment extends Fragment {
             this.context = context;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -93,8 +92,7 @@ public class A_AccessFragment extends Fragment {
             this.context = context; // required - when orientation changed, need to re initialize context, as it becomes null
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -105,8 +103,7 @@ public class A_AccessFragment extends Fragment {
             context = null;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -117,8 +114,7 @@ public class A_AccessFragment extends Fragment {
             viewBinding = null; // Clear binding to avoid memory leaks
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -136,8 +132,7 @@ public class A_AccessFragment extends Fragment {
             viewBinding = FragmentAAccessBinding.inflate(inflater, container, false);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
         return viewBinding.getRoot();
     }
@@ -146,19 +141,11 @@ public class A_AccessFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
-            // todo ------------------ testing -----------------------------------------------------------------------------------------
-            employeeNo = "34387";
-            employeeNo_Encrypted = "yjepDd8wZZ/kstpGJmgycQ==";
-            generateQRCode();
-            viewBinding.tvHostEmployeeNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeNo);
-            // todo ------------------ testing -----------------------------------------------------------------------------------------
-
-//            fetchAccessData(); // todo - comment for testing apk
+            fetchAccessData();
             onClick_Button_Update();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -169,8 +156,7 @@ public class A_AccessFragment extends Fragment {
             refreshQRCode();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -181,8 +167,7 @@ public class A_AccessFragment extends Fragment {
             handler.removeCallbacks(runnable);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -198,8 +183,7 @@ public class A_AccessFragment extends Fragment {
             }
 
         } catch (Exception e) {
-            new CS_Utility(getActivity()).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(getActivity()).saveError(e);
         }
     }
 
@@ -213,8 +197,7 @@ public class A_AccessFragment extends Fragment {
                                 fetchAccessData();
 
                             } catch (Exception e) {
-                                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                                new CS_Utility(context).saveError(e);
                             }
                         }
                     });
@@ -222,8 +205,7 @@ public class A_AccessFragment extends Fragment {
 
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -236,8 +218,7 @@ public class A_AccessFragment extends Fragment {
 //                    new CS_Utility(context).showToast("Updated", 0);
 
                 } catch (Exception e) {
-                    new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                    }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                    new CS_Utility(context).saveError(e);
                 }
             }
         });
@@ -248,16 +229,20 @@ public class A_AccessFragment extends Fragment {
             if (refreshTime > 0) {
                 handler.postDelayed(runnable = new Runnable() {
                     public void run() {
-                        handler.postDelayed(runnable, refreshTime);
+                        try {
+                            handler.postDelayed(runnable, refreshTime);
 
-                        generateQRCode();
+                            generateQRCode();
+
+                        } catch (Exception e) {
+                            new CS_Utility(context).saveError(e);
+                        }
                     }
                 }, refreshTime);
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -265,7 +250,8 @@ public class A_AccessFragment extends Fragment {
 
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
-        private String bCode = "", tCode = "", clientSecret = "", appToken = "", baseURL = "", buildingId = "", tenantId = "", loginId = "";
+        private String appToken = "", baseURL = "", buildingId = "", tenantId = "", hostId = "";
+        private boolean saveUpdateStatus = false;
 
         @Override
         protected void onPreExecute() {
@@ -277,60 +263,45 @@ public class A_AccessFragment extends Fragment {
                 progressdialog.show();
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                // Fetch lastUpdationDate from sqlite
+                String sqLiteLastUpdationDate = new CS_Action_AccessDetails(context).getAccessDetails().getAD_E_UpdationDate();
+
                 OkHttpClient client = new CS_Utility(context).getOkHttpClient();
 
                 CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
-
                 if (model != null) {
-                    bCode = model.getSD_BCode();
-                    tCode = model.getSD_TCode();
-                    clientSecret = model.getSD_ClientSecret();
-                    appToken = model.getSD_AppToken();
                     baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
+                    appToken = model.getSD_AppToken();
                     buildingId = model.getSD_BU_ID();
                     tenantId = model.getSD_TE_ID();
-
                 }
-                if (!bCode.equals("") && !tCode.equals("") && !clientSecret.equals("") && !baseURL.equals("")) {
+
+                if (!baseURL.equals("")) {
 
                     // Fetch login id
-                    CS_Entity_LoginDetails loginModel = new CS_Action_LoginDetails(context).getLoginDetails();
-                    loginId = loginModel.getLD_SourceId();
-
-                    // todo - test photo is there in assert, remove after testing
-
-                    InputStream ims = context.getAssets().open("test_image.jpg");
-                    Drawable d = Drawable.createFromStream(ims, null);
-
-                    Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//                    byte[] bitmapdata = stream.toByteArray();
-
-                    ims.close();
-
-                    File imageFile = bitmapToFile(bitmap, "image.jpg");
+                    hostId = new CS_Action_LoginDetails(context).getLoginDetails().getLD_SourceId();
 
                     JSONObject jObject = new JSONObject();
-                    jObject.put("HostId", loginId);
+                    jObject.put("HostId", hostId);
                     jObject.put("Logged_BU_Id", buildingId);
                     jObject.put("Logged_TE_Id", tenantId);
                     jObject.put("Flag", "Fetch_Access_Data");
+                    jObject.put("LastUpdationDate", sqLiteLastUpdationDate);
 
                     RequestBody body = new MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
-                            .addFormDataPart("Id", "70")
+                            .addFormDataPart("Id", "71")
                             .addFormDataPart("Json_Data", String.valueOf(jObject))
                             .addFormDataPart("App_Token", appToken)
 //                            .addFormDataPart("App_Token","1161")
+//                            .addFormDataPart("Binary_Data_1", "G")
 //                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpeg"), imageFile))
 //                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpg"), imageFile))
                             .build();
@@ -362,29 +333,38 @@ public class A_AccessFragment extends Fragment {
                                     employeeUnit = jsonObject.getString("TenantName");
                                     employeeVehicleNo = jsonObject.getString("VehicleNo");
                                     employeeNo_Encrypted = jsonObject.getString("EmployeeNo_Encrypted");
+                                    employeeLastUpdationDate = jsonObject.getString("LastUpdationDate");
+                                    floorUnitNo = jsonObject.getString("FloorUnitNo");
                                 }
                             }
                         }
                     }
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             try {
                 if (result.equals("1")) {
 
-                    // Clean
-                    new CS_Action_AccessDetails(context).deleteAccessDetails();
+                    CS_Entity_AccessDetails accessModel = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(employeeUnit), CS_ED.Encrypt(employeeVehicleNo), new CS_Utility(context).getDateTime(), employeeLastUpdationDate, employeeNo_Encrypted, CS_ED.Encrypt(floorUnitNo));
 
-                    // Insert access data
-                    CS_Entity_AccessDetails model = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(employeeUnit), CS_ED.Encrypt(employeeVehicleNo), new CS_Utility(context).getDateTime(), "", employeeNo_Encrypted);
-                    new CS_Action_AccessDetails(context).insertAccessDetails(model);
+                    // Check if same host id then update
+                    String sqLiteHostId = new CS_Action_AccessDetails(context).getAccessDetails().getAD_SourceId();
+                    if (sqLiteHostId.equals(sourceId)) {
+                        // Update
+//                        saveUpdateStatus = new CS_Action_AccessDetails(context).updateAccessDetails(accessModel);
+                        saveUpdateStatus = new CS_Action_AccessDetails(context).updateAccessDetails(accessModel.getAD_SourceId(), accessModel.getAD_E_No(), accessModel.getAD_E_Name(), accessModel.getAD_E_Unit(), accessModel.getAD_E_VehicleNo(), accessModel.getAD_E_UpdationDate(), accessModel.getAD_E_No_Encrypted(), accessModel.getAD_E_FloorUnit());
 
+                    } else {
+                        // Clean
+                        new CS_Action_AccessDetails(context).deleteAccessDetails();
+
+                        // Insert
+                        saveUpdateStatus = new CS_Action_AccessDetails(context).insertAccessDetails(accessModel);
+                    }
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             return null;
         }
@@ -395,48 +375,35 @@ public class A_AccessFragment extends Fragment {
             try {
                 progressdialog.dismiss();
 
+                // Fetched from above, as if data empty, will hide the fields
+                new FetchAccessDetailsFromSQLite().execute();
+
                 if (result.equals("1")) {
-                    new FetchAccessDetailsFromSQLite().execute();
+                    // Found access data.
+                    if (saveUpdateStatus) {
+                        // Ok
+                    } else {
+                        showAlertDialog(context.getResources().getString(R.string.access_data_save_error));
 
+                    }
 
-//                    if (dataInserted) {
-//
-//                    } else {
-//                        showAlertDialog(getResources().getString(R.string.access_data_save_error));
-//                    }
+                } else if (result.equals("2")) {
+                    // No update found.
 
-                } else if (loginId.equals("")) {
-                    showAlertDialog("Login id is blank.");
+                } else if (hostId.equals("")) {
+                    showAlertDialog(context.getResources().getString(R.string.access_login_id_blank));
 
-                } else if (bCode.equals("") || tCode.equals("") || clientSecret.equals("") || baseURL.equals("")) {
-                    showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
+                } else if (baseURL.equals("")) {
+                    showAlertDialog(CS_Constant.invalidBaseURL);
 
                 } else {
                     showAlertDialog(!msg.equals("") ? msg : CS_Constant.serverConnectionErrorMessage);
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
-    }
-
-    // Example for Bitmap:
-    private File bitmapToFile(Bitmap bitmap, String fileName) throws IOException {
-        File file = new File(context.getCacheDir(), fileName);
-        file.createNewFile();
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos); // Adjust quality as needed
-        byte[] bitmapData = bos.toByteArray();
-
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(bitmapData);
-        fos.flush();
-        fos.close();
-
-        return file;
     }
 
     public void showAlertDialog(String message) {
@@ -457,8 +424,7 @@ public class A_AccessFragment extends Fragment {
             alertDialog.show();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -475,12 +441,12 @@ public class A_AccessFragment extends Fragment {
                     employeeUnit = CS_ED.Decrypt(model.getAD_E_Unit());
                     employeeVehicleNo = CS_ED.Decrypt(model.getAD_E_VehicleNo());
                     employeeNo_Encrypted = model.getAD_E_No_Encrypted();
+                    floorUnitNo = CS_ED.Decrypt(model.getAD_E_FloorUnit());
 
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             return null;
         }
@@ -490,24 +456,64 @@ public class A_AccessFragment extends Fragment {
             super.onPostExecute(unused);
             try {
                 generateQRCode();
-                setAccessDetails();
+                setData();
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
     }
 
-    private void setAccessDetails() {
+    private void setData() {
         try {
-            viewBinding.tvHostEmployeeNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeNo);
-            viewBinding.tvHostName.setText(employeeName);
-            viewBinding.tvHostVehicleNo.setText(employeeVehicleNo);
+            // QR Code
+            if (employeeNo_Encrypted.isEmpty()) {
+                viewBinding.llQRCode.setVisibility(View.INVISIBLE);
+
+            }
+
+            // Unit Name
+            if (!employeeUnit.isEmpty()) {
+                viewBinding.tvUnitName.setText(employeeUnit);
+
+            } else {
+                viewBinding.tvUnitName.setVisibility(View.GONE);
+            }
+
+            // Floor Unit No.
+            if (!floorUnitNo.isEmpty() && !floorUnitNo.equals("-") && !floorUnitNo.equals("0-0")) {
+                viewBinding.tvUnitNo.setText(floorUnitNo);
+
+            } else {
+                viewBinding.tvUnitNo.setVisibility(View.GONE);
+            }
+
+            // Host No.
+            if (!employeeNo.isEmpty()) {
+                viewBinding.tvHostNo.setText(getResources().getString(R.string.access_host_employee_no) + " " + employeeNo);
+
+            } else {
+                viewBinding.tvHostNo.setVisibility(View.GONE);
+            }
+
+            // Host Name
+            if (!employeeName.isEmpty()) {
+                viewBinding.tvHostName.setText(employeeName);
+
+            } else {
+                viewBinding.llHostName.setVisibility(View.GONE);
+            }
+
+            // Host Vehicle No.
+            if (!employeeVehicleNo.isEmpty()) {
+                viewBinding.tvHostVehicleNo.setText(employeeVehicleNo);
+
+            } else {
+                viewBinding.llHostVehicleNo.setVisibility(View.GONE);
+            }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -515,20 +521,19 @@ public class A_AccessFragment extends Fragment {
         try {
             if (!employeeNo_Encrypted.isEmpty()) {
                 String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
-
-                String qrcodeValue = "<body><en>" + employeeNo_Encrypted + "</en><mct>" + CS_ED.Encrypt(currentDateTime) + "</mct></body>";
-                String qrcodeValueDecrypt = "<body><en>" + employeeNo_Encrypted + "</en><mct>" + currentDateTime + "</mct></body>";
+                String qrcodeValue = "HOST://" + employeeNo_Encrypted + "§" + CS_ED.Encrypt(currentDateTime);
 
                 barcodeEncoder = new BarcodeEncoder();
                 bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);
                 viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
 
-                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
+                // Testing
+//                String qrcodeValueDecrypt = "HOST://" + employeeNo_Encrypted + "§" + currentDateTime;
+//                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

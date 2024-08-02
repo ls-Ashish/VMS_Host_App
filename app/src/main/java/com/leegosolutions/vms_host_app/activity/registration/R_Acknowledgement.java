@@ -31,8 +31,7 @@ public class R_Acknowledgement extends AppCompatActivity {
             on_Click_Button_Done();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -42,8 +41,7 @@ public class R_Acknowledgement extends AppCompatActivity {
                 goToHomePage();
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         });
     }
@@ -57,8 +55,7 @@ public class R_Acknowledgement extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 

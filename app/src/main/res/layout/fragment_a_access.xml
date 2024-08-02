@@ -27,7 +27,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp">
+                    android:layout_margin="5dp">
 
                     <ImageView
                         android:visibility="gone"
@@ -35,6 +35,7 @@
                         android:id="@+id/iv_BackArrow"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_back_arrow"/>
 
                     <TextView
@@ -52,6 +53,7 @@
                         android:foregroundGravity="right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:src="@drawable/ic_scan"/>
 
                 </TableRow>
@@ -64,9 +66,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/parent_page_margin"
-            android:layout_marginRight="@dimen/parent_page_margin"
-            android:layout_marginBottom="@dimen/parent_page_margin"
+            android:layout_margin="@dimen/parent_page_margin"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -98,14 +98,15 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/access_employee_accss"
-                                android:textSize="@dimen/text_large"
+                                android:text="@string/access_employee_access"
+                                android:textSize="@dimen/text_size_large"
                                 android:textColor="@color/tv_text_color_primary"
                                 android:textStyle="bold"
                                 android:gravity="center"
                                 android:layout_marginTop="5dp"/>
 
                             <LinearLayout
+                                android:id="@+id/ll_QRCode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
@@ -117,7 +118,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/access_page_instruction"
-                                    android:textSize="@dimen/text_small"
+                                    android:textSize="@dimen/text_size_normal"
                                     android:gravity="center"
                                     android:layout_marginBottom="10dp"/>
 
@@ -140,39 +141,40 @@
                             </LinearLayout>
 
                             <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_HostCompanyName"
+                                android:id="@+id/tv_UnitName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="HiCOMM PTE LTD"
-                                android:textSize="@dimen/text_small"
+                                android:text=""
+                                android:textColor="@color/tv_text_color"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
                                 android:layout_marginTop="20dp"/>
 
                             <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_HostUnitName"
+                                android:id="@+id/tv_UnitNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="A15-403"
-                                android:textSize="@dimen/text_small"
+                                android:text=""
+                                android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
                                 android:layout_marginTop="10dp"/>
 
                             <TextView
-                                android:id="@+id/tv_HostEmployeeNo"
+                                android:id="@+id/tv_HostNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/access_host_employee_no"
-                                android:textSize="@dimen/text_small"
+                                android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
                                 android:layout_marginTop="10dp"/>
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/tv_QRCodeValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="@dimen/text_extra_small"
+                                android:textSize="@dimen/text_size_normal"
                                 android:layout_marginTop="10dp"/>
 
                             <TableRow
@@ -206,45 +208,59 @@
                                 android:background="#EFEFEF"
                                 android:layout_marginTop="20dp"/>
 
-                            <TextView
-                                android:visibility="gone"
+                            <LinearLayout
+                                android:id="@+id/ll_HostName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/access_host_visitor_name"
-                                android:textSize="@dimen/text_small"
-                                android:gravity="center|left"
-                                android:layout_marginTop="20dp"/>
+                                android:orientation="vertical"
+                                android:layout_marginTop="20dp">
 
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_HostName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Steven  Lee"
-                                android:textSize="@dimen/text_small"
-                                android:textColor="@color/tv_text_color"
-                                android:gravity="center|left"
-                                android:layout_marginTop="10dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/access_host_visitor_name"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:gravity="center|left"/>
 
-                            <TextView
-                                android:visibility="gone"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/access_host_vehicle_no"
-                                android:textSize="@dimen/text_small"
-                                android:gravity="center|left"
-                                android:layout_marginTop="20dp"/>
+                                <TextView
+                                    android:id="@+id/tv_HostName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:textColor="@color/tv_text_color"
+                                    android:textStyle="bold"
+                                    android:gravity="center|left"
+                                    android:layout_marginTop="10dp"/>
 
-                            <TextView
-                                android:visibility="gone"
-                                android:id="@+id/tv_HostVehicleNo"
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_HostVehicleNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="SJH6723"
-                                android:textColor="@color/tv_text_color"
-                                android:textSize="@dimen/text_small"
-                                android:gravity="center|left"
-                                android:layout_marginTop="10dp"/>
+                                android:orientation="vertical"
+                                android:layout_marginTop="20dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/access_host_vehicle_no"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:gravity="center|left"/>
+
+                                <TextView
+                                    android:id="@+id/tv_HostVehicleNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="@color/tv_text_color"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:gravity="center|left"
+                                    android:layout_marginTop="10dp"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

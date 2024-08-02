@@ -1,39 +1,51 @@
 package com.leegosolutions.vms_host_app.activity;
 
+
+import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.login.Login;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_AccessDetails;
+import com.leegosolutions.vms_host_app.database.action.CS_Action_EmailDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
+import com.leegosolutions.vms_host_app.database.action.CS_Action_SMSDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
-import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.databinding.ActivityScanServerDetailsBinding;
 import com.leegosolutions.vms_host_app.utility.CS_Connection;
 import com.leegosolutions.vms_host_app.utility.CS_Constant;
 import com.leegosolutions.vms_host_app.utility.CS_ED;
+import com.leegosolutions.vms_host_app.utility.email.CS_Fetch_Email_Setup;
+import com.leegosolutions.vms_host_app.utility.sms.CS_Fetch_SMS_Setup;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
 import com.leegosolutions.vms_host_app.utility.camera.CameraXScanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import okhttp3.MediaType;
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -45,8 +57,10 @@ public class ScanServerDetails extends AppCompatActivity {
     private final Context context = ScanServerDetails.this;
     private ActivityScanServerDetailsBinding viewBinding;
     private final int LAUNCH_SCANNING_ACTIVITY = 1;
-    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", bu_Id = "", te_Id = "", buildingName = "", tenantName = "", errorPostingURL = "", appToken = "";
+    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "", bu_Id = "", te_Id = "", buildingName = "", tenantName = "", errorPostingURL = "", buildingCountry = "", buildingAddressLine_1 = "", buildingAddressLine_2 = "";
     private byte[] attachedPhoto;
+    private static final int PERMISSION_CODE = 1001;
+    private static final String CAMERA_PERMISSION = Manifest.permission.CAMERA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +74,7 @@ public class ScanServerDetails extends AppCompatActivity {
             on_Click_Scan_button();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -72,8 +85,7 @@ public class ScanServerDetails extends AppCompatActivity {
             viewBinding.lavImage.playAnimation();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -82,14 +94,49 @@ public class ScanServerDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    startScanningActivityForResult();
+                    getCameraPermissions();
 
                 } catch (Exception e) {
-                    new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                    }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                    new CS_Utility(context).saveError(e);
                 }
             }
         });
+    }
+
+    private void getCameraPermissions() {
+        try {
+            if (ContextCompat.checkSelfPermission(this, CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED) {
+                startScanningActivityForResult();
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{CAMERA_PERMISSION}, PERMISSION_CODE);
+
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+        try {
+            for (int r : grantResults) {
+                if (r == PackageManager.PERMISSION_DENIED) {
+                    new CS_Utility(context).showToast(getResources().getString(R.string.camera_permission_denied), 1);
+                    return;
+                }
+            }
+
+            if (requestCode == PERMISSION_CODE) {
+                startScanningActivityForResult();
+            }
+
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
     }
 
     private void startScanningActivityForResult() {
@@ -98,8 +145,7 @@ public class ScanServerDetails extends AppCompatActivity {
             startActivityForResult(intent, LAUNCH_SCANNING_ACTIVITY);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -128,8 +174,7 @@ public class ScanServerDetails extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -180,8 +225,7 @@ public class ScanServerDetails extends AppCompatActivity {
                 showAlertDialog("Invalid QR Code");
             }
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -203,8 +247,7 @@ public class ScanServerDetails extends AppCompatActivity {
             alertDialog.show();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -219,8 +262,7 @@ public class ScanServerDetails extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -234,8 +276,7 @@ public class ScanServerDetails extends AppCompatActivity {
                                 connect();
 
                             } catch (Exception e) {
-                                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                                new CS_Utility(context).saveError(e);
                             }
                         }
                     });
@@ -243,8 +284,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -264,15 +304,14 @@ public class ScanServerDetails extends AppCompatActivity {
                 progressdialog.show();
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                if (!bCode.equals("") && !tCode.equals("") && !clientSecret.equals("") && !baseURL.equals("")) {
+                if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
 
                     OkHttpClient client = new CS_Utility(context).getOkHttpClient();
 
@@ -284,9 +323,9 @@ public class ScanServerDetails extends AppCompatActivity {
 
                     RequestBody body = new MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
-                            .addFormDataPart("Id","0")
-                            .addFormDataPart("Json_Data",String.valueOf(jObject))
-                            .addFormDataPart("App_Token",appToken)
+                            .addFormDataPart("Id", "0")
+                            .addFormDataPart("Json_Data", String.valueOf(jObject))
+                            .addFormDataPart("App_Token", appToken)
                             .build();
 
                     Request request = new Request.Builder()
@@ -315,6 +354,9 @@ public class ScanServerDetails extends AppCompatActivity {
                                     buildingName = jsonObject.getString("BU_BuildingName");
                                     tenantName = jsonObject.getString("TenantName");
                                     errorPostingURL = jsonObject.getString("ErrorPostingURL");
+                                    buildingCountry = jsonObject.getString("Country");
+                                    buildingAddressLine_1 = jsonObject.getString("AddressLine_1");
+                                    buildingAddressLine_2 = jsonObject.getString("AddressLine_2");
 
                                     String base64_Image = jsonObject.getString("AttachedPhoto");
                                     if (!base64_Image.equals("null") && !base64_Image.equals("")) {
@@ -368,8 +410,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             try {
                 if (result.equals("1")) {
@@ -377,20 +418,17 @@ public class ScanServerDetails extends AppCompatActivity {
                     // Save Server Details
 
                     // Clean
-                    new CS_Action_ServerDetails(context).deleteServerDetails();
-                    new CS_Action_LoginDetails(context).deleteLoginDetails();
-                    new CS_Action_AccessDetails(context).deleteAccessDetails();
+                    cleanExistingTables();
 
                     // Model
-                    CS_Entity_ServerDetails model = new CS_Entity_ServerDetails(CS_ED.Encrypt(baseURL), bu_Id, te_Id, bCode, tCode, clientSecret, buildingName, tenantName, attachedPhoto, appToken, errorPostingURL, new CS_Utility(context).getDateTime(), "", "Active");
+                    CS_Entity_ServerDetails model = new CS_Entity_ServerDetails(CS_ED.Encrypt(baseURL), bu_Id, te_Id, bCode, tCode, clientSecret, buildingName, tenantName, attachedPhoto, appToken, errorPostingURL, new CS_Utility(context).getDateTime(), "", "Active", buildingCountry, buildingAddressLine_1, buildingAddressLine_2);
 
                     // Insert
                     dataInserted = new CS_Action_ServerDetails(context).insertServerDetails(model);
                 }
 
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
             return null;
         }
@@ -405,6 +443,10 @@ public class ScanServerDetails extends AppCompatActivity {
 //                if (result.equals("1") && !appToken.equals("")) {
 
                     if (dataInserted) {
+
+                        // Fetch Data
+                        fetchData(context, baseURL, bCode, tCode, clientSecret, appToken);
+
                         nextPage(Login.class);
                         new CS_Utility(context).showToast(getResources().getString(R.string.scan_server_details_connect_success), 1);
 
@@ -412,7 +454,7 @@ public class ScanServerDetails extends AppCompatActivity {
                         showAlertDialog(getResources().getString(R.string.scan_server_details_data_save_error));
                     }
 
-                } else if (bCode.equals("") || tCode.equals("") || clientSecret.equals("") || baseURL.equals("")) {
+                } else if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
                     showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
 
                 }
@@ -424,23 +466,8 @@ public class ScanServerDetails extends AppCompatActivity {
                     showAlertDialog(msg.equals("") ? CS_Constant.serverConnectionErrorMessage : msg);
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                new CS_Utility(context).saveError(e);
             }
-        }
-    }
-
-    private void checkLoginDetails() {
-        try {
-            CS_Entity_LoginDetails model = new CS_Action_LoginDetails(context).getLoginDetails();
-            if (model != null) {
-
-            } else {
-            }
-
-        } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
         }
     }
 
@@ -452,8 +479,79 @@ public class ScanServerDetails extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void cleanExistingTables() {
+        try {
+            new CS_Action_ServerDetails(context).deleteServerDetails();
+            new CS_Action_LoginDetails(context).deleteLoginDetails();
+            new CS_Action_AccessDetails(context).deleteAccessDetails();
+            new CS_Action_EmailDetails(context).deleteEmailDetails();
+            new CS_Action_SMSDetails(context).deleteSMSDetails();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void fetchData(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken) {
+        try {
+            // Default Email and Email Setup
+            new CS_Fetch_Email_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id).execute();
+            // SMS Setup
+            new CS_Fetch_SMS_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id).execute();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        try {
+            ActivityManager mngr = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(1);
+
+            if (taskList.get(0).numActivities == 1 && taskList.get(0).topActivity.getClassName().equals(this.getClass().getName())) {
+                showAppExitDialog();
+
+            } else {
+                super.onBackPressed();
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public void showAppExitDialog() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(getResources().getString(R.string.app_exit_caption));
+            builder.setIcon(R.drawable.ic_exit);
+            builder.setMessage(getResources().getString(R.string.app_exit_message));
+            builder.setCancelable(false);
+            builder.setPositiveButton("Yes".toUpperCase(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
         }
     }
 

@@ -6,9 +6,15 @@ import android.widget.Toast;
 
 import com.leegosolutions.vms_host_app.BuildConfig;
 import com.leegosolutions.vms_host_app.database.action.CS_Action;
+import com.leegosolutions.vms_host_app.database.action.CS_Action_EmailDetails;
+import com.leegosolutions.vms_host_app.database.action.CS_Action_SMSDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_EmailDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_SMSDetails;
 import com.leegosolutions.vms_host_app.model.CS_VisitorDetailsModel;
 import com.leegosolutions.vms_host_app.model.CS_VisitorsModel;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,8 +42,7 @@ public class CS_Utility {
             result = dateFormat.format(date);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            saveError(e);
         }
         return result;
     }
@@ -50,13 +55,21 @@ public class CS_Utility {
         }
     }
 
-    public void saveError(Exception e, String sourceClassName, String sourceMethodName, String sourceLineNo) {
+    public void saveError(Exception e) {
         try {
             if (BuildConfig.DEBUG) {
                 showToast(e.toString(), 0);
             }
         } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
+        try {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String stackTrace = sw.toString();
+
+        } catch (Exception ignored) {}
     }
 
     public ArrayList<CS_VisitorsModel> getTestingVisitorsData() {
@@ -91,8 +104,7 @@ public class CS_Utility {
             al_Visitors.add(model);
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            saveError(e);
         }
         return al_Visitors;
     }
@@ -121,8 +133,7 @@ public class CS_Utility {
 
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            saveError(e);
         }
         return model;
     }
@@ -137,9 +148,7 @@ public class CS_Utility {
                     .build();
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
-
+            saveError(e);
         } finally {
             try {
                 if (client == null) {
@@ -147,8 +156,7 @@ public class CS_Utility {
                             .build();
                 }
             } catch (Exception e) {
-                new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-                }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+                saveError(e);
             }
         }
         return client;
@@ -181,8 +189,136 @@ public class CS_Utility {
             result = versionToDisplay;
 
         } catch (Exception e) {
-            new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
-            }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
+            saveError(e);
+        }
+        return result;
+    }
+
+    public boolean containsUpperCase(String str) {
+        try {
+            for (char c : str.toCharArray()) {
+                if (Character.isUpperCase(c)) {
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return false;
+    }
+
+    public boolean containsLowerCase(String str) {
+        try {
+            for (char c : str.toCharArray()) {
+                if (Character.isLowerCase(c)) {
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return false;
+    }
+
+    public boolean containsNumber(String str) {
+        try {
+            for (char c : str.toCharArray()) {
+                if (Character.isDigit(c)) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return false;
+    }
+
+    public boolean containsSpecificSymbols(String str, String symbols) {
+        try {
+            for (char symbol : symbols.toCharArray()) {
+                if (str.contains(String.valueOf(symbol))) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return false;
+    }
+
+    public boolean checkEmailSetUpBuildingWise() {
+        boolean result = false;
+        try {
+            // Building Wise
+            CS_Entity_EmailDetails model = new CS_Action_EmailDetails(context).getEmailDetails("Building_Wise");
+            if (model != null) {
+
+                String emailId = CS_ED.Decrypt(model.getED_EmailId());
+                String password = CS_ED.Decrypt(model.getED_Password());
+                String server = CS_ED.Decrypt(model.getED_Server());
+                String port = CS_ED.Decrypt(model.getED_Port());
+                String enableSSL = model.getED_EnableSSL();
+
+                if (!server.isEmpty() && !port.isEmpty() && !emailId.isEmpty() && !password.isEmpty()) {
+                    result = true;
+                }
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
+    public boolean checkDefaultEmail() {
+        boolean result = false;
+        try {
+            // Default
+            CS_Entity_EmailDetails model = new CS_Action_EmailDetails(context).getEmailDetails("Default");
+            if (model != null) {
+
+                String emailId = CS_ED.Decrypt(model.getED_EmailId());
+                String password = CS_ED.Decrypt(model.getED_Password());
+                String server = CS_ED.Decrypt(model.getED_Server());
+                String port = CS_ED.Decrypt(model.getED_Port());
+                String enableSSL = model.getED_EnableSSL();
+
+                if (!server.isEmpty() && !port.isEmpty() && !emailId.isEmpty() && !password.isEmpty()) {
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
+    public boolean checkSMSSettings() {
+        boolean result = false;
+        try {
+            CS_Entity_SMSDetails model = new CS_Action_SMSDetails(context).getSMSDetails();
+            if (model != null) {
+                String platform = CS_ED.Decrypt(model.getSD_Platform());
+                String accountNo = CS_ED.Decrypt(model.getSD_AccountNo());
+                String tokenNo = CS_ED.Decrypt(model.getSD_TokenNo());
+                String sender = CS_ED.Decrypt(model.getSD_Sender());
+                String urlCode = CS_ED.Decrypt(model.getSD_UrlCode());
+                String serviceNo = CS_ED.Decrypt(model.getSD_ServiceNo());
+                String platform_WB = CS_ED.Decrypt(model.getSD_Platform_WB());
+                String templateID = CS_ED.Decrypt(model.getSD_P_WB_TemplateID());
+                String object_1 = CS_ED.Decrypt(model.getSD_P_WB_Object_1());
+                String object_2 = CS_ED.Decrypt(model.getSD_P_WB_Object_2());
+                String object_3 = CS_ED.Decrypt(model.getSD_P_WB_Object_3());
+                String object_4 = CS_ED.Decrypt(model.getSD_P_WB_Object_4());
+
+                if (!platform.isEmpty() && !accountNo.isEmpty() && !tokenNo.isEmpty() && !sender.isEmpty() && !urlCode.isEmpty()) {
+                    result = true;
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
         }
         return result;
     }

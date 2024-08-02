@@ -10,8 +10,8 @@ android {
         applicationId = "com.leegosolutions.vms_host_app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 3
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,7 +54,6 @@ dependencies {
     implementation ("com.google.android.material:material:1.13.0-alpha03")
     // Room Database
     val room_version = "2.6.1"
-
     implementation ("androidx.room:room-runtime:$room_version")
     annotationProcessor ("androidx.room:room-compiler:$room_version")
     // ML Kit - Scan barcodes
@@ -69,9 +68,15 @@ dependencies {
     implementation ("com.airbnb.android:lottie:$lottieVersion")
     // Okhttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
     // zxing - for QR Code Generation
     val zxingVersion = "4.3.0"
     // https://github.com/journeyapps/zxing-android-embedded
     implementation("com.journeyapps:zxing-android-embedded:$zxingVersion")
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    // Email
+    implementation(files("libs\\activation.jar"))
+    implementation(files("libs\\additionnal.jar"))
+    implementation(files("libs\\mail.jar"))
+
 }
