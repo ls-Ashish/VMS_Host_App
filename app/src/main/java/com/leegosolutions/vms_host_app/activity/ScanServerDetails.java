@@ -4,15 +4,28 @@ package com.leegosolutions.vms_host_app.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +36,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.login.Login;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
@@ -44,7 +62,12 @@ import com.leegosolutions.vms_host_app.utility.camera.CameraXScanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -54,6 +77,7 @@ import okhttp3.Response;
 
 public class ScanServerDetails extends AppCompatActivity {
 
+    private final AppCompatActivity appCompatActivity = ScanServerDetails.this;
     private final Context context = ScanServerDetails.this;
     private ActivityScanServerDetailsBinding viewBinding;
     private final int LAUNCH_SCANNING_ACTIVITY = 1;
@@ -61,6 +85,7 @@ public class ScanServerDetails extends AppCompatActivity {
     private byte[] attachedPhoto;
     private static final int PERMISSION_CODE = 1001;
     private static final String CAMERA_PERMISSION = Manifest.permission.CAMERA;
+    private static final int OPEN_GALLERY = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +97,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
 //            startAnimation();
             on_Click_Scan_button();
+            on_Click_Gallery_Icon();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -95,6 +121,7 @@ public class ScanServerDetails extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     getCameraPermissions();
+//                    showCameraOrGalleryDialog();
 
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e);
@@ -102,6 +129,79 @@ public class ScanServerDetails extends AppCompatActivity {
             }
         });
     }
+
+    private void on_Click_Gallery_Icon() {
+        viewBinding.tvGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    openGallery();
+
+                } catch (Exception e) {
+                    new CS_Utility(context).saveError(e);
+                }
+            }
+        });
+    }
+
+    // custom AlertDialog with layout
+//    private void showCameraOrGalleryDialog() {
+//        try {
+//            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//            LayoutInflater inflater = this.getLayoutInflater();
+//            View dialogView = inflater.inflate(R.layout.single_row_camera_or_gallery, null);
+//            dialogBuilder.setCancelable(false);
+//            dialogBuilder.setView(dialogView);
+//
+//            TextView tv_Camera = dialogView.findViewById(R.id.tv_Camera);
+//            TextView tv_Gallery = dialogView.findViewById(R.id.tv_Gallery);
+//            TextView tv_Cancel = dialogView.findViewById(R.id.tv_Cancel);
+//
+//            AlertDialog alertDialog = dialogBuilder.create();
+//            alertDialog.show();
+//
+//            tv_Camera.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        alertDialog.dismiss();
+//                        getCameraPermissions();
+//
+//                    } catch (Exception e) {
+//                        new CS_Utility(context).saveError(e);
+//                    }
+//                }
+//            });
+//
+//            tv_Gallery.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        alertDialog.dismiss();
+//                        openGallery();
+//
+//                    } catch (Exception e) {
+//                        new CS_Utility(context).saveError(e);
+//                    }
+//                }
+//            });
+//
+//            tv_Cancel.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        alertDialog.dismiss();
+//
+//                    } catch (Exception e) {
+//                        new CS_Utility(context).saveError(e);
+//                    }
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            new CS_Utility(context).saveError(e);
+//        }
+//    }
 
     private void getCameraPermissions() {
         try {
@@ -149,30 +249,111 @@ public class ScanServerDetails extends AppCompatActivity {
         }
     }
 
+    public void openGallery() {
+        try {
+            Intent pickIntent = new Intent(Intent.ACTION_PICK);
+            pickIntent.setDataAndType( android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+
+            startActivityForResult(pickIntent, OPEN_GALLERY);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (requestCode == LAUNCH_SCANNING_ACTIVITY) {
-                if (resultCode == Activity.RESULT_OK) {
-                    String result = data.getStringExtra("result");
-                    if (result != null) {
-                        if (!result.isEmpty()) {
-                            // Connect Server
-                            readQRCode(result);
+                try {
+                    if (resultCode == Activity.RESULT_OK) {
+                        String result = data.getStringExtra("result");
+                        readScanResult(result);
 
-                        } else {
-                            new CS_Utility(context).showToast(context.getResources().getString(R.string.scan_server_details_scan_error_empty), 1);
-                        }
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        // Write your code if there's no result
+                        new CS_Utility(context).showToast("Cancelled", 1);
+
                     } else {
-                        new CS_Utility(context).showToast(context.getResources().getString(R.string.scan_server_details_scan_error_null), 1);
+                        new CS_Utility(context).showToast("resultCode : " + String.valueOf(Activity.RESULT_OK), 1);
                     }
+
+                } catch (Exception e) {
+                    new CS_Utility(context).saveError(e);
                 }
-                if (resultCode == Activity.RESULT_CANCELED) {
-                    // Write your code if there's no result
-                    new CS_Utility(context).showToast("Canceled", 1);
+
+            } else if (requestCode == OPEN_GALLERY) {
+                try {
+                    if (resultCode == Activity.RESULT_OK) {
+                        if(data == null || data.getData()==null) {
+                            new CS_Utility(context).showToast("The uri is null.", 1);
+                            return;
+                        }
+                        Uri uri = data.getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(uri);
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            if (bitmap == null) {
+                                Toast.makeText(this, "Uri is not a bitmap," + uri.toString(), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            int width = bitmap.getWidth(), height = bitmap.getHeight();
+                            int[] pixels = new int[width * height];
+                            bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+                            bitmap.recycle();
+                            bitmap = null;
+
+                            RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+                            BinaryBitmap bBitmap = new BinaryBitmap(new HybridBinarizer(source));
+                            MultiFormatReader reader = new MultiFormatReader();
+                            try {
+                                String result = reader.decode(bBitmap).getText();
+                                readScanResult(result);
+//                                Toast.makeText(this, "The content of the QR image is: " + result, Toast.LENGTH_SHORT).show();
+
+                            } catch (Exception e) {
+                                new CS_Utility(context).showToast(getResources().getString(R.string.scan_server_details_invalid_qr_code), 1);
+                                new CS_Utility(context).saveError(e);
+                            }
+
+                        } catch (Exception e) {
+                            new CS_Utility(context).showToast(getResources().getString(R.string.scan_server_details_cannot_read_qr_code) + " " + uri.toString(), 1);
+                            new CS_Utility(context).saveError(e);
+                        }
+
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
+                        // Write your code if there's no result
+                        new CS_Utility(context).showToast("Cancelled", 1);
+
+                    }  else {
+                        new CS_Utility(context).showToast("resultCode : " + String.valueOf(Activity.RESULT_OK), 1);
+                    }
+
+                } catch (Exception e) {
+                    new CS_Utility(context).saveError(e);
                 }
             }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void readScanResult(String result) {
+        try {
+            if (result != null) {
+                if (!result.isEmpty()) {
+                    // Connect Server
+                    readQRCode(result);
+
+                } else {
+                    new CS_Utility(context).showToast(context.getResources().getString(R.string.scan_server_details_scan_error_empty), 1);
+                }
+            } else {
+                new CS_Utility(context).showToast(context.getResources().getString(R.string.scan_server_details_scan_error_null), 1);
+            }
+
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }
@@ -410,6 +591,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
                 }
             } catch (Exception e) {
+                msg = e.toString();
                 new CS_Utility(context).saveError(e);
             }
             try {
@@ -455,7 +637,7 @@ public class ScanServerDetails extends AppCompatActivity {
                     }
 
                 } else if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
-                    showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_server_details));
+                    showAlertDialog(msg.isEmpty() ? getResources().getString(R.string.scan_server_details_invalid_server_details) : msg);
 
                 }
 //                else if (appToken.equals("")) {

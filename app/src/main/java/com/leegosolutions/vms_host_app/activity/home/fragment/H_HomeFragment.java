@@ -336,13 +336,11 @@ public class H_HomeFragment extends Fragment implements CS_UpcomingVisitorsAdapt
                 new FetchVisitors().execute();
 
             } else {
+                // No internet connection
                 CS_VisitorsModel model = new CS_VisitorsModel();
                 model.setConnected(false);
-
                 al_Visitors.add(model);
-
                 setUpcomingVisitorAdapter(al_Visitors);
-
                 viewBinding.tabLayout.setVisibility(View.INVISIBLE);
             }
 
@@ -607,21 +605,27 @@ public class H_HomeFragment extends Fragment implements CS_UpcomingVisitorsAdapt
                 progressdialog.dismiss();
                 if (result.equals("1")) {
                     // 'Found visitor data.
-                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.VISIBLE);
+//                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.VISIBLE);
                     if (al_Visitors.size() > 0) {
                         setUpcomingVisitorAdapter(al_Visitors);
 
                     } else {
-
+                        showAlertDialog(context.getResources().getString(R.string.home_visitor_success_no_visitor_data));
                     }
 
                 } else if (result.equals("2")) {
                     // No update found.
-                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.VISIBLE);
+//                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.VISIBLE);
 
                 } else if (result.equals("0")) {
                     // No visitor data found.
-                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.GONE);
+//                    viewBinding.tvCaptionUpcomingVisitors.setVisibility(View.GONE);
+                    // No data
+                    CS_VisitorsModel model = new CS_VisitorsModel();
+                    model.setVisitorDataFound(false);
+                    al_Visitors.add(model);
+                    setUpcomingVisitorAdapter(al_Visitors);
+                    viewBinding.tabLayout.setVisibility(View.INVISIBLE);
 
                 } else if (hostId.equals("")) {
                     showAlertDialog(context.getResources().getString(R.string.home_visitor_login_id_blank));

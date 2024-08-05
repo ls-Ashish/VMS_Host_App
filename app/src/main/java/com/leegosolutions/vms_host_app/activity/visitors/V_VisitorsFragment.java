@@ -220,7 +220,13 @@ public class V_VisitorsFragment extends Fragment implements CS_VisitorsAdapter.O
                 new FetchVisitors().execute();
 
             } else {
-                showSnackbar();
+                // No internet connection
+                CS_VisitorsModel model = new CS_VisitorsModel();
+                model.setConnected(false);
+                al_Visitors.add(model);
+                setUpcomingVisitorAdapter(al_Visitors);
+//                viewBinding.tabLayout.setVisibility(View.INVISIBLE);
+//                showSnackbar();
             }
 
         } catch (Exception e) {
@@ -571,7 +577,7 @@ public class V_VisitorsFragment extends Fragment implements CS_VisitorsAdapter.O
                         setUpcomingVisitorAdapter(al_Visitors);
 
                     } else {
-
+                        showAlertDialog(context.getResources().getString(R.string.visitor_success_no_visitor_data));
                     }
 
                 } else if (result.equals("2")) {

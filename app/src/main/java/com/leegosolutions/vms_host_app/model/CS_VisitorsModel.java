@@ -3,7 +3,7 @@ package com.leegosolutions.vms_host_app.model;
 public class CS_VisitorsModel {
 
     String id="", appointmentNo="", name = "", type = "", mobileNo = "", startDate = "", endDate = "", overnights = "", status = "";
-    boolean isConnected = true; // default is true
+    boolean isConnected = true, visitorDataFound = true; // default is true
 
     public String getId() {
         return id;
@@ -85,4 +85,11 @@ public class CS_VisitorsModel {
         this.status = status;
     }
 
+    public boolean isVisitorDataFound() {
+        return visitorDataFound;
+    }
+
+    public void setVisitorDataFound(boolean visitorDataFound) {
+        this.visitorDataFound = visitorDataFound;
+    }
 }

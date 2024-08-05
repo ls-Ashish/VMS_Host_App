@@ -135,9 +135,8 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center|top">
 
@@ -243,67 +242,76 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:layout_marginTop="20dp"
                         android:gravity="center|top">
 
-                        <TextView
-                            android:id="@+id/tv_CaptionUpcomingVisitors"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/home_upcoming_visitors"
-                            android:textSize="@dimen/text_size_normal"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/tv_text_color"/>
+                            android:layout_height="match_parent">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <androidx.viewpager2.widget.ViewPager2
-                                android:id="@+id/vp_UpcomingVisitors"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <com.google.android.material.tabs.TabLayout
-                                android:id="@+id/tab_layout"
+                            <TextView
+                                android:id="@+id/tv_CaptionUpcomingVisitors"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:tabBackground="@drawable/vp_tab_selector"
-                                android:background="@android:color/transparent"
-                                app:tabGravity="center"
-                                app:tabMode="fixed"
-                                app:tabIndicatorHeight="0dp"
-                                android:layout_gravity="bottom"
-                                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                                android:text="@string/home_upcoming_visitors"
+                                android:textSize="@dimen/text_size_normal"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/tv_text_color"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_gravity="center"
+                                android:gravity="center|top"
+                                android:layout_below="@+id/tv_CaptionUpcomingVisitors"
+                                android:layout_marginTop="10dp">
+
+                                <androidx.viewpager2.widget.ViewPager2
+                                    android:id="@+id/vp_UpcomingVisitors"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                                <com.google.android.material.tabs.TabLayout
+                                    android:id="@+id/tab_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:tabBackground="@drawable/vp_tab_selector"
+                                    android:background="@android:color/transparent"
+                                    app:tabGravity="center"
+                                    app:tabMode="fixed"
+                                    app:tabIndicatorHeight="0dp"
+                                    android:layout_gravity="bottom"
+                                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
-                        </LinearLayout>
+                            </LinearLayout>
 
-                    </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_alignParentBottom="true"
+                                android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center|bottom">
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fab_MakeAppointment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    app:fabSize="normal"
+                                    android:elevation="0dp"
+                                    app:tint="@color/fab_icon_color"
+                                    app:elevation="0dp"
+                                    app:shapeAppearanceOverlay="@style/fab_rounded"
+                                    app:srcCompat="@drawable/ic_add"
+                                    android:backgroundTint="@color/colorPrimary"/>
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_MakeAppointment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            app:fabSize="normal"
-                            android:elevation="0dp"
-                            app:tint="@color/fab_icon_color"
-                            app:elevation="0dp"
-                            app:shapeAppearanceOverlay="@style/fab_rounded"
-                            app:srcCompat="@drawable/ic_add"
-                            android:backgroundTint="@color/colorPrimary"/>
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 

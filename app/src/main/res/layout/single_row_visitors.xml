@@ -20,10 +20,11 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_Message"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_connection"
+                android:text="Message"
                 android:textSize="@dimen/text_size_normal"
                 android:gravity="center"/>
 

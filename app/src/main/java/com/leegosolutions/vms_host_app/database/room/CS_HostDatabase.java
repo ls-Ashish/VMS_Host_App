@@ -24,8 +24,8 @@ import com.leegosolutions.vms_host_app.database.migrations.CS_Migrations;
         CS_Entity_AccessDetails.class,
         CS_Entity_EmailDetails.class,
         CS_Entity_SMSDetails.class
-},
-        version = 3)
+
+}, version = 3)
 public abstract class CS_HostDatabase extends RoomDatabase {
 
     private final static String DATABASE_NAME = "vmshost_db";

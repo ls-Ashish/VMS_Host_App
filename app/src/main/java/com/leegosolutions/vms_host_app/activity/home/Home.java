@@ -3,6 +3,7 @@ package com.leegosolutions.vms_host_app.activity.home;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ public class Home extends AppCompatActivity {
 
     private Context context = Home.this;
     private ActivityHomeBinding viewBinding;
+    private boolean bnn_Menu_Home = false, bnn_Menu_Visitors = false, bnn_Menu_Access = false, bnn_Menu_Nortifications = false, bnn_Menu_Settings = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +65,36 @@ public class Home extends AppCompatActivity {
 
     private void setBottomNavigationView() {
         try {
-            // Default - Home
-//            viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_home);
-//            nextFragment("Home");
+            Menu menu = viewBinding.bottomNavigationView.getMenu();
 
-            viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_access); // fixme - current flow
-            nextFragment("Access");
+            MenuItem menu_Home = menu.findItem(R.id.nav_home);
+            MenuItem menu_Visitors = menu.findItem(R.id.nav_visitors);
+            MenuItem menu_Access = menu.findItem(R.id.nav_access);
+            MenuItem menu_Notifications = menu.findItem(R.id.nav_notifications);
+            MenuItem menu_Settings = menu.findItem(R.id.nav_settings);
+
+            // Make dynamic as per requirement
+            bnn_Menu_Home = false;
+            bnn_Menu_Visitors = false;
+            bnn_Menu_Access = true;
+            bnn_Menu_Nortifications = false;
+            bnn_Menu_Settings = true;
+
+            menu_Home.setVisible(bnn_Menu_Home);
+            menu_Visitors.setVisible(bnn_Menu_Visitors);
+            menu_Access.setVisible(bnn_Menu_Access);
+            menu_Notifications.setVisible(bnn_Menu_Nortifications);
+            menu_Settings.setVisible(bnn_Menu_Settings);
+
+            // Default
+            if (bnn_Menu_Home) {
+                viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                nextFragment("Home");
+
+            } else if (bnn_Menu_Access) {
+                viewBinding.bottomNavigationView.setSelectedItemId(R.id.nav_access);
+                nextFragment("Access");
+            }
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -94,7 +120,7 @@ public class Home extends AppCompatActivity {
                         nextFragment("Access");
                         return true;
 
-                    } else if (id == R.id.nav_nortifications) {
+                    } else if (id == R.id.nav_notifications) {
                         nextFragment("Notifications");
                         return true;
 

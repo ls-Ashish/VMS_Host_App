@@ -67,4 +67,7 @@
 <!--    Success-->
     <color name="success">#06D001</color>
 
+<!--    Line-->
+    <color name="line_bg">#EFEFEF</color>
+
 </resources>

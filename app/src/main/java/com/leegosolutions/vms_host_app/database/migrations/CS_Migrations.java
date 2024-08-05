@@ -30,11 +30,11 @@ public class CS_Migrations {
             database.execSQL("CREATE TABLE IF NOT EXISTS " + CS_SQLiteTable.VMS_SMS_Details + "(SD_Auto_Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, SD_Platform TEXT, SD_AccountNo TEXT, SD_TokenNo TEXT, SD_ServiceNo TEXT, SD_Sender TEXT, SD_UrlCode TEXT, SD_ExpiryTime TEXT, SD_Platform_WB TEXT, SD_P_WB_TemplateID TEXT, SD_P_WB_Object_1 TEXT, SD_P_WB_Object_2 TEXT, SD_P_WB_Object_3 TEXT, SD_P_WB_Object_4 TEXT, SD_CreationDate TEXT, SD_UpdationDate TEXT)");
         }
     };
-//
+
 //    public static final Migration VERSION_4 = new Migration(3, 4) {
 //        @Override
 //        public void migrate(@NonNull SupportSQLiteDatabase database) {
-//            database.execSQL("CREATE TABLE IF NOT EXISTS " + CS_SQLiteTable.VMS_LogIn_Details + "(`LD_AUTO_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `LD_UserName` TEXT, `LD_Password` TEXT)");
+//
 //        }
 //    };
 

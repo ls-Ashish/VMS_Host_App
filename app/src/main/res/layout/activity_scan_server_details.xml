@@ -40,6 +40,7 @@
                         android:src="@drawable/ic_back_arrow"/>
 
                     <TextView
+                        android:visibility="invisible"
                         android:layout_weight="8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -50,7 +51,6 @@
                     <ImageView
                         android:visibility="invisible"
                         android:layout_weight="1"
-                        android:id="@+id/iv_ScanServerDetails"
                         android:foregroundGravity="right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -91,9 +91,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/scan_server_details_page_instruction"
-                            android:textSize="@dimen/text_size_normal"
+                            android:textSize="@dimen/text_size_large"
                             android:gravity="center"
-                            android:padding="20dp"
                             android:textColor="@color/tv_text_color_primary"
                             android:fontFamily="@font/inter_regular"/>
 
@@ -103,84 +102,110 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TableRow
-                                android:visibility="gone"
+                            <LinearLayout
+                                android:layout_weight="0"
                                 android:layout_width="match_parent"
-                                android:layout_height="250dp">
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:orientation="vertical"/>
 
-                                <LinearLayout
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical"/>
+                            <LinearLayout
+                                android:layout_weight="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                <TableRow
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="250dp">
 
-                                    <com.airbnb.lottie.LottieAnimationView
-                                        android:id="@+id/lav_Image"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:layout_weight="1"
+                                        android:layout_width="0dp"
                                         android:layout_height="match_parent"
-                                        android:layout_centerInParent="true"
-                                        app:lottie_autoPlay="true"
-                                        app:lottie_loop="true" />
+                                        android:orientation="vertical"/>
 
-                                </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_weight="1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical"/>
+                                        <com.airbnb.lottie.LottieAnimationView
+                                            android:id="@+id/lav_Image"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_centerInParent="true"
+                                            app:lottie_autoPlay="true"
+                                            app:lottie_loop="true" />
 
-                            </TableRow>
+                                    </LinearLayout>
 
-                            <TableRow
+                                    <LinearLayout
+                                        android:layout_weight="1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"/>
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <ImageView
+                                        android:layout_weight="0.5"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"/>
+
+                                    <ImageView
+                                        android:layout_weight="2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/ic_scan"/>
+
+                                    <ImageView
+                                        android:layout_weight="0.5"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"/>
+
+                                </TableRow>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
-                                android:layout_height="250dp">
+                                android:layout_height="0dp"
+                                android:gravity="center|bottom"
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"/>
+                                <Button
+                                    android:id="@+id/btn_Scan"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/scan_server_details_scan"
+                                    android:textColor="@color/btn_background_text_color"
+                                    android:background="@drawable/rectangle_shape"
+                                    android:backgroundTint="@color/btn_background"
+                                    android:fontFamily="@font/inter_regular"/>
 
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_scan"/>
+                                <TextView
+                                    android:id="@+id/tv_Gallery"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/scan_server_details_select_from_gallery"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:gravity="center"
+                                    android:padding="20dp"
+                                    android:textColor="@color/tv_text_color_primary"
+                                    android:fontFamily="@font/inter_regular"/>
 
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"/>
-
-                            </TableRow>
+                            </LinearLayout>
 
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:background="#46E91E63"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="50dp">
-
-                        <Button
-                            android:id="@+id/btn_Scan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/scan_server_details_scan"
-                            android:textColor="@color/btn_background_text_color"
-                            android:background="@drawable/rectangle_shape"
-                            android:backgroundTint="@color/btn_background"
-                            android:drawableLeft="@drawable/ic_scan_white"
-                            android:fontFamily="@font/inter_regular"/>
 
                     </LinearLayout>
 

@@ -20,7 +20,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
 
     private Context context;
     private ArrayList<CS_VisitorsModel> al_Visitors;
-    private CS_UpcomingVisitorsAdapter.OnItemClickListener listener = null;
+    private OnItemClickListener listener = null;
 
     public CS_UpcomingVisitorsAdapter(Context context, ArrayList<CS_VisitorsModel> al_Visitors, OnItemClickListener listener) {
         try {
@@ -53,8 +53,19 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
             CS_VisitorsModel model = al_Visitors.get(position);
 
             boolean isConnected = model.isConnected();
+            boolean isVisitorDataFound = model.isVisitorDataFound();
 
-            if (isConnected) {
+            if (!isConnected) {
+                holder.tv_Message.setText(context.getResources().getString(R.string.no_connection));
+                holder.ll_Content.setVisibility(View.INVISIBLE);
+                holder.rl_NoConnection.setVisibility(View.VISIBLE);
+
+            } else if (!isVisitorDataFound) {
+                holder.tv_Message.setText(context.getResources().getString(R.string.home_upcoming_visitors_no_visitors));
+                holder.ll_Content.setVisibility(View.INVISIBLE);
+                holder.rl_NoConnection.setVisibility(View.VISIBLE);
+
+            } else {
                 holder.ll_Content.setVisibility(View.VISIBLE);
                 holder.rl_NoConnection.setVisibility(View.GONE);
 
@@ -68,10 +79,6 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
 
                 String overNight = model.getOvernights();
                 holder.tv_Overnights.setText(overNight.equals("0") ? "-" : overNight);
-
-            } else {
-                holder.ll_Content.setVisibility(View.INVISIBLE);
-                holder.rl_NoConnection.setVisibility(View.VISIBLE);
 
             }
 
@@ -100,7 +107,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout ll_Content;
         private RelativeLayout rl_NoConnection;
-        TextView tv_AppointmentNo, tv_Name, tv_Type, tv_MobileNo, tv_StartDate, tv_EndDate, tv_Overnights, tv_Status;
+        TextView tv_AppointmentNo, tv_Name, tv_Type, tv_MobileNo, tv_StartDate, tv_EndDate, tv_Overnights, tv_Status, tv_Message;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -115,6 +122,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
                 tv_EndDate = itemView.findViewById(R.id.tv_EndDate);
                 tv_Overnights = itemView.findViewById(R.id.tv_Overnights);
                 tv_Status = itemView.findViewById(R.id.tv_Status);
+                tv_Message = itemView.findViewById(R.id.tv_Message);
 
             } catch (Exception ignored) {
                 // todo - check to save

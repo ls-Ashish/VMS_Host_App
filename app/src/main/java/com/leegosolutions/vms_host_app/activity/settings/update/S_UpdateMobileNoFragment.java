@@ -46,7 +46,7 @@ public class S_UpdateMobileNoFragment extends Fragment {
 
     private Context context;
     private FragmentSUpdateMobileNoBinding viewBinding;
-    private String name="", email="", company="", countryCode = "", mobileNo = "";
+    private String name="", email="", company="", countryCode = "", mobileNo = "", temp_CountryCode = "", temp_MobileNo = "";
 
     public S_UpdateMobileNoFragment() {
         // Required empty public constructor
@@ -148,8 +148,8 @@ public class S_UpdateMobileNoFragment extends Fragment {
 
                     if (loginModel != null) {
                         name = CS_ED.Decrypt(loginModel.getLD_UserName());
-                        countryCode = CS_ED.Decrypt(loginModel.getLD_CountryCode());
-                        mobileNo = CS_ED.Decrypt(loginModel.getLD_MobileNo());
+                        countryCode = temp_CountryCode = CS_ED.Decrypt(loginModel.getLD_CountryCode());
+                        mobileNo = temp_MobileNo = CS_ED.Decrypt(loginModel.getLD_MobileNo());
                         email = CS_ED.Decrypt(loginModel.getLD_Email());
                     }
 
@@ -236,27 +236,34 @@ public class S_UpdateMobileNoFragment extends Fragment {
             countryCode = viewBinding.countryCodePicker.getSelectedCountryCode().trim();
             mobileNo = viewBinding.etMobileNo.getText().toString().trim();
 
-            // Country Code
-            if (countryCode.equals("")) {
-                new CS_Utility(context).showToast(getResources().getString(R.string.update_mobile_no_error_country_code_blank_update), 0);
+
+            if (countryCode.equals(temp_CountryCode) && mobileNo.equals(temp_MobileNo)) {
+                // no data change
+                new CS_Utility(context).showToast(getResources().getString(R.string.update_mobile_error_same), 0);
 
             } else {
-                validCountryCode = true;
-            }
+                // Country Code
+                if (countryCode.equals("")) {
+                    new CS_Utility(context).showToast(getResources().getString(R.string.update_mobile_no_error_country_code_blank_update), 0);
 
-            // Mobile No.
-            if (mobileNo.equals("")) {
-                viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_blank));
+                } else {
+                    validCountryCode = true;
+                }
 
-            } else {
-                // clear set error
-                viewBinding.tilMobileNo.setError(null);
-                validMobileNo = true;
-            }
+                // Mobile No.
+                if (mobileNo.equals("")) {
+                    viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_blank));
 
-            // validate
-            if (validCountryCode && validMobileNo) {
-                result = true;
+                } else {
+                    // clear set error
+                    viewBinding.tilMobileNo.setError(null);
+                    validMobileNo = true;
+                }
+
+                // validate
+                if (validCountryCode && validMobileNo) {
+                    result = true;
+                }
             }
 
         } catch (Exception e) {

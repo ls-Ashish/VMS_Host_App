@@ -107,7 +107,7 @@ public class CS_ScanningOverlayView extends ViewGroup {
         line.setStrokeWidth(Float.valueOf(lineWidth));
 
         // draw the line to product animation
-        if (endY >= top + dpToPx(rectHeight) + frames) {
+        if (endY >= top + dpToPx(rectHeight - 10) + frames) { // -10 added as the scanning line was reaching the bottom border
             revAnimation = true;
         } else if (endY == top + frames) {
             revAnimation = false;
