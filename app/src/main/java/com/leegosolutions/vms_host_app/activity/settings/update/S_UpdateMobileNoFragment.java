@@ -10,14 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailFragment;
+import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailVerifyFragment;
+import com.leegosolutions.vms_host_app.activity.login.fragment.L_MobileNoVerifyFragment;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
+import com.leegosolutions.vms_host_app.database.action.CS_Action_AccessDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
@@ -46,7 +52,7 @@ public class S_UpdateMobileNoFragment extends Fragment {
 
     private Context context;
     private FragmentSUpdateMobileNoBinding viewBinding;
-    private String name="", email="", company="", countryCode = "", mobileNo = "", temp_CountryCode = "", temp_MobileNo = "";
+    private String name = "", email = "", company = "", countryCode = "", mobileNo = "", temp_CountryCode = "", temp_MobileNo = "";
 
     public S_UpdateMobileNoFragment() {
         // Required empty public constructor
@@ -219,8 +225,8 @@ public class S_UpdateMobileNoFragment extends Fragment {
                 try {
                     if (validate()) {
                         updateMobileNo();
-                    }
 
+                    }
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e);
                 }
@@ -254,6 +260,15 @@ public class S_UpdateMobileNoFragment extends Fragment {
                 if (mobileNo.equals("")) {
                     viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_blank));
 
+                } else if (countryCode.equals("65") && mobileNo.length() != 8) {
+                    viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_invalid));
+
+                } else if (countryCode.equals("65") && (!mobileNo.startsWith("8") && !mobileNo.startsWith("9"))) {
+                    viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_invalid));
+
+                } else if (!countryCode.equals("65") && mobileNo.length() < 8) {
+                    viewBinding.tilMobileNo.setError(getResources().getString(R.string.update_mobile_no_error_mobile_no_invalid));
+
                 } else {
                     // clear set error
                     viewBinding.tilMobileNo.setError(null);
@@ -276,10 +291,11 @@ public class S_UpdateMobileNoFragment extends Fragment {
         try {
             // check internet connection
             if (new CS_Connection(context).getStatus()) {
-                new UpdateMobileNo().execute();
+//                new UpdateMobileNo().execute();
+                verifyMobileNo();
 
             } else {
-                showSnackbar();
+                showSnackbar("updateMobileNo");
             }
 
         } catch (Exception e) {
@@ -287,14 +303,19 @@ public class S_UpdateMobileNoFragment extends Fragment {
         }
     }
 
-    private void showSnackbar() {
+    private void showSnackbar(String cameFrom) {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
-                                updateMobileNo();
+                                if (cameFrom.equals("updateMobileNo")) {
+                                    viewBinding.btnUpdate.performClick();
+
+                                } else {
+                                    new CS_Utility(context).showToast("cameFrom : " + cameFrom, 1);
+                                }
 
                             } catch (Exception e) {
                                 new CS_Utility(context).saveError(e);
@@ -461,6 +482,35 @@ public class S_UpdateMobileNoFragment extends Fragment {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void verifyMobileNo() {
+        try {
+            Bundle args = new Bundle();
+            args.putString("countryCode", countryCode);
+            args.putString("mobileNo", mobileNo);
+            args.putString("cameFrom", "settings");
+
+            Fragment fragment = new L_MobileNoVerifyFragment(context);
+
+            if (fragment != null) {
+
+                fragment.setArguments(args);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .addToBackStack(null)
+                        .commit();
+
+            } else {
+                new CS_Utility(context).showToast("Fragment is null", 0);
+
+            }
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);

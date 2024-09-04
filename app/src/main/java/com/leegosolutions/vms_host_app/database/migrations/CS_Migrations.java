@@ -31,7 +31,17 @@ public class CS_Migrations {
         }
     };
 
-//    public static final Migration VERSION_4 = new Migration(3, 4) {
+    public static final Migration VERSION_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE "+ CS_SQLiteTable.VMS_LogIn_Details +" ADD COLUMN LD_S_PIN_Status TEXT");
+            database.execSQL("ALTER TABLE "+ CS_SQLiteTable.VMS_LogIn_Details +" ADD COLUMN LD_S_PIN TEXT");
+            database.execSQL("ALTER TABLE "+ CS_SQLiteTable.VMS_LogIn_Details +" ADD COLUMN LD_S_Fingerprint_Status TEXT");
+
+        }
+    };
+
+//    public static final Migration VERSION_4 = new Migration(4, 5) {
 //        @Override
 //        public void migrate(@NonNull SupportSQLiteDatabase database) {
 //

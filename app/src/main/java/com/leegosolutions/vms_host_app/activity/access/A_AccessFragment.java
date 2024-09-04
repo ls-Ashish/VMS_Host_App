@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,33 +180,10 @@ public class A_AccessFragment extends Fragment {
 
             } else {
                 new FetchAccessDetailsFromSQLite().execute();
-//                showSnackbar();
             }
 
         } catch (Exception e) {
             new CS_Utility(getActivity()).saveError(e);
-        }
-    }
-
-    private void showSnackbar() {
-        try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                fetchAccessData();
-
-                            } catch (Exception e) {
-                                new CS_Utility(context).saveError(e);
-                            }
-                        }
-                    });
-            snackbar.show();
-
-
-        } catch (Exception e) {
-            new CS_Utility(context).saveError(e);
         }
     }
 
@@ -297,13 +275,9 @@ public class A_AccessFragment extends Fragment {
 
                     RequestBody body = new MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
-                            .addFormDataPart("Id", "71")
+                            .addFormDataPart("Id", "0")
                             .addFormDataPart("Json_Data", String.valueOf(jObject))
                             .addFormDataPart("App_Token", appToken)
-//                            .addFormDataPart("App_Token","1161")
-//                            .addFormDataPart("Binary_Data_1", "G")
-//                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpeg"), imageFile))
-//                            .addFormDataPart("Binary_Data_1", imageFile.getName(), RequestBody.create(MediaType.parse("image/jpg"), imageFile))
                             .build();
 
                     Request request = new Request.Builder()
@@ -528,6 +502,7 @@ public class A_AccessFragment extends Fragment {
                 viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
 
                 // Testing
+//                Log.d("VMSTest", qrcodeValue);
 //                String qrcodeValueDecrypt = "HOST://" + employeeNo_Encrypted + "§" + currentDateTime;
 //                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
             }

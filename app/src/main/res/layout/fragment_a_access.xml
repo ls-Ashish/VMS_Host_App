@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/page_background"
+    android:background="@color/page_background_white"
     tools:context=".activity.access.A_AccessFragment">
 
     <RelativeLayout
@@ -22,7 +22,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:contentInsetStart="16dp"
                 app:contentInsetEnd="16dp"
-                style="@style/Theme.MyCustomToolbar">
+                style="@style/Theme.MyCustomToolbar_White">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/parent_page_margin"
+            style="@style/ActivityTopMarginStyle"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -92,18 +92,17 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_margin="5dp"
-                            android:background="#FFFFFF"
                             android:padding="5dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/access_employee_access"
-                                android:textSize="@dimen/text_size_large"
-                                android:textColor="@color/tv_text_color_primary"
-                                android:textStyle="bold"
+                                android:layout_marginTop="5dp"
                                 android:gravity="center"
-                                android:layout_marginTop="5dp"/>
+                                android:text="@string/access_employee_access"
+                                android:textColor="@color/tv_text_color_primary"
+                                android:textSize="@dimen/text_size_large"
+                                android:fontFamily="@font/inter_bold" />
 
                             <LinearLayout
                                 android:id="@+id/ll_QRCode"
@@ -120,7 +119,8 @@
                                     android:text="@string/access_page_instruction"
                                     android:textSize="@dimen/text_size_normal"
                                     android:gravity="center"
-                                    android:layout_marginBottom="10dp"/>
+                                    android:layout_marginBottom="10dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
@@ -146,10 +146,10 @@
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/tv_text_color"
-                                android:textStyle="bold"
                                 android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
-                                android:layout_marginTop="20dp"/>
+                                android:layout_marginTop="20dp"
+                                android:fontFamily="@font/inter_bold"/>
 
                             <TextView
                                 android:id="@+id/tv_UnitNo"
@@ -158,7 +158,8 @@
                                 android:text=""
                                 android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
-                                android:layout_marginTop="10dp"/>
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/inter_regular"/>
 
                             <TextView
                                 android:id="@+id/tv_HostNo"
@@ -167,7 +168,8 @@
                                 android:text="@string/access_host_employee_no"
                                 android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
-                                android:layout_marginTop="10dp"/>
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/inter_regular"/>
 
                             <TextView
                                 android:visibility="gone"
@@ -175,7 +177,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_normal"
-                                android:layout_marginTop="10dp"/>
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/inter_regular"/>
 
                             <TableRow
                                 android:visibility="gone"
@@ -220,7 +223,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/access_host_visitor_name"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:gravity="center|left"/>
+                                    android:gravity="center|left"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_HostName"
@@ -229,13 +233,14 @@
                                     android:text=""
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:textStyle="bold"
                                     android:gravity="center|left"
-                                    android:layout_marginTop="10dp"/>
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:visibility="gone"
                                 android:id="@+id/ll_HostVehicleNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -247,7 +252,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/access_host_vehicle_no"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:gravity="center|left"/>
+                                    android:gravity="center|left"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_HostVehicleNo"
@@ -255,10 +261,10 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textColor="@color/tv_text_color"
-                                    android:textStyle="bold"
                                     android:textSize="@dimen/text_size_normal"
                                     android:gravity="center|left"
-                                    android:layout_marginTop="10dp"/>
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </LinearLayout>
 

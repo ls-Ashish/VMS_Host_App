@@ -32,8 +32,7 @@ public class CS_ED {
 
     public static String Decrypt(String text) throws Exception {
         if (text != null){
-            Cipher cipher = Cipher.getInstance
-                    ("AES/CBC/PKCS5Padding"); //this parameters should not be changed
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding"); //this parameters should not be changed
             byte[] keyBytes = new byte[16];
             byte[] b = _secretKey.getBytes(StandardCharsets.UTF_8);
             int len = b.length;

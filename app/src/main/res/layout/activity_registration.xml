@@ -65,7 +65,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/parent_page_margin"
+            style="@style/ActivityTopMarginStyle"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -88,11 +88,11 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/registration_name"
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/tv_text_color_grey"
+                            android:fontFamily="@font/inter_regular"
                             android:padding="10dp"
-                            android:fontFamily="@font/inter_regular"/>
+                            android:text="@string/registration_name"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:textSize="@dimen/text_size_normal" />
 
                         <EditText
                             android:id="@+id/et_Name"

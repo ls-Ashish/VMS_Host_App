@@ -65,7 +65,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/parent_page_margin"
+            style="@style/ActivityTopMarginStyle"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -82,7 +82,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginBottom="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -90,7 +91,8 @@
                             android:text="@string/settings_account_preference"
                             android:textSize="@dimen/text_size_normal"
                             android:layout_marginLeft="20dp"
-                            android:gravity="center|left"/>
+                            android:gravity="center|left"
+                            android:fontFamily="@font/inter_regular"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -151,8 +153,8 @@
                                                 android:text="@string/settings_update_contact_details"
                                                 android:textSize="@dimen/text_size_normal"
                                                 android:textColor="@color/tv_text_color"
-                                                android:textStyle="bold"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_bold"/>
 
                                         </LinearLayout>
 
@@ -169,7 +171,8 @@
                                                 android:layout_height="wrap_content"
                                                 android:text="@string/settings_update_contact_details_details"
                                                 android:textSize="@dimen/text_size_small"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_regular"/>
 
                                         </LinearLayout>
 
@@ -204,7 +207,8 @@
                             android:textSize="@dimen/text_size_normal"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
-                            android:gravity="center|left"/>
+                            android:gravity="center|left"
+                            android:fontFamily="@font/inter_regular"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -212,6 +216,112 @@
                             app:cardCornerRadius="5dp"
                             app:cardBackgroundColor="@color/white"
                             android:layout_marginTop="10dp"
+                            app:cardMaxElevation="5dp">
+
+                            <LinearLayout
+                                android:id="@+id/ll_Security_Pin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="5dp"
+                                android:background="#FFFFFF"
+                                android:padding="5dp">
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:layout_weight="0.1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginRight="5dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_account_settings"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_weight="0.8"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_weight="1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0dp"
+                                            android:orientation="vertical"
+                                            android:layout_margin="2dp"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/settings_security_pin"
+                                                android:textSize="@dimen/text_size_normal"
+                                                android:textColor="@color/tv_text_color"
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_bold"/>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_weight="1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0dp"
+                                            android:orientation="vertical"
+                                            android:layout_margin="2dp"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/settings_security_pin_details"
+                                                android:textSize="@dimen/text_size_small"
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_regular"/>
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_weight="0.1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="5dp"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:src="@drawable/ic_right_arrow"/>
+
+                                    </LinearLayout>
+
+                                </TableRow>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="5dp"
+                            app:cardBackgroundColor="@color/white"
+                            android:layout_marginTop="20dp"
                             app:cardMaxElevation="5dp">
 
                             <LinearLayout
@@ -265,8 +375,8 @@
                                                 android:text="@string/settings_change_password"
                                                 android:textSize="@dimen/text_size_normal"
                                                 android:textColor="@color/tv_text_color"
-                                                android:textStyle="bold"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_bold"/>
 
                                         </LinearLayout>
 
@@ -283,7 +393,8 @@
                                                 android:layout_height="wrap_content"
                                                 android:text="@string/settings_change_password_details"
                                                 android:textSize="@dimen/text_size_small"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_regular"/>
 
                                         </LinearLayout>
 
@@ -318,7 +429,8 @@
                             android:textSize="@dimen/text_size_normal"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
-                            android:gravity="center|left"/>
+                            android:gravity="center|left"
+                            android:fontFamily="@font/inter_regular"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -379,8 +491,8 @@
                                                 android:text="@string/settings_server_details"
                                                 android:textSize="@dimen/text_size_normal"
                                                 android:textColor="@color/tv_text_color"
-                                                android:textStyle="bold"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_bold"/>
 
                                         </LinearLayout>
 
@@ -397,7 +509,8 @@
                                                 android:layout_height="wrap_content"
                                                 android:text="@string/settings_server_details_info"
                                                 android:textSize="@dimen/text_size_small"
-                                                android:gravity="center|left"/>
+                                                android:gravity="center|left"
+                                                android:fontFamily="@font/inter_regular"/>
 
                                         </LinearLayout>
 
@@ -437,7 +550,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -469,7 +582,8 @@
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:text="@string/settings_app_version"
-                            android:textSize="10sp"/>
+                            android:textSize="10sp"
+                            android:fontFamily="@font/inter_regular"/>
 
                     </TableRow>
 
@@ -478,8 +592,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="5dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -496,7 +609,8 @@
                             android:layout_gravity="center"
                             android:text="@string/settings_developed_by"
                             android:textSize="10sp"
-                            android:layout_marginLeft="2dp"/>
+                            android:layout_marginLeft="2dp"
+                            android:fontFamily="@font/inter_regular"/>
 
                     </TableRow>
 

@@ -11,6 +11,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+<!--        Set it to true for dark text and icons on a light status bar background.-->
+<!--        Set it to false (or omit it) for light text and icons on a dark status bar background.-->
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
 <!--    Toolbar-->
@@ -59,5 +64,14 @@
         <item name="android:backgroundTint">@color/searchview_background_color</item>
     </style>
     <!--    SearchView-->
+
+<!--    Activity Top Margin Style-->
+    <style name="ActivityTopMarginStyle" parent="">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+<!--    Activity Top Margin Style-->
 
 </resources>

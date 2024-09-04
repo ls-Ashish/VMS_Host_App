@@ -401,7 +401,7 @@ public class V_VisitorsFragment extends Fragment implements CS_VisitorsAdapter.O
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.rlMain, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            Snackbar snackbar = Snackbar.make(viewBinding.rlMain, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

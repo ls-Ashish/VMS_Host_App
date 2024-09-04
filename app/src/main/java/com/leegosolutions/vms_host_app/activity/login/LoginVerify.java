@@ -123,6 +123,7 @@ public class LoginVerify extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putString("email", email);
             args.putString("mobileNo", mobileNo);
+            args.putString("cameFrom", "login");
 
             Fragment fragment = null;
 

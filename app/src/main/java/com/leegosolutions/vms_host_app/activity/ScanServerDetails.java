@@ -314,8 +314,7 @@ public class ScanServerDetails extends AppCompatActivity {
 //                                Toast.makeText(this, "The content of the QR image is: " + result, Toast.LENGTH_SHORT).show();
 
                             } catch (Exception e) {
-                                new CS_Utility(context).showToast(getResources().getString(R.string.scan_server_details_invalid_qr_code), 1);
-                                new CS_Utility(context).saveError(e);
+                                showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_qr_code));
                             }
 
                         } catch (Exception e) {
@@ -403,7 +402,7 @@ public class ScanServerDetails extends AppCompatActivity {
                 connect();
 
             } else {
-                showAlertDialog("Invalid QR Code");
+                showAlertDialog(getResources().getString(R.string.scan_server_details_invalid_qr_code));
             }
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -449,7 +448,7 @@ public class ScanServerDetails extends AppCompatActivity {
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

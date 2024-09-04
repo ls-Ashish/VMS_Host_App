@@ -99,7 +99,7 @@ public class CS_Action_LoginDetails {
         return result;
     }
 
-    // Update password
+    // Update mobile no.
     public boolean updateMobileNo(String whereColumnId, String countryCode, String mobileNo) {
         boolean result = false;
         try {
@@ -112,7 +112,7 @@ public class CS_Action_LoginDetails {
         return result;
     }
 
-    // Update password
+    //
     public CS_LoginDetailsWithAccessDetails getLoginDetailsWithAccessDetails() {
         CS_LoginDetailsWithAccessDetails list = null;
         try {
@@ -122,6 +122,45 @@ public class CS_Action_LoginDetails {
             new CS_Utility(context).saveError(e);
         }
         return list;
+    }
+
+    // Update login details
+    public boolean updateLoginDetails(String whereColumnId, String email, String password, String userType, String userName, byte[] userPhoto, String updationDate, String countryCode, String mobileNo) {
+        boolean result = false;
+        try {
+            long rowId = dao.updateLoginDetails(whereColumnId, email, password, userType, userName, userPhoto, updationDate, countryCode, mobileNo);
+            result = rowId > 0;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
+    // Update PIN
+    public boolean setPIN(String whereColumnId, String status, String pin) {
+        boolean result = false;
+        try {
+            long rowId = dao.setPIN(whereColumnId, status, pin);
+            result = rowId > 0;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
+    // Update Fingerprint
+    public boolean enableFingerprint(String whereColumnId, String status) {
+        boolean result = false;
+        try {
+            long rowId = dao.enableFingerprint(whereColumnId, status);
+            result = rowId > 0;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
     }
 
 }

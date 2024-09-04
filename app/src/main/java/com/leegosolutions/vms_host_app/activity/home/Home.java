@@ -106,29 +106,36 @@ public class Home extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 try {
+                    int currentItemId = viewBinding.bottomNavigationView.getSelectedItemId();
                     int id = item.getItemId();
 
-                    if (id == R.id.nav_home) {
-                        nextFragment("Home");
-                        return true;
+                    if (id != currentItemId) {
 
-                    } else if (id == R.id.nav_visitors) {
-                        nextFragment("Visitors");
-                        return true;
+                        if (id == R.id.nav_home) {
+                            nextFragment("Home");
+                            return true;
 
-                    } else if (id == R.id.nav_access) {
-                        nextFragment("Access");
-                        return true;
+                        } else if (id == R.id.nav_visitors) {
+                            nextFragment("Visitors");
+                            return true;
 
-                    } else if (id == R.id.nav_notifications) {
-                        nextFragment("Notifications");
-                        return true;
+                        } else if (id == R.id.nav_access) {
+                            nextFragment("Access");
+                            return true;
 
-                    } else if (id == R.id.nav_settings) {
-                        nextFragment("Settings");
-                        return true;
+                        } else if (id == R.id.nav_notifications) {
+                            nextFragment("Notifications");
+                            return true;
 
+                        } else if (id == R.id.nav_settings) {
+                            nextFragment("Settings");
+                            return true;
+
+                        } else {
+                            return false;
+                        }
                     } else {
+                        // Ignore the click as it's on the current item
                         return false;
                     }
                 } catch (Exception e) {
@@ -174,7 +181,7 @@ public class Home extends AppCompatActivity {
                 fragment = new N_NotificationsFragment(context);
 
             } else if (calledFrom.equals("Settings")) {
-                fragment = new S_SettingsFragment(context);
+                fragment = new S_SettingsFragment(context, viewBinding.bottomNavigationView);
 
             }
 

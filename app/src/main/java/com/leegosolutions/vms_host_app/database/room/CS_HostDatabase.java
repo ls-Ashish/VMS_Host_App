@@ -25,7 +25,7 @@ import com.leegosolutions.vms_host_app.database.migrations.CS_Migrations;
         CS_Entity_EmailDetails.class,
         CS_Entity_SMSDetails.class
 
-}, version = 3)
+}, version = 4)
 public abstract class CS_HostDatabase extends RoomDatabase {
 
     private final static String DATABASE_NAME = "vmshost_db";
@@ -40,7 +40,7 @@ public abstract class CS_HostDatabase extends RoomDatabase {
     public static synchronized CS_HostDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), CS_HostDatabase.class, DATABASE_NAME)
-                            .addMigrations(CS_Migrations.VERSION_2, CS_Migrations.VERSION_3)
+                            .addMigrations(CS_Migrations.VERSION_2, CS_Migrations.VERSION_3, CS_Migrations.VERSION_4)
 //                            .addCallback(roomCallback)
                             .build();
         }

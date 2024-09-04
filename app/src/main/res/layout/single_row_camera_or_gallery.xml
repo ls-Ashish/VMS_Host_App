@@ -29,11 +29,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/scan_server_details_camera"
                 android:textSize="@dimen/text_size_normal"
-                android:textStyle="bold"
                 android:padding="10dp"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/inter_regular"/>
+                android:fontFamily="@font/inter_bold"/>
 
             <View
                 android:layout_width="match_parent"
@@ -48,11 +47,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/scan_server_details_gallery"
                 android:textSize="@dimen/text_size_normal"
-                android:textStyle="bold"
                 android:padding="10dp"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/inter_regular"/>
+                android:fontFamily="@font/inter_bold"/>
 
         </LinearLayout>
 
@@ -80,11 +78,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/scan_server_details_cancel"
                 android:textSize="@dimen/text_size_normal"
-                android:textStyle="bold"
                 android:padding="10dp"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/inter_regular"/>
+                android:fontFamily="@font/inter_bold"/>
 
         </LinearLayout>
 

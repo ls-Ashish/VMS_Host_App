@@ -167,7 +167,7 @@ public class V_VisitorsDetails extends Fragment {
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.rlMain, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            Snackbar snackbar = Snackbar.make(viewBinding.rlMain, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

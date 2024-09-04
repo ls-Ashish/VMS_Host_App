@@ -46,6 +46,7 @@ public class L_MobileNoFragment extends Fragment {
     private Context context;
     private FragmentLMobileNoBinding viewBinding;
     private String email = "", countryCode="", mobileNo="", password = "";
+    private Snackbar snackbar;
 
     public L_MobileNoFragment() {
         // default constructor required, if no default constructor than will crash at orientation change
@@ -157,6 +158,15 @@ public class L_MobileNoFragment extends Fragment {
             if (mobileNo.equals("")) {
                 viewBinding.tilMobileNo.setError(getResources().getString(R.string.login_mobile_no_empty));
 
+            } else if (countryCode.equals("65") && mobileNo.length() != 8) {
+                viewBinding.tilMobileNo.setError(getResources().getString(R.string.login_mobile_no_invalid));
+
+            } else if (countryCode.equals("65") && (!mobileNo.startsWith("8") && !mobileNo.startsWith("9"))) {
+                viewBinding.tilMobileNo.setError(getResources().getString(R.string.login_mobile_no_invalid));
+
+            } else if (!countryCode.equals("65") && mobileNo.length() < 8) {
+                viewBinding.tilMobileNo.setError(getResources().getString(R.string.login_mobile_no_invalid));
+
             } else {
                 // clear set error
                 viewBinding.tilMobileNo.setError(null);
@@ -204,7 +214,7 @@ public class L_MobileNoFragment extends Fragment {
 
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
-        private String baseURL = "", appToken = "", userType = "", userName = "", buildingId = "", tenantId = "", sourceId = "", enable2FA="";
+        private String baseURL = "", appToken = "", userType = "", userName = "", buildingId = "", tenantId = "", sourceId = "", enable2FA="", lastUpdationDate="";
         private byte[] userPhoto = null;
         private boolean dataInserted = false;
 
@@ -279,9 +289,11 @@ public class L_MobileNoFragment extends Fragment {
                                     sourceId = jsonObject.getString("Source_Id");
                                     userType = jsonObject.getString("UserType");
                                     userName = jsonObject.getString("UserName");
+                                    password = jsonObject.getString("Password");
                                     countryCode = jsonObject.getString("CountryCode");
                                     mobileNo = jsonObject.getString("ContactNo");
                                     enable2FA = jsonObject.getString("2FA_Enable");
+                                    lastUpdationDate = jsonObject.getString("LastUpdationDate");
 
                                     String base64_Image = jsonObject.getString("ProfilePhoto");
                                     if (!base64_Image.equals("null") && !base64_Image.equals("")) {
@@ -304,7 +316,7 @@ public class L_MobileNoFragment extends Fragment {
                     new CS_Action_LoginDetails(context).deleteLoginDetails();
 
                     // Model
-                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), "", CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo));
+                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), lastUpdationDate, CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo));
 
                     // Insert
                     dataInserted = new CS_Action_LoginDetails(context).insertLoginDetails(model);
@@ -404,12 +416,12 @@ public class L_MobileNoFragment extends Fragment {
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
-                                login();
+                                viewBinding.btnNext.performClick();
 
                             } catch (Exception e) {
                                 new CS_Utility(context).saveError(e);
@@ -455,6 +467,21 @@ public class L_MobileNoFragment extends Fragment {
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
             }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (snackbar != null) {
+                if (snackbar.isShown()) {
+                    snackbar.dismiss();
+                }
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
         }
     }
 

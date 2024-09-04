@@ -49,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/home_visitor_appointment_no"
                     android:textSize="@dimen/text_size_normal"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/inter_bold"/>
 
                 <ImageView
                     android:id="@+id/iv_Details"

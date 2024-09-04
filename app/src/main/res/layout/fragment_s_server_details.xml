@@ -65,7 +65,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/parent_page_margin"
+            style="@style/ActivityTopMarginStyle"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -104,13 +104,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_name"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_PropertyName"
@@ -118,7 +121,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -132,13 +136,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_id"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_PropertyID"
@@ -146,7 +153,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -161,13 +169,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_unit_name"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_UnitName"
@@ -175,7 +186,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -190,13 +202,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_unit_id"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_UnitID"
@@ -204,7 +219,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -219,13 +235,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_country"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_Country"
@@ -233,7 +252,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -248,13 +268,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_address_line_1"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_AddressLine1"
@@ -262,7 +285,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 
@@ -277,13 +301,16 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/server_address_line_2"
-                                    android:textSize="@dimen/text_size_normal"/>
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=":"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
                                     android:id="@+id/tv_AddressLine2"
@@ -291,7 +318,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
-                                    android:textColor="@color/tv_text_color"/>
+                                    android:textColor="@color/tv_text_color"
+                                    android:fontFamily="@font/inter_regular"/>
 
                             </TableRow>
 

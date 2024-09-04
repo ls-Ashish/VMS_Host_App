@@ -65,7 +65,7 @@
             android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/parent_page_margin"
+            style="@style/ActivityTopMarginStyle"
             android:layout_below="@+id/appBar">
 
             <ScrollView
@@ -113,7 +113,8 @@
                                 android:backgroundTint="@color/et_background_color"
                                 android:textColorHint="@color/et_hint_text_color"
                                 android:padding="10dp"
-                                android:maxLength="6"/>
+                                android:maxLength="6"
+                                android:singleLine="true"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 

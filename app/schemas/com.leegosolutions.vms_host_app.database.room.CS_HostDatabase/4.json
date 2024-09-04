@@ -1,0 +1,492 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "9d7f8b05f13ced33c8b0731fdb1753ad",
+    "entities": [
+      {
+        "tableName": "VMS_Server_Details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SD_Auto_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SD_BaseURL` TEXT, `SD_BU_ID` TEXT, `SD_TE_ID` TEXT, `SD_BCode` TEXT, `SD_TCode` TEXT, `SD_ClientSecret` TEXT, `SD_BuildingName` TEXT, `SD_TenantName` TEXT, `SD_Logo` BLOB, `SD_AppToken` TEXT, `SD_ErrorPostingURL` TEXT, `SD_CreationDate` TEXT, `SD_UpdationDate` TEXT, `SD_Status` TEXT, `SD_Country` TEXT, `SD_Address_Line_1` TEXT, `SD_Address_Line_2` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "SD_Auto_Id",
+            "columnName": "SD_Auto_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "SD_BaseURL",
+            "columnName": "SD_BaseURL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_BU_ID",
+            "columnName": "SD_BU_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_TE_ID",
+            "columnName": "SD_TE_ID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_BCode",
+            "columnName": "SD_BCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_TCode",
+            "columnName": "SD_TCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_ClientSecret",
+            "columnName": "SD_ClientSecret",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_BuildingName",
+            "columnName": "SD_BuildingName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_TenantName",
+            "columnName": "SD_TenantName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Logo",
+            "columnName": "SD_Logo",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_AppToken",
+            "columnName": "SD_AppToken",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_ErrorPostingURL",
+            "columnName": "SD_ErrorPostingURL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_CreationDate",
+            "columnName": "SD_CreationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_UpdationDate",
+            "columnName": "SD_UpdationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Status",
+            "columnName": "SD_Status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Country",
+            "columnName": "SD_Country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Address_Line_1",
+            "columnName": "SD_Address_Line_1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Address_Line_2",
+            "columnName": "SD_Address_Line_2",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "SD_Auto_Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "VMS_LogIn_Details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`LD_Auto_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `LD_SourceId` TEXT, `LD_Email` TEXT, `LD_Password` TEXT, `LD_UserType` TEXT, `LD_UserName` TEXT, `LD_UserPhoto` BLOB, `LD_IsLogin` INTEGER NOT NULL, `LD_CreationDate` TEXT, `LD_UpdationDate` TEXT, `LD_CountryCode` TEXT, `LD_MobileNo` TEXT, `LD_S_PIN_Status` TEXT, `LD_S_PIN` TEXT, `LD_S_Fingerprint_Status` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "LD_Auto_Id",
+            "columnName": "LD_Auto_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LD_SourceId",
+            "columnName": "LD_SourceId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_Email",
+            "columnName": "LD_Email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_Password",
+            "columnName": "LD_Password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_UserType",
+            "columnName": "LD_UserType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_UserName",
+            "columnName": "LD_UserName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_UserPhoto",
+            "columnName": "LD_UserPhoto",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_IsLogin",
+            "columnName": "LD_IsLogin",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "LD_CreationDate",
+            "columnName": "LD_CreationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_UpdationDate",
+            "columnName": "LD_UpdationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_CountryCode",
+            "columnName": "LD_CountryCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_MobileNo",
+            "columnName": "LD_MobileNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_S_PIN_Status",
+            "columnName": "LD_S_PIN_Status",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_S_PIN",
+            "columnName": "LD_S_PIN",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "LD_S_Fingerprint_Status",
+            "columnName": "LD_S_Fingerprint_Status",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "LD_Auto_Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "VMS_Access_Details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`AD_Auto_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `AD_SourceId` TEXT, `AD_E_No` TEXT, `AD_E_Name` TEXT, `AD_E_Unit` TEXT, `AD_E_VehicleNo` TEXT, `AD_E_CreationDate` TEXT, `AD_E_UpdationDate` TEXT, `AD_E_No_Encrypted` TEXT, `AD_E_FloorUnit` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "AD_Auto_Id",
+            "columnName": "AD_Auto_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "AD_SourceId",
+            "columnName": "AD_SourceId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_No",
+            "columnName": "AD_E_No",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_Name",
+            "columnName": "AD_E_Name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_Unit",
+            "columnName": "AD_E_Unit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_VehicleNo",
+            "columnName": "AD_E_VehicleNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_CreationDate",
+            "columnName": "AD_E_CreationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_UpdationDate",
+            "columnName": "AD_E_UpdationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_No_Encrypted",
+            "columnName": "AD_E_No_Encrypted",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "AD_E_FloorUnit",
+            "columnName": "AD_E_FloorUnit",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "AD_Auto_Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "VMS_Email_Details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ED_Auto_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `ED_Type` TEXT, `ED_EmailId` TEXT, `ED_Password` TEXT, `ED_Server` TEXT, `ED_Port` TEXT, `ED_EnableSSL` TEXT, `ED_CreationDate` TEXT, `ED_UpdationDate` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "ED_Auto_Id",
+            "columnName": "ED_Auto_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ED_Type",
+            "columnName": "ED_Type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_EmailId",
+            "columnName": "ED_EmailId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_Password",
+            "columnName": "ED_Password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_Server",
+            "columnName": "ED_Server",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_Port",
+            "columnName": "ED_Port",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_EnableSSL",
+            "columnName": "ED_EnableSSL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_CreationDate",
+            "columnName": "ED_CreationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ED_UpdationDate",
+            "columnName": "ED_UpdationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ED_Auto_Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "VMS_SMS_Details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`SD_Auto_Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `SD_Platform` TEXT, `SD_AccountNo` TEXT, `SD_TokenNo` TEXT, `SD_ServiceNo` TEXT, `SD_Sender` TEXT, `SD_UrlCode` TEXT, `SD_ExpiryTime` TEXT, `SD_Platform_WB` TEXT, `SD_P_WB_TemplateID` TEXT, `SD_P_WB_Object_1` TEXT, `SD_P_WB_Object_2` TEXT, `SD_P_WB_Object_3` TEXT, `SD_P_WB_Object_4` TEXT, `SD_CreationDate` TEXT, `SD_UpdationDate` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "SD_Auto_Id",
+            "columnName": "SD_Auto_Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "SD_Platform",
+            "columnName": "SD_Platform",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_AccountNo",
+            "columnName": "SD_AccountNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_TokenNo",
+            "columnName": "SD_TokenNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_ServiceNo",
+            "columnName": "SD_ServiceNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Sender",
+            "columnName": "SD_Sender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_UrlCode",
+            "columnName": "SD_UrlCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_ExpiryTime",
+            "columnName": "SD_ExpiryTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_Platform_WB",
+            "columnName": "SD_Platform_WB",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_P_WB_TemplateID",
+            "columnName": "SD_P_WB_TemplateID",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_P_WB_Object_1",
+            "columnName": "SD_P_WB_Object_1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_P_WB_Object_2",
+            "columnName": "SD_P_WB_Object_2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_P_WB_Object_3",
+            "columnName": "SD_P_WB_Object_3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_P_WB_Object_4",
+            "columnName": "SD_P_WB_Object_4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_CreationDate",
+            "columnName": "SD_CreationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "SD_UpdationDate",
+            "columnName": "SD_UpdationDate",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "SD_Auto_Id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d7f8b05f13ced33c8b0731fdb1753ad')"
+    ]
+  }
+}

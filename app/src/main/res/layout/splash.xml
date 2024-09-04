@@ -115,9 +115,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/splash_powered_by"
                                 android:gravity="center"
-                                android:textStyle="italic"
                                 android:textColor="@color/tv_text_color_grey"
-                                android:fontFamily="@font/inter_regular"
+                                android:fontFamily="@font/inter_italic"
                                 android:textSize="@dimen/text_size_extra_small"/>
 
                             <TextView
@@ -125,10 +124,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/splash_powered_by_text"
                                 android:gravity="center"
-                                android:textStyle="bold"
                                 android:layout_marginTop="5dp"
                                 android:textColor="@color/tv_text_color_grey"
-                                android:fontFamily="@font/inter_regular"
+                                android:fontFamily="@font/inter_bold"
                                 android:textSize="@dimen/text_size_normal"/>
 
                         </LinearLayout>

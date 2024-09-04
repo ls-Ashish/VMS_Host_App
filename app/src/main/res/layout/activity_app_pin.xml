@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/gradient"
+    tools:context=".activity.AppPIN">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_app_logo"
+                                android:layout_gravity="center|right"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_PageCaption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:text="@string/app_name"
+                                android:gravity="center"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:padding="10dip"
+                                android:fontFamily="@font/playfair_regular"/>
+
+                        </LinearLayout>
+
+                    </TableRow>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_Message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/app_pin_page_info"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_large_26"
+                        android:padding="10dip"
+                        android:fontFamily="@font/inter_regular"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:text="-"
+                                android:layout_weight="1"
+                                android:id="@+id/tv_PinBox_6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="false"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:password="true"
+                                android:textSize="@dimen/text_size_extra_large"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:gravity="center"
+                                android:fontFamily="@font/inter_bold"/>
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="top"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_PINMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:gravity="center"
+                        android:textColor="#d41522"
+                        android:textSize="@dimen/text_size_large_26"
+                        android:padding="5dip"
+                        android:fontFamily="@font/inter_regular"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btn_1"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_2"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_3"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                </TableRow>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/btn_4"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="4"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_5"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_6"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="6"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                </TableRow>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/btn_7"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="7"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_8"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="8"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <Button
+                        android:id="@+id/btn_9"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="9"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                </TableRow>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/iv_UseBiometrics"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:src="@drawable/ic_fingerprint"/>
+
+                    <Button
+                        android:id="@+id/btn_0"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textSize="45sp"
+                        android:textColor="#ffffff"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:fontFamily="@font/inter_regular"/>
+
+                    <ImageView
+                        android:id="@+id/iv_Backspace"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="6dip"
+                        android:layout_margin="3dip"
+                        android:src="@drawable/ic_backspace"/>
+
+                </TableRow>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

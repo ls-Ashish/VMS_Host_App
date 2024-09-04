@@ -55,7 +55,6 @@
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="@string/home_visitor_appointment_no"-->
 <!--                    android:textSize="@dimen/text_medium"-->
-<!--                    android:textStyle="bold"-->
 <!--                    android:textColor="@color/colorPrimary"/>-->
 
 <!--                <ImageView-->

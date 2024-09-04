@@ -51,6 +51,7 @@ public class L_EmailFragment extends Fragment {
     private String email = "", countryCode = "", mobileNo = "", password = "";
     private TabLayout tabLayout;
     private int targetTabPosition = 1; // Want to select the 2nd tab (index 1)
+    private Snackbar snackbar;
 
     public L_EmailFragment() {
         // default constructor required, if no default constructor than will crash at orientation change
@@ -217,7 +218,7 @@ public class L_EmailFragment extends Fragment {
 
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
-        private String baseURL = "", appToken = "", userType = "", userName = "", buildingId = "", tenantId = "", sourceId = "", enable2FA = "";
+        private String baseURL = "", appToken = "", userType = "", userName = "", buildingId = "", tenantId = "", sourceId = "", enable2FA = "", lastUpdationDate = "";
         private byte[] userPhoto = null;
         private boolean dataInserted = false;
 
@@ -292,9 +293,11 @@ public class L_EmailFragment extends Fragment {
                                     sourceId = jsonObject.getString("Source_Id");
                                     userType = jsonObject.getString("UserType");
                                     userName = jsonObject.getString("UserName");
+                                    password = jsonObject.getString("Password");
                                     countryCode = jsonObject.getString("CountryCode");
                                     mobileNo = jsonObject.getString("ContactNo");
                                     enable2FA = jsonObject.getString("2FA_Enable");
+                                    lastUpdationDate = jsonObject.getString("LastUpdationDate");
 
                                     String base64_Image = jsonObject.getString("ProfilePhoto");
                                     if (!base64_Image.equals("null") && !base64_Image.equals("")) {
@@ -317,7 +320,7 @@ public class L_EmailFragment extends Fragment {
                     new CS_Action_LoginDetails(context).deleteLoginDetails();
 
                     // Model
-                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), "", CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo));
+                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), lastUpdationDate, CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo));
 
                     // Insert
                     dataInserted = new CS_Action_LoginDetails(context).insertLoginDetails(model);
@@ -416,12 +419,12 @@ public class L_EmailFragment extends Fragment {
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
-                                login();
+                                viewBinding.btnNext.performClick();
 
                             } catch (Exception e) {
                                 new CS_Utility(context).saveError(e);
@@ -478,4 +481,18 @@ public class L_EmailFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            if (snackbar != null) {
+                if (snackbar.isShown()) {
+                    snackbar.dismiss();
+                }
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
 }

@@ -23,6 +23,9 @@ public class CS_Entity_LoginDetails {
     private String LD_UpdationDate = "";
     private String LD_CountryCode = "";
     private String LD_MobileNo = "";
+    private String LD_S_PIN_Status = "";
+    private String LD_S_PIN = "";
+    private String LD_S_Fingerprint_Status = "";
 
     public CS_Entity_LoginDetails() {}
 
@@ -134,5 +137,29 @@ public class CS_Entity_LoginDetails {
 
     public void setLD_MobileNo(String LD_MobileNo) {
         this.LD_MobileNo = LD_MobileNo;
+    }
+
+    public String getLD_S_PIN_Status() {
+        return LD_S_PIN_Status;
+    }
+
+    public void setLD_S_PIN_Status(String LD_S_PIN_Status) {
+        this.LD_S_PIN_Status = LD_S_PIN_Status;
+    }
+
+    public String getLD_S_PIN() {
+        return LD_S_PIN;
+    }
+
+    public void setLD_S_PIN(String LD_S_PIN) {
+        this.LD_S_PIN = LD_S_PIN;
+    }
+
+    public String getLD_S_Fingerprint_Status() {
+        return LD_S_Fingerprint_Status;
+    }
+
+    public void setLD_S_Fingerprint_Status(String LD_S_Fingerprint_Status) {
+        this.LD_S_Fingerprint_Status = LD_S_Fingerprint_Status;
     }
 }

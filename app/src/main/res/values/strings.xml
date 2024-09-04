@@ -8,10 +8,13 @@
     <string name="camera_permission_denied">Permission denied, require camera permission to scan qr code.</string>
     <string name="app_exit_caption">Exit</string>
     <string name="app_exit_message">Are you sure want to exit ?</string>
+    <string name="status_on">ON</string>
+    <string name="status_off">OFF</string>
 
     <!--    Splash Page-->
     <string name="splash_powered_by">Powered by</string>
     <string name="splash_powered_by_text">Leego Visitor Management</string>
+    <string name="splash_app_pin_message">Enter PIN to continue</string>
 
     <!--    Scan Server Details-->
     <string name="scan_server_details_page_caption">Scan Server Details</string>
@@ -94,6 +97,7 @@
     <string name="login_mobile_no_next">Next</string>
     <string name="login_mobile_no_country_code_empty">Select country code</string>
     <string name="login_mobile_no_empty">Enter mobile no.</string>
+    <string name="login_mobile_no_invalid">Invalid mobile no.</string>
     <string name="login_mobile_no_password_empty">Enter password</string>
 
     <!--    Login Email Verify-->
@@ -192,8 +196,8 @@
     <string name="access_employee_access">Employee Access</string>
     <string name="access_page_instruction">Scan/Present this QR code at the gate.</string>
     <string name="access_host_employee_no">Employee No. :</string>
-    <string name="access_host_visitor_name">Visitor Name:</string>
-    <string name="access_host_vehicle_no">Vehicle Number:</string>
+    <string name="access_host_visitor_name">Employee Name</string>
+    <string name="access_host_vehicle_no">Vehicle Number</string>
     <string name="access_data_save_error">Unable to save or update access details</string>
     <string name="access_login_id_blank">Employee id is empty</string>
 
@@ -211,12 +215,14 @@
     <string name="settings_security">SECURITY</string>
     <string name="settings_change_password">Change Password</string>
     <string name="settings_change_password_details">Change your password regularly</string>
-    <string name="settings_server">SERVER</string>
-    <string name="settings_server_details">Server</string>
-    <string name="settings_server_details_info">Server Details</string>
+    <string name="settings_server">PROPERTY</string>
+    <string name="settings_server_details">Property</string>
+    <string name="settings_server_details_info">Property Details</string>
+    <string name="settings_security_pin">Security</string>
+    <string name="settings_security_pin_details">PIN Lock, Biometric</string>
 
     <!--    Server Details-->
-    <string name="server_page_caption">Server Details</string>
+    <string name="server_page_caption">Property Details</string>
     <string name="server_name">Property Name</string>
     <string name="server_id">Property ID</string>
     <string name="server_unit_name">Unit Name</string>
@@ -225,7 +231,7 @@
     <string name="server_address_line_1">Address Line 1</string>
     <string name="server_address_line_2">Address Line 2</string>
 
-<!--    Update Mobile No-->
+    <!--    Update Mobile No-->
     <string name="update_mobile_no_page_caption">Update Contact Details</string>
     <string name="update_mobile_no_name">Name</string>
     <string name="update_mobile_no_name_hint">John Smith</string>
@@ -239,6 +245,7 @@
     <string name="update_mobile_no_btn_update">Update</string>
     <string name="update_mobile_no_error_country_code_blank_update">Select country code</string>
     <string name="update_mobile_no_error_mobile_no_blank">Enter mobile no.</string>
+    <string name="update_mobile_no_error_mobile_no_invalid">Invalid mobile no.</string>
     <string name="update_mobile_no_change_success">Mobile no. changed successfully.</string>
     <string name="update_mobile_save_error">Unable to save or update mobile no.</string>
     <string name="update_mobile_id_empty">Employee id is empty</string>
@@ -246,18 +253,64 @@
 
     <!--    Change Password-->
     <string name="change_password_page_caption">Change Password</string>
-    <string name="change_password_enter_old_password">Enter old passwords</string>
+    <string name="change_password_enter_old_password">Enter old password</string>
     <string name="change_password_old_password_did_not_match">Password not match</string>
-    <string name="change_password_enter_new_password">Enter new passwords</string>
+    <string name="change_password_enter_new_password">Enter new password</string>
     <string name="change_password_invalid_new_password">Invalid new passwords</string>
     <string name="change_password_new_old_password_same">New passwords same as old password</string>
-    <string name="change_password_info">At least 12 characters long but 14 or more is better. A combination of uppercase letters, lowercase letters, numbers, and special characters.\nSpecial characters are</string>
-    <string name="change_password_confirm_password">Confirm new passwords</string>
+    <string name="change_password_info">At least 12 characters long but more is better. \nA combination of uppercase letters, lowercase letters, numbers, and special characters.\nSpecial characters are</string>
+    <string name="change_password_confirm_password">Confirm new password</string>
     <string name="change_password_password_confirm">Enter confirm passwords</string>
     <string name="change_password_password_not_match">Password not match</string>
     <string name="change_password_update">Update</string>
     <string name="change_password_save_error">Unable to save or update new password</string>
     <string name="change_password_id_empty">Employee id is empty</string>
     <string name="change_password_success">Password changed successfully.</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Security Pin-->
+    <string name="security_pin_page_caption">Security</string>
+    <string name="security_pin_pin">PIN Lock</string>
+    <string name="security_pin_pin_details">Unlock the app with a 6-digit PIN.</string>
+    <string name="security_pin_fingerprint">Biometric Unlock</string>
+    <string name="security_pin_fingerprint_details">Use biometric to unlock the app.</string>
+    <string name="security_pin_save">Save</string>
+    <string name="security_pin_biometric_error_1">This device does not have biometric hardware.</string>
+    <string name="security_pin_biometric_error_2">Biometric features are unavailable.</string>
+    <string name="security_pin_biometric_error_3">Enroll biometrics in device settings.</string>
+    <string name="security_pin_source_id_error">Source id blank.</string>
+    <string name="security_pin_save_error">Unable to save or update</string>
+
+    <!--    Security Pin-->
+    <string name="security_s_pin_page_caption">Set PIN</string>
+    <string name="security_s_pin_enter_old_pin">Enter old PIN</string>
+    <string name="security_s_pin_enter_new_pin">Enter new PIN</string>
+    <string name="security_s_pin_confirm_enter_new_pin">Confirm new PIN</string>
+    <string name="security_s_pin_button_update">Update</string>
+    <string name="security_s_pin_enable">PIN</string>
+    <string name="security_s_enter_old_pin">Enter old PIN</string>
+    <string name="security_s_pin_old_pin_did_not_match">PIN not match</string>
+    <string name="security_s_enter_new_pin">Enter new PIN</string>
+    <string name="security_s_invalid_new_pin">Invalid new PIN</string>
+    <string name="security_s_pin_new_old_pin_same">New PIN same as old PIN</string>
+    <string name="security_s_pin_change_success">PIN changed successfully.</string>
+    <string name="security_s_pin_save_error">Unable to save or update new password</string>
+    <string name="security_s_pin_id_empty">Employee id is empty</string>
+    <string name="security_s_pin_success">Success</string>
+    <string name="security_s_pin_set">PIN set successfully.</string>
+    <string name="security_s_pin_button_save">Set</string>
+
+    <!--    App Pin-->
+    <string name="app_pin_page_caption">Enter PIN to continue</string>
+    <string name="app_pin_page_info">Enter PIN to continue</string>
+    <string name="app_pin_btn_verify">Verify</string>
+    <string name="app_pin_error_invalid">Incorrect PIN</string>
+    <string name="app_pin_error_invalid_lock">Incorrect PIN. Keypad Locked</string>
+    <string name="app_pin_biometric_error_prompt">PromptInfo is null</string>
+    <string name="app_pin_biometric_prompt_title">Biometric Authentication</string>
+    <string name="app_pin_biometric_prompt_subtitle">Login with your biometric credential</string>
+    <string name="app_pin_biometric_error_authentication">Biometric Authentication Failed</string>
+    <string name="app_pin_correct">Correct</string>
 
 </resources>

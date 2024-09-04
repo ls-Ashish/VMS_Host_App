@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background"
+    tools:context=".activity.settings.security.S_Set_PIN">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                style="@style/Theme.MyCustomToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetEnd="16dp"
+                app:contentInsetStart="16dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_BackArrow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_back_arrow" />
+
+                    <TextView
+                        style="@style/Theme.MyCustomToolbarText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8"
+                        android:gravity="center"
+                        android:text="@string/security_s_pin_page_caption" />
+
+                    <ImageView
+                        android:id="@+id/iv_ScanServerDetails"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:foregroundGravity="right"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_back_arrow"
+                        android:visibility="invisible" />
+
+                </TableRow>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appBar"
+            style="@style/ActivityTopMarginStyle"
+            android:gravity="center|top">
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TableRow
+                            android:id="@+id/tr_OnOff"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/listPreferredItemHeightSmall"
+                            android:layout_below="@+id/tv_Scanning"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="8"
+                                android:gravity="center|left"
+                                android:text="@string/security_s_pin_enable"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/inter_regular" />
+
+                            <Switch
+                                android:id="@+id/sw_EnablePIN"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:switchMinWidth="50dp" />
+
+                        </TableRow>
+
+                        <TextView
+                            android:id="@+id/tv_EnterOldPinCaption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:padding="10dp"
+                            android:text="@string/security_s_pin_enter_old_pin"
+                            android:textAllCaps="true"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_OldPin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:errorEnabled="true"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false"
+                            app:passwordToggleDrawable="@drawable/eye_password"
+                            app:passwordToggleEnabled="true">
+
+                            <EditText
+                                android:id="@+id/et_OldPin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_shape"
+                                android:backgroundTint="@color/et_background_color"
+                                android:digits="012345689"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberPassword"
+                                android:maxLength="6"
+                                android:padding="10dp"
+                                android:textColorHint="@color/et_hint_text_color"
+                                android:textSize="@dimen/text_size_normal"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/tv_EnterNewPinCaption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:padding="10dp"
+                            android:text="@string/security_s_pin_enter_new_pin"
+                            android:textAllCaps="true"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_NewPin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:errorEnabled="true"
+                            app:hintAnimationEnabled="false"
+                            app:hintEnabled="false">
+
+                            <EditText
+                                android:id="@+id/et_NewPin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_shape"
+                                android:backgroundTint="@color/et_background_color"
+                                android:digits="012345689"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="number"
+                                android:maxLength="6"
+                                android:padding="10dp"
+                                android:textColorHint="@color/et_hint_text_color"
+                                android:textSize="@dimen/text_size_normal"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/btn_Save"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rectangle_shape"
+                            android:backgroundTint="@color/btn_background"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="@string/security_s_pin_button_save"
+                            android:textColor="@color/btn_background_text_color" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

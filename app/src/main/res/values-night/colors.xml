@@ -38,6 +38,7 @@
     <color name="et_text_color">#000000</color>
     <color name="et_hint_text_color">#6a6b6c</color>
     <color name="et_background_color">#FFFFFF</color>
+    <color name="et_error_color">#b3261e</color>
 
     <!-- Button-->
     <color name="btn_background">@color/colorPrimaryDark</color>
@@ -69,5 +70,8 @@
 
     <!--    Line-->
     <color name="line_bg">#EFEFEF</color>
+
+    <!--    Status Bar -->
+    <color name="status_bar_color">#FFFFFF</color>
 
 </resources>

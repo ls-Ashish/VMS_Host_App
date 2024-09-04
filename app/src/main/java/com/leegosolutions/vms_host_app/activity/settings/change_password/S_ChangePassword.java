@@ -273,12 +273,12 @@ public class S_ChangePassword extends Fragment {
 
     private void showSnackbar() {
         try {
-            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_INDEFINITE).setAction("RETRY",
+            Snackbar snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
-                                updatePassword();
+                                viewBinding.btnUpdate.performClick();
 
                             } catch (Exception e) {
                                 new CS_Utility(context).saveError(e);

@@ -105,8 +105,7 @@
                                         android:textSize="@dimen/text_size_large_36"
                                         android:textColor="@color/tv_text_color"
                                         android:gravity="center"
-                                        android:textStyle="bold"
-                                        android:fontFamily="@font/playfair_regular"/>
+                                        android:fontFamily="@font/inter_bold"/>
 
                                 </RelativeLayout>
 

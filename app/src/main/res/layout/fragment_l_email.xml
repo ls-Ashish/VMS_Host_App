@@ -61,7 +61,8 @@
                             android:hint="@string/login_email_text_hint"
                             android:inputType="textEmailAddress"
                             android:textColorHint="@color/et_hint_text_color"
-                            android:fontFamily="@font/inter_regular"/>
+                            android:fontFamily="@font/inter_regular"
+                            android:singleLine="true"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +96,8 @@
                             android:padding="10dp"
                             android:inputType="textPassword"
                             android:textColorHint="@color/et_hint_text_color"
-                            android:fontFamily="@font/inter_regular"/>
+                            android:fontFamily="@font/inter_regular"
+                            android:singleLine="true"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
