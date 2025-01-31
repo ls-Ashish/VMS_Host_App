@@ -39,4 +39,21 @@ public interface CS_Dao_ServerDetails {
             "ORDER BY SD_Auto_Id DESC LIMIT 1")
     CS_Entity_ServerDetails getServerDetails();
 
+
+
+    // Update server details
+    @Query("UPDATE " + CS_SQLiteTable.VMS_Server_Details  + " SET " +
+            "SD_BuildingName = :buildingName, " +
+            "SD_BuildingName = :buildingName, " +
+            "SD_TenantName = :tenantName, " +
+            "SD_Logo = :logo, " +
+            "SD_ErrorPostingURL = :errorPostingURL, " +
+            "SD_UpdationDate = :updationDate, " +
+            "SD_Country = :country, " +
+            "SD_Address_Line_1 = :address_Line_1, " +
+            "SD_Address_Line_2 = :address_Line_2 " +
+            "WHERE SD_BU_ID = :where_Building_Id AND SD_TE_ID = :where_Tenant_Id")
+    int updateServerDetails(String where_Building_Id, String where_Tenant_Id, String buildingName, String tenantName, byte[] logo, String errorPostingURL, String updationDate, String country, String address_Line_1, String address_Line_2);
+
+
 }

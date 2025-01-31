@@ -87,6 +87,7 @@
                         app:cardMaxElevation="5dp">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/ll_AccountPreference"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -122,7 +123,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -154,7 +155,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -187,7 +188,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -220,7 +221,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -253,7 +254,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -286,7 +287,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 
@@ -319,7 +320,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
-                                    android:fontFamily="@font/inter_regular"/>
+                                    android:fontFamily="@font/inter_bold"/>
 
                             </TableRow>
 

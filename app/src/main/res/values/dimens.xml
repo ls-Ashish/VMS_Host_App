@@ -22,6 +22,7 @@
     <dimen name="text_size_large_26">26sp</dimen>
     <dimen name="text_size_large_36">36sp</dimen>
     <dimen name="text_size_extra_large">40sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

@@ -21,9 +21,11 @@ import okhttp3.Response;
 public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "", logged_BU_Id = "", logged_TE_Id = "";
+    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "", logged_BU_Id = "", logged_TE_Id = "", resultMessage = "";
+    private OnUpdateCompleted listener;
+    private boolean defaultEmailStatus = false, emailSetupStatus = false;
 
-    public CS_Fetch_Email_Setup(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken, String logged_BU_Id, String logged_TE_Id) {
+    public CS_Fetch_Email_Setup(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken, String logged_BU_Id, String logged_TE_Id, OnUpdateCompleted listener) {
         try {
             this.context = context;
             this.baseURL = baseURL;
@@ -33,6 +35,7 @@ public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
             this.appToken = appToken;
             this.logged_BU_Id = logged_BU_Id;
             this.logged_TE_Id = logged_TE_Id;
+            this.listener = listener;
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -94,7 +97,7 @@ public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
 
                                 // Save
                                 CS_Entity_EmailDetails model = new CS_Entity_EmailDetails("Default", CS_ED.Encrypt(emailId), CS_ED.Encrypt(password), CS_ED.Encrypt(server), CS_ED.Encrypt(port), enableSSL, new CS_Utility(context).getDateTime(), "");
-                                new CS_Action_EmailDetails(context).insertEmailDetails(model);
+                                defaultEmailStatus = new CS_Action_EmailDetails(context).insertEmailDetails(model);
 
                             }
                         }
@@ -104,6 +107,10 @@ public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
             }
 
         } catch (Exception e) {
+
+            defaultEmailStatus = false;
+            resultMessage = e.toString();
+
             new CS_Utility(context).saveError(e);
         }
         // Email_Setup
@@ -156,7 +163,7 @@ public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
 
                                 // Save
                                 CS_Entity_EmailDetails model = new CS_Entity_EmailDetails("Building_Wise", CS_ED.Encrypt(emailId), CS_ED.Encrypt(password), CS_ED.Encrypt(server), CS_ED.Encrypt(port), enableSSL, new CS_Utility(context).getDateTime(), "");
-                                new CS_Action_EmailDetails(context).insertEmailDetails(model);
+                                emailSetupStatus = new CS_Action_EmailDetails(context).insertEmailDetails(model);
 
                             }
                         }
@@ -166,9 +173,30 @@ public class CS_Fetch_Email_Setup extends AsyncTask<Void, Void, Void> {
             }
 
         } catch (Exception e) {
+
+            emailSetupStatus = false;
+            resultMessage = e.toString();
+
             new CS_Utility(context).saveError(e);
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void unused) {
+        super.onPostExecute(unused);
+        try {
+            if (listener != null) {
+                listener.OnUpdateCompleted(defaultEmailStatus, emailSetupStatus, resultMessage);
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public interface OnUpdateCompleted {
+        void OnUpdateCompleted(boolean defaultEmailStatus, boolean emailStatus, String message);
     }
 
 }

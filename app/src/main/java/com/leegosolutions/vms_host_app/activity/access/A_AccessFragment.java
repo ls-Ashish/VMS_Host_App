@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
@@ -71,7 +72,7 @@ public class A_AccessFragment extends Fragment {
     private long refreshTime = 5000; // 5 x 1000 = 5 sec
     private Handler handler = new Handler();
     private Runnable runnable;
-    private String sourceId = "", employeeNo = "", employeeName = "", employeeUnit = "", employeeVehicleNo = "", employeeNo_Encrypted = "", employeeLastUpdationDate = "", floorUnitNo = "";
+    private String sourceId = "", employeeNo = "", employeeName = "", employeeUnit = "", employeeVehicleNo = "", employeeNo_Encrypted = "", employeeLastUpdationDate = "", floorUnitNo = "", buildingName="";
 
     public A_AccessFragment() {
         // default constructor required, if no default constructor than will crash at orientation change
@@ -130,12 +131,23 @@ public class A_AccessFragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_a_access, container, false);
         try {
+            // Restrict screenshot
+            restrictScreenshot();
             viewBinding = FragmentAAccessBinding.inflate(inflater, container, false);
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }
         return viewBinding.getRoot();
+    }
+
+    private void restrictScreenshot() {
+        try {
+            requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
     }
 
     @Override
@@ -154,6 +166,13 @@ public class A_AccessFragment extends Fragment {
     public void onResume() {
         super.onResume();
         try {
+            // Restrict screenshot
+            restrictScreenshot();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        try {
             refreshQRCode();
 
         } catch (Exception e) {
@@ -166,6 +185,13 @@ public class A_AccessFragment extends Fragment {
         super.onPause();
         try {
             handler.removeCallbacks(runnable);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        try {
+            // Allow screenshot
+            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -249,7 +275,8 @@ public class A_AccessFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             try {
                 // Fetch lastUpdationDate from sqlite
-                String sqLiteLastUpdationDate = new CS_Action_AccessDetails(context).getAccessDetails().getAD_E_UpdationDate();
+//                String sqLiteLastUpdationDate = new CS_Action_AccessDetails(context).getAccessDetails().getAD_E_UpdationDate();
+                String sqLiteLastUpdationDate = ""; // to fetch host's latest company name
 
                 OkHttpClient client = new CS_Utility(context).getOkHttpClient();
 
@@ -422,6 +449,16 @@ public class A_AccessFragment extends Fragment {
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
             }
+            try {
+                CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
+                if (model != null) {
+                    buildingName = model.getSD_BuildingName();
+
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
             return null;
         }
 
@@ -447,11 +484,11 @@ public class A_AccessFragment extends Fragment {
             }
 
             // Unit Name
-            if (!employeeUnit.isEmpty()) {
-                viewBinding.tvUnitName.setText(employeeUnit);
+            if (!employeeName.isEmpty()) {
+                viewBinding.tvHostName.setText(employeeName);
 
             } else {
-                viewBinding.tvUnitName.setVisibility(View.GONE);
+                viewBinding.tvHostName.setVisibility(View.GONE);
             }
 
             // Floor Unit No.
@@ -471,19 +508,19 @@ public class A_AccessFragment extends Fragment {
             }
 
             // Host Name
-            if (!employeeName.isEmpty()) {
-                viewBinding.tvHostName.setText(employeeName);
+            if (!buildingName.isEmpty()) {
+                viewBinding.tvProperty.setText(buildingName);
 
             } else {
-                viewBinding.llHostName.setVisibility(View.GONE);
+                viewBinding.llProperty.setVisibility(View.GONE);
             }
 
-            // Host Vehicle No.
-            if (!employeeVehicleNo.isEmpty()) {
-                viewBinding.tvHostVehicleNo.setText(employeeVehicleNo);
+            // Host Company
+            if (!employeeUnit.isEmpty()) {
+                viewBinding.tvHostCompany.setText(employeeUnit);
 
             } else {
-                viewBinding.llHostVehicleNo.setVisibility(View.GONE);
+                viewBinding.llHostCompany.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {
@@ -496,6 +533,9 @@ public class A_AccessFragment extends Fragment {
             if (!employeeNo_Encrypted.isEmpty()) {
                 String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
                 String qrcodeValue = "HOST://" + employeeNo_Encrypted + "§" + CS_ED.Encrypt(currentDateTime);
+
+                // HOST://85gaEPeZSLW+oRNejKJ2JQ==§RjHzQefDXhpGVKjg/OPzQq9SIVfMe4omzJdrep8+JVY=
+                // host primary id + datetime
 
                 barcodeEncoder = new BarcodeEncoder();
                 bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);

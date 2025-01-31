@@ -525,25 +525,27 @@ public class ScanServerDetails extends AppCompatActivity {
                                 JSONArray jsonArray = new JSONArray(jsonData);
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                                result = jsonObject.getString("Result");
-                                msg = jsonObject.getString("Msg");
+                                if (jsonObject.has("Result") && jsonObject.has("Msg")) {
 
-                                if (result.equals("1")) {
-                                    bu_Id = jsonObject.getString("BU_Id");
-                                    te_Id = jsonObject.getString("TE_Id");
-                                    buildingName = jsonObject.getString("BU_BuildingName");
-                                    tenantName = jsonObject.getString("TenantName");
-                                    errorPostingURL = jsonObject.getString("ErrorPostingURL");
-                                    buildingCountry = jsonObject.getString("Country");
-                                    buildingAddressLine_1 = jsonObject.getString("AddressLine_1");
-                                    buildingAddressLine_2 = jsonObject.getString("AddressLine_2");
+                                    result = jsonObject.getString("Result");
+                                    msg = jsonObject.getString("Msg");
 
-                                    String base64_Image = jsonObject.getString("AttachedPhoto");
-                                    if (!base64_Image.equals("null") && !base64_Image.equals("")) {
-                                        attachedPhoto = Base64.decode(base64_Image, Base64.NO_WRAP);
-                                    }
+                                    if (result.equals("1")) {
+                                        bu_Id = jsonObject.getString("BU_Id");
+                                        te_Id = jsonObject.getString("TE_Id");
+                                        buildingName = jsonObject.getString("BU_BuildingName");
+                                        tenantName = jsonObject.getString("TenantName");
+                                        errorPostingURL = jsonObject.getString("ErrorPostingURL");
+                                        buildingCountry = jsonObject.getString("Country");
+                                        buildingAddressLine_1 = jsonObject.getString("AddressLine_1");
+                                        buildingAddressLine_2 = jsonObject.getString("AddressLine_2");
 
-                                    // Generate New App Token
+                                        String base64_Image = jsonObject.getString("AttachedPhoto");
+                                        if (!base64_Image.equals("null") && !base64_Image.equals("")) {
+                                            attachedPhoto = Base64.decode(base64_Image, Base64.NO_WRAP);
+                                        }
+
+                                        // Generate New App Token
 //                                    try {
 //                                        client = new CS_Utility(context).getOkHttpClient();
 //                                        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
@@ -583,6 +585,13 @@ public class ScanServerDetails extends AppCompatActivity {
 //                                        new CS_Utility(context).saveError(e, context.getClass().getSimpleName(), new Object() {
 //                                        }.getClass().getEnclosingMethod().getName(), String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber()));
 //                                    }
+                                    }
+
+                                } else if (jsonObject.has("code") && jsonObject.has("Msg")) {
+
+                                    result = jsonObject.getString("code");
+                                    msg = jsonObject.getString("Msg");
+
                                 }
                             }
                         }
@@ -680,9 +689,9 @@ public class ScanServerDetails extends AppCompatActivity {
     private void fetchData(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken) {
         try {
             // Default Email and Email Setup
-            new CS_Fetch_Email_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id).execute();
+            new CS_Fetch_Email_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id, null).execute();
             // SMS Setup
-            new CS_Fetch_SMS_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id).execute();
+            new CS_Fetch_SMS_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id, null).execute();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);

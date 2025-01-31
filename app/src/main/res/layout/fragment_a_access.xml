@@ -141,7 +141,7 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tv_UnitName"
+                                android:id="@+id/tv_HostName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -162,6 +162,7 @@
                                 android:fontFamily="@font/inter_regular"/>
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/tv_HostNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -212,7 +213,7 @@
                                 android:layout_marginTop="20dp"/>
 
                             <LinearLayout
-                                android:id="@+id/ll_HostName"
+                                android:id="@+id/ll_Property"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
@@ -227,21 +228,20 @@
                                     android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
-                                    android:id="@+id/tv_HostName"
+                                    android:id="@+id/tv_Property"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="@dimen/text_size_normal"
                                     android:textColor="@color/tv_text_color"
                                     android:gravity="center|left"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:fontFamily="@font/inter_bold"/>
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
-                                android:id="@+id/ll_HostVehicleNo"
+                                android:id="@+id/ll_HostCompany"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
@@ -250,20 +250,20 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/access_host_vehicle_no"
+                                    android:text="@string/access_host_company"
                                     android:textSize="@dimen/text_size_normal"
                                     android:gravity="center|left"
                                     android:fontFamily="@font/inter_regular"/>
 
                                 <TextView
-                                    android:id="@+id/tv_HostVehicleNo"
+                                    android:id="@+id/tv_HostCompany"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textColor="@color/tv_text_color"
                                     android:textSize="@dimen/text_size_normal"
                                     android:gravity="center|left"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:fontFamily="@font/inter_bold"/>
 
                             </LinearLayout>

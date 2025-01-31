@@ -1,5 +1,6 @@
 package com.leegosolutions.vms_host_app.activity.settings;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,7 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.AppPIN;
+import com.leegosolutions.vms_host_app.activity.ScanServerDetails;
 import com.leegosolutions.vms_host_app.activity.access.A_AccessFragment;
 import com.leegosolutions.vms_host_app.activity.home.fragment.H_HomeFragment;
 import com.leegosolutions.vms_host_app.activity.login.Login;
@@ -38,6 +42,7 @@ import com.leegosolutions.vms_host_app.database.action.CS_Action_AccessDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.databinding.FragmentAAccessBinding;
 import com.leegosolutions.vms_host_app.databinding.FragmentHVisitorsBinding;
@@ -84,7 +89,10 @@ public class S_SettingsFragment extends Fragment {
             this.bottomNavigationView = bottomNavigationView;
 
             // Show
-            bottomNavigationView.setVisibility(View.VISIBLE);
+            if (bottomNavigationView != null) {
+                // Show
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -189,7 +197,13 @@ public class S_SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    // check internet connection
+//                    if (new CS_Connection(context).getStatus()) {
                     showLogoutConfirmation();
+
+//                    } else {
+//                        showSnackbar();
+//                    }
 
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e);
@@ -201,9 +215,9 @@ public class S_SettingsFragment extends Fragment {
     public void showLogoutConfirmation() {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Alert");
+            builder.setTitle(getResources().getString(R.string.dialog_alert));
             builder.setIcon(R.drawable.ic_logout);
-            builder.setMessage("Are you sure want to logout ?");
+            builder.setMessage(getResources().getString(R.string.settings_logout_confirmation));
             builder.setCancelable(false);
             builder.setPositiveButton("Yes".toUpperCase(), new DialogInterface.OnClickListener() {
                 @Override
@@ -229,29 +243,98 @@ public class S_SettingsFragment extends Fragment {
 
     public class LogOut extends AsyncTask<Void, Void, Boolean> {
 
+        private String baseURL = "", appToken = "", buildingId = "", tenantId = "", hostId = "", result = "", msg = "";
+        private boolean status = false;
+
         @Override
         protected Boolean doInBackground(Void... voids) {
-            boolean result = false;
+
             try {
+//                OkHttpClient client = new CS_Utility(context).getOkHttpClient();
+//
+//                CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
+//                if (model != null) {
+//                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
+//                    appToken = model.getSD_AppToken();
+//                    buildingId = model.getSD_BU_ID();
+//                    tenantId = model.getSD_TE_ID();
+//                }
+//
+//                hostId = new CS_Action_LoginDetails(context).getLoginDetails().getLD_SourceId();
+//
+//                if (!baseURL.equals("")) {
+//
+//                    JSONObject jObject = new JSONObject();
+//                    jObject.put("UserName", "");
+//                    jObject.put("Password", "");
+//                    jObject.put("Logged_BU_Id", buildingId);
+//                    jObject.put("Logged_TE_Id", tenantId);
+//                    jObject.put("Flag", "Logout");
+//                    jObject.put("LoginType", "");
+//                    jObject.put("CountryCode", "");
+//                    jObject.put("MobileNo", "");
+//
+//                    RequestBody body = new MultipartBody.Builder()
+//                            .setType(MultipartBody.FORM)
+//                            .addFormDataPart("Id", hostId)
+//                            .addFormDataPart("Json_Data", String.valueOf(jObject))
+//                            .addFormDataPart("App_Token", appToken)
+//                            .build();
+//
+//                    Request request = new Request.Builder()
+//                            .url(baseURL + CS_API_URL.Login)
+//                            .method("POST", body)
+//                            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+//                            .addHeader("Authorization", "Bearer " + appToken)
+//                            .build();
+//
+//                    Response response = client.newCall(request).execute();
+//                    if (response.isSuccessful()) {
+//                        if (response != null) {
+//                            String responseBody = response.body().string();
+//                            if (!responseBody.equals("")) {
+//
+//                                String jsonData = responseBody;
+//                                JSONArray jsonArray = new JSONArray(jsonData);
+//                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+//
+//                                result = jsonObject.getString("Result");
+//                                msg = jsonObject.getString("Msg");
+//
+//                                if (result.equals("1")) {
                 // Clean
-                new CS_Action_LoginDetails(context).deleteLoginDetails();
-                new CS_Action_AccessDetails(context).deleteAccessDetails();
+//                                  new CS_Action_LoginDetails(context).deleteLoginDetails();
+                boolean logoutStatus = new CS_Action_LoginDetails(context).logout();
 
-                result = true;
+                if (logoutStatus) {
+                    // Do not clear, as if logout when no internet, then next time login using pin or biometric also without internet, then after login in access page all blank as when logout data was deleted.
+//                                        new CS_Action_AccessDetails(context).deleteAccessDetails();
+                    status = true;
+                }
 
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                }
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
             }
-            return result;
+            return status;
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Boolean status) {
+            super.onPostExecute(status);
             try {
-                if (result) {
+//                if (status && result.equals("1")) {
+                if (status) {
                     new CS_Utility(context).showToast(getResources().getString(R.string.settings_logout_success), 1);
                     goToLoginPage();
+
+                } else if (status.equals("0")) {
+                    showAlertDialog(msg);
 
                 } else {
                     showAlertDialog(context.getResources().getString(R.string.settings_logout_error));
@@ -307,7 +390,7 @@ public class S_SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    goToNextFragment(new S_UpdateMobileNoFragment(context));
+                    goToNextFragment(new S_UpdateMobileNoFragment(context, bottomNavigationView));
 
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e);
@@ -335,7 +418,9 @@ public class S_SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    goToNextFragment(new S_Security(context));
+//                    goToNextFragment(new S_Security(context));
+
+                    new FetchLoginDetails().execute();
 
                 } catch (Exception e) {
                     new CS_Utility(context).saveError(e);
@@ -367,7 +452,11 @@ public class S_SettingsFragment extends Fragment {
                     .commit();
 
             // Hide
-            bottomNavigationView.setVisibility(View.GONE);
+            if (bottomNavigationView != null) {
+                // Show
+                bottomNavigationView.setVisibility(View.GONE);
+            }
+
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -389,7 +478,7 @@ public class S_SettingsFragment extends Fragment {
 
     class UpdateLoginDetails extends AsyncTask<Void, Void, Void> {
 
-//        private ProgressDialog progressdialog;
+        //        private ProgressDialog progressdialog;
         private String result = "", msg = "";
         private String baseURL = "", appToken = "", email = "", userType = "", userName = "", password = "", buildingId = "", tenantId = "", sourceId = "", enable2FA = "", lastUpdationDate = "", countryCode = "", mobileNo = "";
         private byte[] userPhoto = null;
@@ -527,6 +616,94 @@ public class S_SettingsFragment extends Fragment {
                 } else {
                     new CS_Utility(context).showToast("Error", 1);
                 }
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        }
+    }
+
+    private void showSnackbar() {
+        try {
+            Snackbar snackbar;
+            snackbar = Snackbar.make(viewBinding.main, context.getResources().getText(R.string.no_connection), Snackbar.LENGTH_LONG).setAction("RETRY",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                viewBinding.btnLogOut.performClick();
+
+                            } catch (Exception e) {
+                                new CS_Utility(context).saveError(e);
+                            }
+                        }
+                    });
+            snackbar.show();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == 1001) {
+                if (resultCode == Activity.RESULT_OK) {
+                    String result = data.getStringExtra("result");
+                    if (result.equals("1")) {
+                        goToNextFragment(new S_Security(context));
+
+                    } else {
+                        new CS_Utility(context).showToast("Incorrect PIN", 0);
+                    }
+
+                } else if (resultCode == Activity.RESULT_CANCELED) {
+                    // Write your code if there's no result
+
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+
+    public class FetchLoginDetails extends AsyncTask<Void, Void, Void> {
+
+        String appPINStatus = "", appBiometricStatus = "";
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_LoginDetails model = new CS_Action_LoginDetails(context).getLoginDetails();
+                if (model != null) {
+                    appPINStatus = model.getLD_S_PIN_Status();
+//                    appPIN = CS_ED.Decrypt(model.getLD_S_PIN());
+                    appBiometricStatus = model.getLD_S_Fingerprint_Status();
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                if (appPINStatus.equals("1") || appBiometricStatus.equals("1")) {
+
+                    Intent intent = new Intent(context, AppPIN.class);
+                    intent.putExtra("cameFrom", "S_SettingsFragment");
+                    startActivityForResult(intent, 1001);
+                    requireActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                } else {
+                    goToNextFragment(new S_Security(context));
+                }
+
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
             }

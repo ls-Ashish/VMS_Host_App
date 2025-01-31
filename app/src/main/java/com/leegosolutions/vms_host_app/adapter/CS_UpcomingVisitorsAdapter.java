@@ -125,7 +125,7 @@ public class CS_UpcomingVisitorsAdapter extends RecyclerView.Adapter<CS_Upcoming
                 tv_Message = itemView.findViewById(R.id.tv_Message);
 
             } catch (Exception ignored) {
-                // todo - check to save
+                // Later - check to save
             }
         }
     }

@@ -9,6 +9,7 @@ import com.leegosolutions.vms_host_app.database.action.CS_Action_SMSDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_SMSDetails;
 import com.leegosolutions.vms_host_app.utility.CS_ED;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
+import com.leegosolutions.vms_host_app.utility.email.CS_Fetch_Email_Setup;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,9 +23,11 @@ import okhttp3.Response;
 public class CS_Fetch_SMS_Setup extends AsyncTask<Void, Void, Void> {
 
     private Context context;
-    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "", logged_BU_Id = "", logged_TE_Id = "";
+    private String baseURL = "", bCode = "", tCode = "", clientSecret = "", appToken = "", logged_BU_Id = "", logged_TE_Id = "", resultMessage = "";
+    private OnUpdateCompleted listener;
+    private boolean status = false;
 
-    public CS_Fetch_SMS_Setup(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken, String logged_BU_Id, String logged_TE_Id) {
+    public CS_Fetch_SMS_Setup(Context context, String baseURL, String bCode, String tCode, String clientSecret, String appToken, String logged_BU_Id, String logged_TE_Id, OnUpdateCompleted listener) {
         try {
             this.context = context;
             this.baseURL = baseURL;
@@ -34,6 +37,7 @@ public class CS_Fetch_SMS_Setup extends AsyncTask<Void, Void, Void> {
             this.appToken = appToken;
             this.logged_BU_Id = logged_BU_Id;
             this.logged_TE_Id = logged_TE_Id;
+            this.listener = listener;
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -95,7 +99,7 @@ public class CS_Fetch_SMS_Setup extends AsyncTask<Void, Void, Void> {
 
                                 // Save
                                 CS_Entity_SMSDetails model = new CS_Entity_SMSDetails(CS_ED.Encrypt(platform), CS_ED.Encrypt(accountNo), CS_ED.Encrypt(tokenNo), CS_ED.Encrypt(serviceNo), CS_ED.Encrypt(sender), CS_ED.Encrypt(urlCode), CS_ED.Encrypt(expiryTime), "", "", "", "", "", "", new CS_Utility(context).getDateTime(), "");
-                                new CS_Action_SMSDetails(context).insertSMSDetails(model);
+                                status = new CS_Action_SMSDetails(context).insertSMSDetails(model);
 
                             }
                         }
@@ -105,9 +109,30 @@ public class CS_Fetch_SMS_Setup extends AsyncTask<Void, Void, Void> {
             }
 
         } catch (Exception e) {
+
+            status = false;
+            resultMessage = e.toString();
+
             new CS_Utility(context).saveError(e);
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void unused) {
+        super.onPostExecute(unused);
+        try {
+            if (listener != null) {
+                listener.OnUpdateCompleted(status, resultMessage);
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public interface OnUpdateCompleted {
+        void OnUpdateCompleted(boolean status, String message);
     }
 
 }

@@ -154,7 +154,6 @@
                                     android:backgroundTint="@color/et_background_color"
                                     android:padding="10dp"
                                     android:layout_marginLeft="5dp"
-                                    android:hint="@string/login_mobile_no_text_hint"
                                     android:inputType="number"
                                     android:digits="0123456789"
                                     android:maxLength="12"
@@ -166,6 +165,15 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                         </TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_mobile_no_info"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/inter_regular"/>
 
                         <TextView
                             android:textAllCaps="true"
@@ -190,16 +198,6 @@
                             android:textColorHint="@color/et_hint_text_color"
                             android:fontFamily="@font/inter_regular"
                             android:singleLine="true"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/update_mobile_no_info"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/tv_text_color_grey"
-                            android:padding="10dp"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/inter_regular"/>
 
                         <TextView
                             android:textAllCaps="true"

@@ -2,6 +2,7 @@ package com.leegosolutions.vms_host_app.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
@@ -33,6 +35,7 @@ import androidx.viewbinding.ViewBinding;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.TestingCode;
 import com.leegosolutions.vms_host_app.activity.home.Home;
+import com.leegosolutions.vms_host_app.activity.login.Login;
 import com.leegosolutions.vms_host_app.activity.settings.security.S_Set_PIN;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
@@ -49,7 +52,7 @@ import java.util.Random;
 public class AppPIN extends AppCompatActivity {
 
     private Context context = AppPIN.this;
-    private String appPINStatus = "", appPIN = "", userEntered = "";
+    private String appPINStatus = "", appPIN = "", userEntered = "", appBiometricStatus="", cameFrom="";
     private ActivityAppPinBinding viewBinding;
     private final int PIN_LENGTH = 6;
     private boolean keyPadLockedFlag = false;
@@ -70,11 +73,13 @@ public class AppPIN extends AppCompatActivity {
             setContentView(viewBinding.getRoot());
 
             showHidePage(false);
+            fetchAppPIN();
             getIntentData();
             setPinBox();
             on_Click_Backspace_Button();
             on_Click_Biometric_Icon();
 //            showRandomKeypad();
+            on_Click_Login_Button();
 
             View.OnClickListener pinButtonHandler = new View.OnClickListener() {
                 public void onClick(View v) {
@@ -164,11 +169,55 @@ public class AppPIN extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            super.onBackPressed();
+            if (cameFrom.equals("S_SettingsFragment")) {
+                super.onBackPressed();
+
+            } else {
+//            super.onBackPressed();
 //            finishAffinity();
-            //App not allowed to go back to Parent activity until correct pin entered.
-            return;
-            //super.onBackPressed();
+                //App not allowed to go back to Parent activity until correct pin entered.
+//            return;
+                //super.onBackPressed();
+
+                int count = getSupportFragmentManager().getBackStackEntryCount();
+
+                if (count == 0) {
+//                super.onBackPressed();
+                    //additional code
+                    showAppExitDialog();
+                } else {
+                    super.onBackPressed();
+//                getSupportFragmentManager().popBackStack();
+                }
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public void showAppExitDialog() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(getResources().getString(R.string.app_exit_caption));
+            builder.setIcon(R.drawable.ic_exit);
+            builder.setMessage(getResources().getString(R.string.app_exit_message));
+            builder.setCancelable(false);
+            builder.setPositiveButton("Yes".toUpperCase(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    finish();
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -178,32 +227,11 @@ public class AppPIN extends AppCompatActivity {
     private void getIntentData() {
         try {
             Intent intent = getIntent();
-            if (getIntent().getExtras() != null) {
+            if (intent.getStringExtra("cameFrom") != null) {
+                cameFrom = intent.getStringExtra("cameFrom");
 
-                if (intent.getStringExtra("appPINStatus") != null) {
-                    appPINStatus = intent.getStringExtra("appPINStatus");
-                }
-
-                if (intent.getStringExtra("appPIN") != null) {
-                    appPIN = intent.getStringExtra("appPIN");
-                }
-
-                if (intent.getStringExtra("message") != null) {
-                    String message = intent.getStringExtra("message");
-                    viewBinding.tvMessage.setText(message);
-                }
-
-                if (intent.getStringExtra("appBiometricStatus") != null) {
-                    String appBiometricStatus = intent.getStringExtra("appBiometricStatus");
-                    if (appBiometricStatus.equals("1")) {
-
-                        showHidePage(false);
-                        showBiometricPrompt();
-
-                    } else {
-                        showHidePage(true);
-                        viewBinding.ivUseBiometrics.setVisibility(View.INVISIBLE);
-                    }
+                if (cameFrom.equals("S_SettingsFragment")) {
+                    viewBinding.tvLogin.setVisibility(View.GONE);
                 }
             }
         } catch (Exception e) {
@@ -228,13 +256,30 @@ public class AppPIN extends AppCompatActivity {
 
     private void success() {
         try {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", "1");
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
+            if (cameFrom.equals("S_SettingsFragment")) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result","1");
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+            } else {
+                // Update Login
+                new UpdateLoginDetails().execute();
+
+//            Intent returnIntent = new Intent();
+//            returnIntent.putExtra("result", "1");
+//            setResult(Activity.RESULT_OK, returnIntent);
+//            finish();
+
+                Intent intent = new Intent(context, Home.class);
+                // Clear
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
 //            new CS_Utility(context).showToast("Success", 0);
-
+            }
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }
@@ -243,8 +288,19 @@ public class AppPIN extends AppCompatActivity {
     private void showBiometricPrompt() {
         try {
             String negativeButtonText = "Cancel";
-            if (appPINStatus.equals("1")) {
-                negativeButtonText = "Use PIN";
+
+            if (cameFrom.equals("S_SettingsFragment")) {
+
+                if (appPINStatus.equals("1")) {
+                    negativeButtonText = "Use PIN";
+                }
+            } else {
+                if (appPINStatus.equals("1")) {
+                    negativeButtonText = "Use PIN or LOGIN";
+
+                } else {
+                    negativeButtonText = "LOGIN";
+                }
             }
 
             BiometricPrompt.PromptInfo promptInfo = getBiometricPrompt(negativeButtonText);
@@ -267,6 +323,7 @@ public class AppPIN extends AppCompatActivity {
                     .setTitle(getResources().getString(R.string.app_pin_biometric_prompt_title))
                     .setSubtitle(getResources().getString(R.string.app_pin_biometric_prompt_subtitle))
                     .setNegativeButtonText(negativeButtonText)
+                    .setNegativeButtonText(negativeButtonText)
                     .setConfirmationRequired(false)
 //                    .setDescription("setDescription")
                     .build();
@@ -287,11 +344,17 @@ public class AppPIN extends AppCompatActivity {
                         public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                             super.onAuthenticationError(errorCode, errString);
                             try {
-                                showHidePage(true);
-                                if (errString.equals("Use PIN")) {
+                                if (errString.equals("PIN or LOGIN") || appPINStatus.equals("1")) {
+                                    showHidePage(true);
+
+                                } else if (errString.equals("LOGIN")) {
+                                    viewBinding.tvLogin.performClick();
+
+                                } else if (errString.equals("Cancel") && cameFrom.equals("S_SettingsFragment")) {
+                                    onBackPressed();
 
                                 } else {
-//                                    finishAffinity(); // Close the current activity and all activities below it in the task
+                                    finishAffinity(); // Close the current activity and all activities below it in the task
                                     new CS_Utility(context).showToast(String.valueOf(errString), 1);
                                 }
 
@@ -367,6 +430,21 @@ public class AppPIN extends AppCompatActivity {
 
                              viewBinding.tvPINMessage.setText("");
                          }
+
+                     } catch (Exception e) {
+                         new CS_Utility(context).saveError(e);
+                     }
+                 }
+             }
+        );
+    }
+
+    private void on_Click_Login_Button() {
+        viewBinding.tvLogin.setOnClickListener(new View.OnClickListener() {
+                 public void onClick(View v) {
+                     try {
+                         // Login
+                         nextPage(Login.class);
 
                      } catch (Exception e) {
                          new CS_Utility(context).saveError(e);
@@ -460,6 +538,89 @@ public class AppPIN extends AppCompatActivity {
                 viewBinding.rlMain.setVisibility(View.INVISIBLE);
             }
 
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+
+    private class UpdateLoginDetails extends AsyncTask<Void, Void, Void> {
+
+        boolean result = false;
+
+        @Override
+        protected Void doInBackground(Void... strings) {
+            try {
+                result = new CS_Action_LoginDetails(context).setIsLogin(1);
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+    }
+
+    private void nextPage(Class aClass) {
+        try {
+            Intent intent = new Intent(context, aClass);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void fetchAppPIN() {
+        try {
+            new FetchAppPIN().execute();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public class FetchAppPIN extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_LoginDetails model = new CS_Action_LoginDetails(context).getLoginDetails();
+                if (model != null) {
+                    appPINStatus = model.getLD_S_PIN_Status();
+                    appPIN = CS_ED.Decrypt(model.getLD_S_PIN());
+                    appBiometricStatus = model.getLD_S_Fingerprint_Status();
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                setData();
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        }
+    }
+
+    private void setData() {
+        try {
+            if (appBiometricStatus.equals("1")) {
+                showHidePage(false);
+                showBiometricPrompt();
+
+            } else {
+                showHidePage(true);
+                viewBinding.ivUseBiometrics.setVisibility(View.INVISIBLE);
+            }
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }

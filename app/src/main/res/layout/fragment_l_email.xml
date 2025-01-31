@@ -102,26 +102,59 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TableRow
-                        android:visibility="invisible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
 
                         <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_ForgotPassword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/login_email_password_forgot"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/tv_text_color_grey"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/colorPrimary"
                             android:padding="10dp"
                             android:fontFamily="@font/inter_regular"/>
 
                         <TextView
-                            android:id="@+id/tv_LoginWithMobileNo"
+                            android:visibility="gone"
+                            android:id="@+id/tv_Or"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_email_or"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:visibility="invisible"
+                            android:id="@+id/tv_UsePIN"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_email_use_pin"
+                            android:textSize="@dimen/text_size_normal"
+                            android:padding="10dp"
+                            android:textColor="@color/colorPrimary"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:visibility="invisible"
+                            android:id="@+id/tv_Or_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_email_or"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_text_color_grey"
+                            android:fontFamily="@font/inter_regular"/>
+
+                        <TextView
+                            android:visibility="invisible"
+                            android:id="@+id/tv_UseBiometric"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/login_email_password_mobile_no"
+                            android:text="@string/login_email_use_biometric"
                             android:textSize="@dimen/text_size_normal"
                             android:padding="10dp"
                             android:textColor="@color/colorPrimary"

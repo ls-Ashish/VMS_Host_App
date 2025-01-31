@@ -61,4 +61,17 @@ public class CS_Action_ServerDetails {
         return model;
     }
 
+    // Update server details
+    public boolean updateServerDetails(String where_Building_Id, String where_Tenant_Id, String buildingName, String tenantName, byte[] logo, String errorPostingURL, String updationDate, String country, String address_Line_1, String address_Line_2) {
+        boolean result = false;
+        try {
+            long rowId = dao.updateServerDetails(where_Building_Id, where_Tenant_Id, buildingName, tenantName, logo, errorPostingURL, updationDate, country, address_Line_1, address_Line_2);
+            result = rowId > 0;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
 }

@@ -234,9 +234,11 @@ public class S_ChangePassword extends Fragment {
             // Confirm
             if (confirmNewPassword.equals("")) {
                 viewBinding.tilConfirmPassword.setError(getResources().getString(R.string.change_password_password_confirm));
+                viewBinding.tilConfirmPassword.setErrorIconDrawable(null);
 
             } else if (!newPassword.equals(confirmNewPassword)) {
                 viewBinding.tilConfirmPassword.setError(getResources().getString(R.string.change_password_password_not_match));
+                viewBinding.tilConfirmPassword.setErrorIconDrawable(null);
 
             } else {
                 // clear set error

@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.access.A_AccessFragment;
@@ -39,7 +40,9 @@ import com.leegosolutions.vms_host_app.utility.CS_Connection;
 import com.leegosolutions.vms_host_app.utility.CS_Constant;
 import com.leegosolutions.vms_host_app.utility.CS_ED;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
+import com.leegosolutions.vms_host_app.utility.email.CS_Fetch_Email_Setup;
 import com.leegosolutions.vms_host_app.utility.email.CS_SendEmail;
+import com.leegosolutions.vms_host_app.utility.sms.CS_Fetch_SMS_Setup;
 import com.leegosolutions.vms_host_app.utility.sms.CS_SendSMS;
 
 import org.json.JSONArray;
@@ -55,7 +58,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.ResultListener {
+public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.ResultListener, CS_Fetch_SMS_Setup.OnUpdateCompleted {
 
     private Context context;
     private FragmentLMobileNoVerifyBinding viewBinding;
@@ -67,6 +70,7 @@ public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.Res
     private final long countDownTimeInMinutes = 1;
     private Handler handler = null;
     private Runnable myRunnable = null;
+    private BottomNavigationView bottomNavigationView;
 
     public L_MobileNoVerifyFragment() {
         // Required empty public constructor
@@ -75,6 +79,16 @@ public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.Res
     public L_MobileNoVerifyFragment(Context context) {
         try {
             this.context = context;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public L_MobileNoVerifyFragment(Context context, BottomNavigationView bottomNavigationView) {
+        try {
+            this.context = context;
+            this.bottomNavigationView = bottomNavigationView;
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -142,7 +156,8 @@ public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.Res
             getBundle();
             showResendButton();
             setExpiredText();
-            sendSMS();
+            new FetchServerDetails().execute();
+//            sendSMS();
             on_Click_Button_Resend();
             on_Click_Button_Submit();
 
@@ -626,7 +641,7 @@ public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.Res
 
     private void gotoSettings() {
         try {
-            Fragment fragment = new S_SettingsFragment(context);
+            Fragment fragment = new S_SettingsFragment(context, bottomNavigationView);
 
             if (fragment != null) {
 
@@ -644,6 +659,74 @@ public class L_MobileNoVerifyFragment extends Fragment implements CS_SendSMS.Res
                 new CS_Utility(context).showToast("Fragment is null", 0);
 
             }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public class FetchServerDetails extends AsyncTask<Void, Void, Void> {
+
+        String baseURL="", bCode="", tCode="", clientSecret="", appToken="", bu_Id="", te_Id="";
+        boolean isServerDetailsAvailable = false;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
+                if (model != null) {
+                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
+                    bCode = model.getSD_BCode();
+                    tCode = model.getSD_TCode();
+                    clientSecret = model.getSD_ClientSecret();
+                    appToken = model.getSD_AppToken();
+//                    logo = model.getSD_Logo();
+                    bu_Id = model.getSD_BU_ID();
+                    te_Id = model.getSD_TE_ID();
+
+                    if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
+                        isServerDetailsAvailable = true;
+
+                    }
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                // Check login status
+                if (isServerDetailsAvailable) {
+
+                    // check internet connection
+                    if (new CS_Connection(context).getStatus()) {
+
+                        // SMS Setup
+                        new CS_Fetch_SMS_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id, L_MobileNoVerifyFragment.this).execute();
+
+                    } else {
+                        new CS_Utility(context).showToast(CS_Constant.serverConnectionErrorMessage, 0);
+                    }
+
+                } else {
+                    new CS_Utility(context).showToast("Server connection not available.", 0);
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        }
+    }
+
+    @Override
+    public void OnUpdateCompleted(boolean status, String message) {
+        try {
+            sendSMS();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);

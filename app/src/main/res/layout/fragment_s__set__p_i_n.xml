@@ -98,7 +98,7 @@
                                 android:layout_weight="8"
                                 android:gravity="center|left"
                                 android:text="@string/security_s_pin_enable"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/text_size_normal"
                                 android:fontFamily="@font/inter_regular" />
 
                             <Switch
@@ -111,80 +111,100 @@
                         </TableRow>
 
                         <TextView
-                            android:id="@+id/tv_EnterOldPinCaption"
+                            android:id="@+id/tv_ModifyPIN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:padding="10dp"
-                            android:text="@string/security_s_pin_enter_old_pin"
-                            android:textAllCaps="true"
-                            android:textColor="@color/tv_text_color_grey"
-                            android:textSize="@dimen/text_size_normal" />
+                            android:layout_marginTop="20dp"
+                            android:gravity="center|left"
+                            android:text="@string/security_s_pin_modify_pin"
+                            android:textColor="@color/tv_text_color_primary"
+                            android:textSize="@dimen/text_size_large" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/til_OldPin"
+                        <LinearLayout
+                            android:id="@+id/ll_Modify_PIN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false"
-                            app:passwordToggleDrawable="@drawable/eye_password"
-                            app:passwordToggleEnabled="true">
+                            android:orientation="vertical">
 
-                            <EditText
-                                android:id="@+id/et_OldPin"
+                            <TextView
+                                android:id="@+id/tv_EnterOldPinCaption"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_shape"
-                                android:backgroundTint="@color/et_background_color"
-                                android:digits="012345689"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/inter_regular"
-                                android:inputType="numberPassword"
-                                android:maxLength="6"
                                 android:padding="10dp"
-                                android:textColorHint="@color/et_hint_text_color"
-                                android:textSize="@dimen/text_size_normal"
-                                android:singleLine="true" />
+                                android:text="@string/security_s_pin_enter_old_pin"
+                                android:textAllCaps="true"
+                                android:textColor="@color/tv_text_color_grey"
+                                android:textSize="@dimen/text_size_normal" />
 
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <TextView
-                            android:id="@+id/tv_EnterNewPinCaption"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:padding="10dp"
-                            android:text="@string/security_s_pin_enter_new_pin"
-                            android:textAllCaps="true"
-                            android:textColor="@color/tv_text_color_grey"
-                            android:textSize="@dimen/text_size_normal" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/til_NewPin"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            app:hintAnimationEnabled="false"
-                            app:hintEnabled="false">
-
-                            <EditText
-                                android:id="@+id/et_NewPin"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_OldPin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/rectangle_shape"
-                                android:backgroundTint="@color/et_background_color"
-                                android:digits="012345689"
-                                android:fontFamily="@font/inter_regular"
-                                android:inputType="number"
-                                android:maxLength="6"
-                                android:padding="10dp"
-                                android:textColorHint="@color/et_hint_text_color"
-                                android:textSize="@dimen/text_size_normal"
-                                android:singleLine="true" />
+                                app:errorEnabled="true"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:passwordToggleDrawable="@drawable/eye_password"
+                                app:passwordToggleEnabled="true">
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                                <EditText
+                                    android:id="@+id/et_OldPin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rectangle_shape"
+                                    android:backgroundTint="@color/et_background_color"
+                                    android:digits="012345689"
+                                    android:fontFamily="@font/inter_regular"
+                                    android:inputType="numberPassword"
+                                    android:maxLength="6"
+                                    android:padding="10dp"
+                                    android:textColorHint="@color/et_hint_text_color"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:singleLine="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:id="@+id/tv_EnterNewPinCaption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:padding="10dp"
+                                android:text="@string/security_s_pin_enter_new_pin"
+                                android:textAllCaps="true"
+                                android:textColor="@color/tv_text_color_grey"
+                                android:textSize="@dimen/text_size_normal" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_NewPin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:errorEnabled="true"
+                                app:hintAnimationEnabled="false"
+                                app:hintEnabled="false"
+                                app:passwordToggleDrawable="@drawable/eye_password"
+                                app:passwordToggleEnabled="true">
+
+                                <EditText
+                                    android:id="@+id/et_NewPin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rectangle_shape"
+                                    android:backgroundTint="@color/et_background_color"
+                                    android:digits="012345689"
+                                    android:fontFamily="@font/inter_regular"
+                                    android:inputType="numberPassword"
+                                    android:maxLength="6"
+                                    android:padding="10dp"
+                                    android:textColorHint="@color/et_hint_text_color"
+                                    android:textSize="@dimen/text_size_normal"
+                                    android:singleLine="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -195,6 +215,7 @@
                         android:orientation="vertical">
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btn_Save"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

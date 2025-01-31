@@ -29,7 +29,7 @@ public class CS_Entity_LoginDetails {
 
     public CS_Entity_LoginDetails() {}
 
-    public CS_Entity_LoginDetails(String LD_SourceId, String LD_Email, String LD_Password, String LD_UserType, String LD_UserName, byte[] LD_UserPhoto, int LD_IsLogin, String LD_CreationDate, String LD_UpdationDate, String LD_CountryCode, String LD_MobileNo) {
+    public CS_Entity_LoginDetails(String LD_SourceId, String LD_Email, String LD_Password, String LD_UserType, String LD_UserName, byte[] LD_UserPhoto, int LD_IsLogin, String LD_CreationDate, String LD_UpdationDate, String LD_CountryCode, String LD_MobileNo, String LD_S_PIN_Status, String LD_S_PIN, String LD_S_Fingerprint_Status) {
         this.LD_SourceId = LD_SourceId;
         this.LD_Email = LD_Email;
         this.LD_Password = LD_Password;
@@ -41,6 +41,9 @@ public class CS_Entity_LoginDetails {
         this.LD_UpdationDate = LD_UpdationDate;
         this.LD_CountryCode = LD_CountryCode;
         this.LD_MobileNo = LD_MobileNo;
+        this.LD_S_PIN_Status = LD_S_PIN_Status;
+        this.LD_S_PIN = LD_S_PIN;
+        this.LD_S_Fingerprint_Status = LD_S_Fingerprint_Status;
     }
 
     public int getLD_Auto_Id() {

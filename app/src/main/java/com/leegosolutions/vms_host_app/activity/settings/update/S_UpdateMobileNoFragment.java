@@ -17,10 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
-import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailFragment;
-import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailVerifyFragment;
 import com.leegosolutions.vms_host_app.activity.login.fragment.L_MobileNoVerifyFragment;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_AccessDetails;
@@ -53,6 +52,7 @@ public class S_UpdateMobileNoFragment extends Fragment {
     private Context context;
     private FragmentSUpdateMobileNoBinding viewBinding;
     private String name = "", email = "", company = "", countryCode = "", mobileNo = "", temp_CountryCode = "", temp_MobileNo = "";
+    private BottomNavigationView bottomNavigationView;
 
     public S_UpdateMobileNoFragment() {
         // Required empty public constructor
@@ -61,6 +61,16 @@ public class S_UpdateMobileNoFragment extends Fragment {
     public S_UpdateMobileNoFragment(Context context) {
         try {
             this.context = context;
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public S_UpdateMobileNoFragment(Context context, BottomNavigationView bottomNavigationView) {
+        try {
+            this.context = context;
+            this.bottomNavigationView = bottomNavigationView;
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -194,7 +204,11 @@ public class S_UpdateMobileNoFragment extends Fragment {
     private void setData() {
         try {
             viewBinding.etName.setText(name);
-            viewBinding.countryCodePicker.setCountryForPhoneCode(Integer.valueOf(countryCode));
+
+            if (!countryCode.isEmpty()) {
+                viewBinding.countryCodePicker.setCountryForPhoneCode(Integer.valueOf(countryCode));
+            }
+
             viewBinding.etMobileNo.setText(mobileNo);
             viewBinding.etEmail.setText(email);
             viewBinding.etCompany.setText(company);
@@ -495,7 +509,7 @@ public class S_UpdateMobileNoFragment extends Fragment {
             args.putString("mobileNo", mobileNo);
             args.putString("cameFrom", "settings");
 
-            Fragment fragment = new L_MobileNoVerifyFragment(context);
+            Fragment fragment = new L_MobileNoVerifyFragment(context, bottomNavigationView);
 
             if (fragment != null) {
 

@@ -1,7 +1,11 @@
 package com.leegosolutions.vms_host_app.utility;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.leegosolutions.vms_host_app.BuildConfig;
@@ -20,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -68,6 +73,13 @@ public class CS_Utility {
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String stackTrace = sw.toString();
+
+            String e_ClassName = context.getClass().getSimpleName();
+            String e_MethodName = new Object() {
+            }.getClass().getEnclosingMethod().getName();
+            String e_LineNo = String.valueOf(Thread.currentThread().getStackTrace()[2].getLineNumber());
+
+            e_LineNo = e_LineNo;
 
         } catch (Exception ignored) {}
     }
@@ -321,6 +333,51 @@ public class CS_Utility {
             new CS_Utility(context).saveError(e);
         }
         return result;
+    }
+
+    public boolean isValidEmail(String email) {
+        boolean result = false;
+        try {
+            result =  android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return result;
+    }
+
+    public String getAndroidId() {
+        String androidID = "";
+        try {
+            // Get
+            SharedPreferences prefs = context.getSharedPreferences(CS_SharedPreferences.SHP_NAME, MODE_PRIVATE);
+            androidID = prefs.getString(CS_SharedPreferences.SHP_ANDROID_ID, "");
+            if (androidID.equals("")) {
+                androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+                // Set
+                SharedPreferences.Editor editor = context.getSharedPreferences(CS_SharedPreferences.SHP_NAME, MODE_PRIVATE).edit();
+                editor.putString(CS_SharedPreferences.SHP_ANDROID_ID, androidID);
+                editor.apply();
+            }
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return androidID;
+    }
+
+    public String capitalizeFirstLetter(String text) {
+        String androidID = "";
+        try {
+            if (text == null || text.isEmpty()) {
+                return text;
+            }
+            return text.substring(0, 1).toUpperCase() + text.substring(1);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+        return androidID;
     }
 
 }

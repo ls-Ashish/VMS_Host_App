@@ -138,7 +138,7 @@ public class CS_VisitorsAdapter extends RecyclerView.Adapter<CS_VisitorsAdapter.
                 tv_Message = itemView.findViewById(R.id.tv_Message);
 
             } catch (Exception ignored) {
-                // todo - check to save
+                // Later - check to save
             }
         }
     }

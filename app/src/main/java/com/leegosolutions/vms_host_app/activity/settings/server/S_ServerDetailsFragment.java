@@ -1,5 +1,7 @@
 package com.leegosolutions.vms_host_app.activity.settings.server;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.Splash;
 import com.leegosolutions.vms_host_app.activity.access.A_AccessFragment;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_AccessDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
@@ -20,14 +23,16 @@ import com.leegosolutions.vms_host_app.database.entity.CS_Entity_AccessDetails;
 import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.databinding.FragmentNNortificationsBinding;
 import com.leegosolutions.vms_host_app.databinding.FragmentSServerDetailsBinding;
+import com.leegosolutions.vms_host_app.utility.CS_Check_Server_Connection;
+import com.leegosolutions.vms_host_app.utility.CS_Connection;
 import com.leegosolutions.vms_host_app.utility.CS_ED;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
 
-public class S_ServerDetailsFragment extends Fragment {
+public class S_ServerDetailsFragment extends Fragment implements CS_Check_Server_Connection.ResultListener {
 
     private Context context;
     private FragmentSServerDetailsBinding viewBinding;
-    private String buildingName="", buildingID="", unitName="", unitID="", buildingCountry="", buildingAddressLine_1="", buildingAddressLine_2="";
+    private String buildingName = "", buildingID = "", unitName = "", unitID = "", buildingCountry = "", buildingAddressLine_1 = "", buildingAddressLine_2 = "";
 
     public S_ServerDetailsFragment() {
         // Required empty public constructor
@@ -124,6 +129,11 @@ public class S_ServerDetailsFragment extends Fragment {
         try {
             new FetchServerDetailsFromSQLite().execute();
 
+            if (new CS_Connection(context).getStatus()) {
+                new CS_Check_Server_Connection(context, S_ServerDetailsFragment.this).execute();
+
+            }
+
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }
@@ -172,6 +182,7 @@ public class S_ServerDetailsFragment extends Fragment {
 
             // Unit Name
             if (!unitName.isEmpty()) {
+                viewBinding.trUnitName.setVisibility(VISIBLE);
                 viewBinding.tvUnitName.setText(unitName);
 
             } else {
@@ -180,6 +191,7 @@ public class S_ServerDetailsFragment extends Fragment {
 
             // Unit ID
             if (!unitID.isEmpty()) {
+                viewBinding.trUnitID.setVisibility(View.VISIBLE);
                 viewBinding.tvUnitID.setText(unitID);
 
             } else {
@@ -188,6 +200,7 @@ public class S_ServerDetailsFragment extends Fragment {
 
             // Country
             if (!buildingCountry.isEmpty()) {
+                viewBinding.trCountry.setVisibility(View.VISIBLE);
                 viewBinding.tvCountry.setText(buildingCountry);
 
             } else {
@@ -196,6 +209,7 @@ public class S_ServerDetailsFragment extends Fragment {
 
             // Address Line_1
             if (!buildingAddressLine_1.isEmpty()) {
+                viewBinding.trAddressLine1.setVisibility(View.VISIBLE);
                 viewBinding.tvAddressLine1.setText(buildingAddressLine_1);
 
             } else {
@@ -204,10 +218,31 @@ public class S_ServerDetailsFragment extends Fragment {
 
             // Address Line_2
             if (!buildingAddressLine_2.isEmpty()) {
+                viewBinding.trAddressLine2.setVisibility(View.VISIBLE);
                 viewBinding.tvAddressLine2.setText(buildingAddressLine_2);
 
             } else {
                 viewBinding.trAddressLine2.setVisibility(View.GONE);
+            }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+
+        try {
+            // Show at last
+            viewBinding.llAccountPreference.setVisibility(VISIBLE);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    @Override
+    public void connectionStatus(String result, String msg, boolean dataInserted) {
+        try {
+            if (result.equals("1")) {
+                new FetchServerDetailsFromSQLite().execute();
             }
 
         } catch (Exception e) {

@@ -144,7 +144,6 @@
                                 android:backgroundTint="@color/et_background_color"
                                 android:padding="10dp"
                                 android:layout_marginLeft="5dp"
-                                android:hint="@string/registration_mobile_no_hint"
                                 android:inputType="number"
                                 android:digits="0123456789"
                                 android:maxLength="12"

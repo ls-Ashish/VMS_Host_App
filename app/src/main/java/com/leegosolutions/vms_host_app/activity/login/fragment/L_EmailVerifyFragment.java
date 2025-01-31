@@ -18,20 +18,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.ScanServerDetails;
+import com.leegosolutions.vms_host_app.activity.Splash;
 import com.leegosolutions.vms_host_app.activity.home.Home;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_LoginDetails;
+import com.leegosolutions.vms_host_app.database.entity.CS_Entity_ServerDetails;
 import com.leegosolutions.vms_host_app.databinding.FragmentLEmailBinding;
 import com.leegosolutions.vms_host_app.databinding.FragmentLEmailVerifyBinding;
 import com.leegosolutions.vms_host_app.utility.CS_Connection;
 import com.leegosolutions.vms_host_app.utility.CS_Constant;
+import com.leegosolutions.vms_host_app.utility.CS_ED;
 import com.leegosolutions.vms_host_app.utility.CS_Utility;
+import com.leegosolutions.vms_host_app.utility.email.CS_Fetch_Email_Setup;
 import com.leegosolutions.vms_host_app.utility.email.CS_SendEmail;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class L_EmailVerifyFragment extends Fragment implements CS_SendEmail.ResultListener {
+public class L_EmailVerifyFragment extends Fragment implements CS_SendEmail.ResultListener, CS_Fetch_Email_Setup.OnUpdateCompleted {
 
     private Context context;
     private FragmentLEmailVerifyBinding viewBinding;
@@ -119,7 +125,7 @@ public class L_EmailVerifyFragment extends Fragment implements CS_SendEmail.Resu
             getBundle();
             showResendButton();
             setExpiredText();
-            new FetchLogoFromSQLite().execute();
+            new FetchServerDetails().execute();
             on_Click_Button_Resend();
             on_Click_Button_Submit();
 
@@ -421,6 +427,74 @@ public class L_EmailVerifyFragment extends Fragment implements CS_SendEmail.Resu
             if (handler != null) {
                 handler.removeCallbacks(myRunnable); // Cancel the task
             }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public class FetchServerDetails extends AsyncTask<Void, Void, Void> {
+
+        String baseURL="", bCode="", tCode="", clientSecret="", appToken="", bu_Id="", te_Id="";
+        boolean isServerDetailsAvailable = false;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_ServerDetails model = new CS_Action_ServerDetails(context).getServerDetails();
+                if (model != null) {
+                    baseURL = CS_ED.Decrypt(model.getSD_BaseURL());
+                    bCode = model.getSD_BCode();
+                    tCode = model.getSD_TCode();
+                    clientSecret = model.getSD_ClientSecret();
+                    appToken = model.getSD_AppToken();
+                    logo = model.getSD_Logo();
+                    bu_Id = model.getSD_BU_ID();
+                    te_Id = model.getSD_TE_ID();
+
+                    if (!baseURL.equals("") && !bCode.equals("") && !tCode.equals("") && !clientSecret.equals("")) {
+                        isServerDetailsAvailable = true;
+
+                    }
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                // Check login status
+                if (isServerDetailsAvailable) {
+
+                    // check internet connection
+                    if (new CS_Connection(context).getStatus()) {
+
+                        // Default Email and Email Setup
+                        new CS_Fetch_Email_Setup(context, baseURL, bCode, tCode, clientSecret, appToken, bu_Id, te_Id, L_EmailVerifyFragment.this).execute();
+
+                    } else {
+                        new CS_Utility(context).showToast(CS_Constant.serverConnectionErrorMessage, 0);
+                    }
+
+                } else {
+                    new CS_Utility(context).showToast("Server connection not available.", 0);
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        }
+    }
+
+    @Override
+    public void OnUpdateCompleted(boolean defaultEmailStatus, boolean emailStatus, String message) {
+        try {
+            sendEmail();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);

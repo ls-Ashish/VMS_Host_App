@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.leegosolutions.vms_host_app.R;
+import com.leegosolutions.vms_host_app.activity.AppPIN;
 import com.leegosolutions.vms_host_app.activity.home.Home;
 import com.leegosolutions.vms_host_app.activity.login.LoginVerify;
+import com.leegosolutions.vms_host_app.activity.login.forgot_password.L_ForgotPassword;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_LoginDetails;
 import com.leegosolutions.vms_host_app.database.action.CS_Action_ServerDetails;
@@ -45,7 +47,7 @@ public class L_MobileNoFragment extends Fragment {
 
     private Context context;
     private FragmentLMobileNoBinding viewBinding;
-    private String email = "", countryCode="", mobileNo="", password = "";
+    private String email = "", countryCode="", mobileNo="", password = "", appPINStatus = "", appPIN = "", appBiometricStatus="";
     private Snackbar snackbar;
 
     public L_MobileNoFragment() {
@@ -117,7 +119,11 @@ public class L_MobileNoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
+            fetchAppPIN();
             on_Click_Button_Next();
+            on_Click_Text_UsePIN();
+            on_Click_Text_ForgotPassword();
+            on_Click_Text_UseBiometric();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
@@ -130,6 +136,41 @@ public class L_MobileNoFragment extends Fragment {
                 if (validate()) {
                     login();
                 }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        });
+    }
+
+    private void on_Click_Text_UsePIN() {
+        viewBinding.tvUsePIN.setOnClickListener(v -> {
+            try {
+                // PIN
+                backToAppPIN();
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        });
+    }
+
+    private void on_Click_Text_ForgotPassword() {
+        viewBinding.tvForgotPassword.setOnClickListener(v -> {
+            try {
+                nextPage(L_ForgotPassword.class, "L_MobileNoFragment");
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+        });
+    }
+
+    private void on_Click_Text_UseBiometric() {
+        viewBinding.tvUseBiometric.setOnClickListener(v -> {
+            try {
+                // PIN
+                backToAppPIN();
 
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
@@ -312,11 +353,17 @@ public class L_MobileNoFragment extends Fragment {
                 if (result.equals("1")) {
                     // Save login details
 
+                    // Keep existing settings
+                    CS_Entity_LoginDetails existingLoginDetails = new CS_Action_LoginDetails(context).getLoginDetails();
+                    String existingPIN_Status = existingLoginDetails.getLD_S_PIN_Status();
+                    String existingPIN = existingLoginDetails.getLD_S_PIN();
+                    String existingFingerprint_Status = existingLoginDetails.getLD_S_Fingerprint_Status();
+
                     // Clean
                     new CS_Action_LoginDetails(context).deleteLoginDetails();
 
                     // Model
-                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), lastUpdationDate, CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo));
+                    CS_Entity_LoginDetails model = new CS_Entity_LoginDetails(sourceId, CS_ED.Encrypt(email), CS_ED.Encrypt(password), CS_ED.Encrypt(userType), CS_ED.Encrypt(userName), userPhoto, enable2FA.equals("1") ? 0 : 1, new CS_Utility(context).getDateTime(), lastUpdationDate, CS_ED.Encrypt(countryCode), CS_ED.Encrypt(mobileNo), existingPIN_Status, existingPIN, existingFingerprint_Status);
 
                     // Insert
                     dataInserted = new CS_Action_LoginDetails(context).insertLoginDetails(model);
@@ -482,6 +529,77 @@ public class L_MobileNoFragment extends Fragment {
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void backToAppPIN() {
+        try {
+            Intent intent = new Intent(context, AppPIN.class);
+            // Clear
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    private void fetchAppPIN() {
+        try {
+            new FetchAppPIN().execute();
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public class FetchAppPIN extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CS_Entity_LoginDetails model = new CS_Action_LoginDetails(context).getLoginDetails();
+                if (model != null) {
+                    appPINStatus = model.getLD_S_PIN_Status();
+                    appPIN = CS_ED.Decrypt(model.getLD_S_PIN());
+                    appBiometricStatus = model.getLD_S_Fingerprint_Status();
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            try {
+                if (appPINStatus.equals("1")) {
+//                    viewBinding.tvOr.setVisibility(View.VISIBLE);
+                    viewBinding.tvUsePIN.setVisibility(View.VISIBLE);
+                } else {
+                    viewBinding.tvOr.setVisibility(View.GONE);
+                    viewBinding.tvUsePIN.setVisibility(View.GONE);
+
+                }
+
+                if (appBiometricStatus.equals("1")) {
+
+                    if (appPINStatus.equals("1")) {
+                        viewBinding.tvOr2.setVisibility(View.VISIBLE);
+
+                    } else {
+                        viewBinding.tvOr2.setVisibility(View.GONE);
+                    }
+                    viewBinding.tvUseBiometric.setVisibility(View.VISIBLE);
+
+                }
+
+            } catch (Exception e) {
+                new CS_Utility(context).saveError(e);
+            }
         }
     }
 

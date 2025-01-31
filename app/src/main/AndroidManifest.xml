@@ -32,6 +32,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.login.forgot_password.L_ForgotPassword"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
             android:name=".TestingCode"
             android:exported="false" />
         <activity
