@@ -148,7 +148,7 @@
                                 android:textColor="@color/tv_text_color"
                                 android:textSize="@dimen/text_size_normal"
                                 android:gravity="center"
-                                android:layout_marginTop="20dp"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/inter_bold"/>
 
                             <TextView
@@ -210,14 +210,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/line_bg"
-                                android:layout_marginTop="20dp"/>
+                                android:layout_marginTop="10dp"/>
 
                             <LinearLayout
                                 android:id="@+id/ll_Property"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="10dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -245,7 +245,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_marginTop="20dp">
+                                android:layout_marginTop="10dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
