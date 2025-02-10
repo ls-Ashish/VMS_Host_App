@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -25,6 +26,11 @@ import android.view.WindowManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.ScanServerDetails;
@@ -55,6 +61,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -68,6 +76,7 @@ public class A_AccessFragment extends Fragment {
     private Context context;
     private FragmentAAccessBinding viewBinding;
     private BarcodeEncoder barcodeEncoder;
+    QRCodeWriter qrCodeWriter = null;
     private Bitmap bitmap;
     private long refreshTime = 5000; // 5 x 1000 = 5 sec
     private Handler handler = new Handler();
@@ -532,7 +541,7 @@ public class A_AccessFragment extends Fragment {
         try {
             if (!employeeNo_Encrypted.isEmpty()) {
                 String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
-                String qrcodeValue = "HOST://" + employeeNo_Encrypted + "§" + CS_ED.Encrypt(currentDateTime);
+                String qrcodeValue = "HOST://" + employeeNo_Encrypted + "**" + CS_ED.Encrypt(currentDateTime);
 
                 // HOST://85gaEPeZSLW+oRNejKJ2JQ==§RjHzQefDXhpGVKjg/OPzQq9SIVfMe4omzJdrep8+JVY=
                 // host primary id + datetime
@@ -551,5 +560,49 @@ public class A_AccessFragment extends Fragment {
             new CS_Utility(context).saveError(e);
         }
     }
+
+//    public Bitmap generateQRCode() {
+//        Bitmap bitmap = null;
+//        try {
+//            if (!employeeNo_Encrypted.isEmpty()) {
+//                int width = 400, height = 400;
+//
+//                String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
+//                String qrcodeValue = "HOST://" + employeeNo_Encrypted + "§" + CS_ED.Encrypt(currentDateTime);
+//
+//                // HOST://85gaEPeZSLW+oRNejKJ2JQ==§RjHzQefDXhpGVKjg/OPzQq9SIVfMe4omzJdrep8+JVY=
+//                // host primary id + datetime
+//
+////                barcodeEncoder = new BarcodeEncoder();
+////                bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);
+////                viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
+//
+//                Map<EncodeHintType, Object> hints = new Hashtable<>();
+//                hints.put(EncodeHintType.CHARACTER_SET, "UTF-8"); // Set the character encoding to UTF-8
+//                hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H); // Set the error correction level
+//
+//                qrCodeWriter = new QRCodeWriter();
+//                BitMatrix bitMatrix = qrCodeWriter.encode(qrcodeValue, BarcodeFormat.QR_CODE, width, height, hints);
+//                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+//                for (int x = 0; x < width; x++) {
+//                    for (int y = 0; y < height; y++) {
+//                        bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+//                    }
+//                }
+//
+//                Log.d("VMSHost", qrcodeValue);
+//
+//                viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
+//
+//                // Testing
+////                Log.d("VMSTest", qrcodeValue);
+////                String qrcodeValueDecrypt = "HOST://" + employeeNo_Encrypted + "§" + currentDateTime;
+////                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
+//            }
+//        } catch (Exception e) {
+//            new CS_Utility(context).saveError(e);
+//        }
+//        return bitmap;
+//    }
 
 }

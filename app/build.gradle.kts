@@ -10,8 +10,8 @@ android {
         applicationId = "com.leegosolutions.vms_host_app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.7"
+        versionCode = 11
+        versionName = "1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
