@@ -36,13 +36,15 @@ public class CS_Action_LoginDetails {
     }
 
     // Delete
-    public void deleteLoginDetails() {
+    public int deleteLoginDetails() {
+        int status = 0;
         try {
-            dao.deleteAllLoginDetails();
+            status = dao.deleteAllLoginDetails();
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
         }
+        return status;
     }
 
     // Fetch

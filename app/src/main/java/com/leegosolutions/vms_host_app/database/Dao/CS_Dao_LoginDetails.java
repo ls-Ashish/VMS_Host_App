@@ -15,7 +15,7 @@ public interface CS_Dao_LoginDetails {
     long insertLoginDetails(CS_Entity_LoginDetails model);
 
     @Query("DELETE FROM " + CS_SQLiteTable.VMS_LogIn_Details)
-    void deleteAllLoginDetails();
+    int deleteAllLoginDetails();
 
     @Query("SELECT " +
             "COALESCE(LD_Auto_Id,'') AS [LD_Auto_Id], " +

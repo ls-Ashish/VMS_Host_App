@@ -3,6 +3,7 @@ package com.leegosolutions.vms_host_app.activity.access;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Handler;
 import android.util.Base64;
@@ -35,6 +37,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.leegosolutions.vms_host_app.R;
 import com.leegosolutions.vms_host_app.activity.ScanServerDetails;
 import com.leegosolutions.vms_host_app.activity.home.Home;
+import com.leegosolutions.vms_host_app.activity.login.Login;
 import com.leegosolutions.vms_host_app.activity.login.fragment.L_EmailFragment;
 import com.leegosolutions.vms_host_app.api.CS_API_URL;
 import com.leegosolutions.vms_host_app.database.Dao.CS_Dao_LoginDetails;
@@ -182,6 +185,9 @@ public class A_AccessFragment extends Fragment {
             new CS_Utility(context).saveError(e);
         }
         try {
+            // Immediately refresh
+            generateQRCode();
+
             refreshQRCode();
 
         } catch (Exception e) {
@@ -264,7 +270,7 @@ public class A_AccessFragment extends Fragment {
         private ProgressDialog progressdialog;
         private String result = "", msg = "";
         private String appToken = "", baseURL = "", buildingId = "", tenantId = "", hostId = "";
-        private boolean saveUpdateStatus = false;
+        private boolean saveUpdateStatus = false, logoutStatus = false;
 
         @Override
         protected void onPreExecute() {
@@ -355,23 +361,41 @@ public class A_AccessFragment extends Fragment {
             }
             try {
                 if (result.equals("1")) {
+                    try {
+                        CS_Entity_AccessDetails accessModel = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(employeeUnit), CS_ED.Encrypt(employeeVehicleNo), new CS_Utility(context).getDateTime(), employeeLastUpdationDate, employeeNo_Encrypted, CS_ED.Encrypt(floorUnitNo));
 
-                    CS_Entity_AccessDetails accessModel = new CS_Entity_AccessDetails(sourceId, CS_ED.Encrypt(employeeNo), CS_ED.Encrypt(employeeName), CS_ED.Encrypt(employeeUnit), CS_ED.Encrypt(employeeVehicleNo), new CS_Utility(context).getDateTime(), employeeLastUpdationDate, employeeNo_Encrypted, CS_ED.Encrypt(floorUnitNo));
-
-                    // Check if same host id then update
-                    String sqLiteHostId = new CS_Action_AccessDetails(context).getAccessDetails().getAD_SourceId();
-                    if (sqLiteHostId.equals(sourceId)) {
-                        // Update
+                        // Check if same host id then update
+                        String sqLiteHostId = new CS_Action_AccessDetails(context).getAccessDetails().getAD_SourceId();
+                        if (sqLiteHostId.equals(sourceId)) {
+                            // Update
 //                        saveUpdateStatus = new CS_Action_AccessDetails(context).updateAccessDetails(accessModel);
-                        saveUpdateStatus = new CS_Action_AccessDetails(context).updateAccessDetails(accessModel.getAD_SourceId(), accessModel.getAD_E_No(), accessModel.getAD_E_Name(), accessModel.getAD_E_Unit(), accessModel.getAD_E_VehicleNo(), accessModel.getAD_E_UpdationDate(), accessModel.getAD_E_No_Encrypted(), accessModel.getAD_E_FloorUnit());
+                            saveUpdateStatus = new CS_Action_AccessDetails(context).updateAccessDetails(accessModel.getAD_SourceId(), accessModel.getAD_E_No(), accessModel.getAD_E_Name(), accessModel.getAD_E_Unit(), accessModel.getAD_E_VehicleNo(), accessModel.getAD_E_UpdationDate(), accessModel.getAD_E_No_Encrypted(), accessModel.getAD_E_FloorUnit());
 
-                    } else {
-                        // Clean
-                        new CS_Action_AccessDetails(context).deleteAccessDetails();
+                        } else {
+                            // Clean
+                            new CS_Action_AccessDetails(context).deleteAccessDetails();
 
-                        // Insert
-                        saveUpdateStatus = new CS_Action_AccessDetails(context).insertAccessDetails(accessModel);
+                            // Insert
+                            saveUpdateStatus = new CS_Action_AccessDetails(context).insertAccessDetails(accessModel);
+                        }
+
+                    } catch (Exception e) {
+                        new CS_Utility(context).saveError(e);
                     }
+                } else if (result.equals("3")) {
+                    try {
+                        // Logout and go to home page
+                        // Staff has been deleted or resigned.
+                        // Clean
+                        int status = new CS_Action_LoginDetails(context).deleteLoginDetails();
+                        if (status > 0) {
+                            logoutStatus = true;
+
+                        }
+                    } catch (Exception e) {
+                        new CS_Utility(context).saveError(e);
+                    }
+
                 }
             } catch (Exception e) {
                 new CS_Utility(context).saveError(e);
@@ -399,6 +423,15 @@ public class A_AccessFragment extends Fragment {
 
                 } else if (result.equals("2")) {
                     // No update found.
+
+                } else if (result.equals("3")) {
+                    // Logout
+                    if (logoutStatus) {
+                        goToLoginPage();
+
+                    } else {
+                        showAlertDialog(logoutStatus + ": " + msg);
+                    }
 
                 } else if (hostId.equals("")) {
                     showAlertDialog(context.getResources().getString(R.string.access_login_id_blank));
@@ -543,18 +576,33 @@ public class A_AccessFragment extends Fragment {
                 String currentDateTime = new CS_Utility(context).getDateTime().replace(" ", "T");
                 String qrcodeValue = "HOST://" + employeeNo_Encrypted + "**" + CS_ED.Encrypt(currentDateTime);
 
-                // HOST://85gaEPeZSLW+oRNejKJ2JQ==§RjHzQefDXhpGVKjg/OPzQq9SIVfMe4omzJdrep8+JVY=
                 // host primary id + datetime
+                // HOST://85gaEPeZSLW+oRNejKJ2JQ==**fRSrGxQ+7rLq96eO4wWiz5DCqxTFhHE6aa7siRZka5w=
 
                 barcodeEncoder = new BarcodeEncoder();
                 bitmap = barcodeEncoder.encodeBitmap(qrcodeValue, BarcodeFormat.QR_CODE, 400, 400);
                 viewBinding.ivAccessQRCode.setImageBitmap(bitmap);
 
                 // Testing
-//                Log.d("VMSTest", qrcodeValue);
-//                String qrcodeValueDecrypt = "HOST://" + employeeNo_Encrypted + "§" + currentDateTime;
-//                viewBinding.tvQRCodeValue.setText(qrcodeValue + "\n\n" + qrcodeValueDecrypt);
+                Log.d("VMSTest", currentDateTime);
             }
+
+        } catch (Exception e) {
+            new CS_Utility(context).saveError(e);
+        }
+    }
+
+    public void goToLoginPage() {
+        try {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            while (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate();
+            }
+
+            Intent intent = new Intent(requireActivity(), Login.class);
+            startActivity(intent);
+            requireActivity().finish();
+            requireActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
         } catch (Exception e) {
             new CS_Utility(context).saveError(e);
